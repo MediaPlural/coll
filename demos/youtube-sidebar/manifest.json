@@ -6,10 +6,10 @@
     "tool": "curl",
     "command": "curl -sL https://www.youtube.com/",
     "summary": {
-      "bytes": 955327
+      "bytes": 955274
     },
     "artifact": "000-html-raw.txt",
-    "digest": "a2895fb1d10ee05b30c42723d9113fbf",
+    "digest": "110ca4e44929e03c904be1f6cc350fed",
     "confidence": "observed",
     "limitation": "rendered DOM differs from static HTML; SPA content lives in JS"
   },
@@ -135,16 +135,16 @@
   },
   {
     "lane": "web",
-    "target": "https://www.youtube.com/s/_/ytmainappweb/_/js/k=ytmainappweb.kevlar_base.en_US.Yr8Cp34MrMI.es5.O/am=AAAAAAEACEBK/d=1/rs=AGKMywFcRu15kXCbb0UB14_r6NgWtvgwww/m=kevlar_base_module,kevlar_main_module,kevlar_base_sync_mod_chunk",
+    "target": "https://www.youtube.com/s/_/ytmainappweb/_/js/k=ytmainappweb.kevlar_base.en_US.Yr8Cp34MrMI.es5.O/am=AAAAABAACEBK/d=1/rs=AGKMywG-VS3J26iXz0Mmw4E7WA9KIYE2Zw/m=kevlar_base_module,kevlar_main_module,kevlar_base_sync_mod_chunk",
     "label": "bundle (bounded)",
     "tool": "curl",
-    "command": "curl -sL https://www.youtube.com/s/_/ytmainappweb/_/js/k=ytmainappweb.kevlar_base.en_US.Yr8Cp34MrMI.es5.O/am=AAAAAAEACEBK/d=1/rs=AGKMywFcRu15kXCbb0UB14_r6NgWtvgwww/m=kevlar_base_module,kevlar_main_module,kevlar_base_sync_mod_chunk",
+    "command": "curl -sL https://www.youtube.com/s/_/ytmainappweb/_/js/k=ytmainappweb.kevlar_base.en_US.Yr8Cp34MrMI.es5.O/am=AAAAABAACEBK/d=1/rs=AGKMywG-VS3J26iXz0Mmw4E7WA9KIYE2Zw/m=kevlar_base_module,kevlar_main_module,kevlar_base_sync_mod_chunk",
     "summary": {
-      "bytes": 10877783,
+      "bytes": 10877807,
       "bounded": true
     },
     "artifact": "009-bundle-bounded.txt",
-    "digest": "0fa050233ce284537d838c5414127679",
+    "digest": "79a598dfb1fee32c788e573127dab81f",
     "confidence": "observed",
     "limitation": "minified bundle; symbol names are heuristically recovered, not resolved"
   },
@@ -153,26 +153,12 @@
     "target": "https://googleads.g.doubleclick.net/pagead/id?slf_rd=1",
     "label": "response body GET pagead-id",
     "tool": "cdp:Network.getResponseBody",
-    "command": "Network.getResponseBody(requestId=72395.166)",
+    "command": "Network.getResponseBody(requestId=53010.166)",
     "summary": {
       "bytes": 100
     },
     "artifact": "010-response-body-get-pagead-id.txt",
-    "digest": "92d158f02080b4faf2a5aec9d57a6666",
-    "confidence": "observed",
-    "limitation": "single response sample; shape is not a contract"
-  },
-  {
-    "lane": "behavior",
-    "target": "https://www.youtube.com/api/jnn/v1/GenerateIT",
-    "label": "response body POST api-jnn-v1-GenerateIT",
-    "tool": "cdp:Network.getResponseBody",
-    "command": "Network.getResponseBody(requestId=72395.186)",
-    "summary": {
-      "bytes": 102
-    },
-    "artifact": "011-response-body-post-api-jnn-v1-generateit.txt",
-    "digest": "b67e17e3460634c4a3d33f99353e188a",
+    "digest": "808266433307b1d7ef73ae196c077423",
     "confidence": "observed",
     "limitation": "single response sample; shape is not a contract"
   },
@@ -181,12 +167,26 @@
     "target": "https://www.youtube.com/youtubei/v1/guide?prettyPrint=false",
     "label": "response body POST youtubei-v1-guide",
     "tool": "cdp:Network.getResponseBody",
-    "command": "Network.getResponseBody(requestId=72395.178)",
+    "command": "Network.getResponseBody(requestId=53010.179)",
     "summary": {
-      "bytes": 14954
+      "bytes": 14986
     },
-    "artifact": "012-response-body-post-youtubei-v1-guide.txt",
-    "digest": "b143b4ca151be8fadeadd91b495d6cc9",
+    "artifact": "011-response-body-post-youtubei-v1-guide.txt",
+    "digest": "0db3ec008f106c39b3fa3b17dcc1a71d",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/api/jnn/v1/GenerateIT",
+    "label": "response body POST api-jnn-v1-GenerateIT",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=53010.184)",
+    "summary": {
+      "bytes": 102
+    },
+    "artifact": "012-response-body-post-api-jnn-v1-generateit.txt",
+    "digest": "5135d056471d59fe270584e6073c55b5",
     "confidence": "observed",
     "limitation": "single response sample; shape is not a contract"
   },
@@ -195,12 +195,12 @@
     "target": "https://www.youtube.com/youtubei/v1/feedback?prettyPrint=false",
     "label": "response body POST youtubei-v1-feedback",
     "tool": "cdp:Network.getResponseBody",
-    "command": "Network.getResponseBody(requestId=72395.190)",
+    "command": "Network.getResponseBody(requestId=53010.183)",
     "summary": {
-      "bytes": 1284
+      "bytes": 1316
     },
     "artifact": "013-response-body-post-youtubei-v1-feedback.txt",
-    "digest": "c7355579653c15945ef743ac6a531daf",
+    "digest": "6ea3e4a6668b19ed7426a451c209866c",
     "confidence": "observed",
     "limitation": "single response sample; shape is not a contract"
   },
@@ -211,7 +211,7 @@
     "tool": "cdp:Accessibility.getFullAXTree",
     "command": "Accessibility.getFullAXTree()",
     "summary": {
-      "nodes": 429,
+      "nodes": 430,
       "roles": {
         "generic": 176,
         "link": 44,
@@ -226,7 +226,7 @@
       }
     },
     "artifact": "014-accessibility-tree.txt",
-    "digest": "e23b677fa66eb4f91183237a473d37b3",
+    "digest": "cb528041db7df33734ccbd697f983677",
     "confidence": "observed",
     "limitation": "AX tree is platform-normalized; not a 1:1 DOM map"
   },
@@ -237,10 +237,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 57345
+      "bytes": 57335
     },
     "artifact": "015-screenshot-initial.png",
-    "digest": "d3f4a45bf1243758842776a2d06d2dd5",
+    "digest": "1e0457243731c3f9526db5db0b0db43f",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -251,10 +251,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 57345
+      "bytes": 57335
     },
     "artifact": "016-screenshot-before-collapse-guide.png",
-    "digest": "d3f4a45bf1243758842776a2d06d2dd5",
+    "digest": "1e0457243731c3f9526db5db0b0db43f",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -263,7 +263,7 @@
     "target": "https://www.youtube.com/youtubei/v1/log_event?alt=json",
     "label": "response body POST youtubei-v1-log_event",
     "tool": "cdp:Network.getResponseBody",
-    "command": "Network.getResponseBody(requestId=72395.340)",
+    "command": "Network.getResponseBody(requestId=53010.340)",
     "summary": {
       "bytes": 28
     },
@@ -279,10 +279,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 29961
+      "bytes": 29952
     },
     "artifact": "018-screenshot-after-collapse-guide.png",
-    "digest": "2df6fa9f771e33903c04af452e1d4361",
+    "digest": "1b09d6f1ced1a09e1bc9611a3bec8c6d",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -293,10 +293,10 @@
     "tool": "cdp:Input+Runtime",
     "command": "{\"action\": \"click\", \"target\": {\"name\": \"Guide\", \"role\": \"button\"}}",
     "summary": {
-      "outcome": "panel-opened"
+      "outcome": "layout-swapped"
     },
     "artifact": "019-transition-01-button-guide.txt",
-    "digest": "ab0031afb41f5242c0b863b2fd69e50b",
+    "digest": "f18d952311e096e0a1442be526795caa",
     "confidence": "observed",
     "limitation": "one observed run; timing/race states not exercised"
   },
@@ -307,10 +307,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 29961
+      "bytes": 29952
     },
     "artifact": "020-screenshot-before-expand-guide.png",
-    "digest": "2df6fa9f771e33903c04af452e1d4361",
+    "digest": "1b09d6f1ced1a09e1bc9611a3bec8c6d",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -321,10 +321,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 57751
+      "bytes": 57743
     },
     "artifact": "021-screenshot-after-expand-guide.png",
-    "digest": "adace5b07d2cfe6aa1b8df9eff13f3e3",
+    "digest": "1605d77cb7723358958e402046afc529",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -335,10 +335,10 @@
     "tool": "cdp:Input+Runtime",
     "command": "{\"action\": \"click\", \"target\": {\"name\": \"Guide\", \"role\": \"button\"}}",
     "summary": {
-      "outcome": "panel-opened"
+      "outcome": "layout-swapped"
     },
     "artifact": "022-transition-02-button-guide.txt",
-    "digest": "040d674939cd79570f8a4e9b2eb99641",
+    "digest": "aab24650bbd85e4f2695a8ae6d68a1ef",
     "confidence": "observed",
     "limitation": "one observed run; timing/race states not exercised"
   },
@@ -349,10 +349,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 57751
+      "bytes": 57743
     },
     "artifact": "023-screenshot-before-expand-sections.png",
-    "digest": "adace5b07d2cfe6aa1b8df9eff13f3e3",
+    "digest": "1605d77cb7723358958e402046afc529",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -363,10 +363,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 58022
+      "bytes": 58012
     },
     "artifact": "024-screenshot-after-expand-sections.png",
-    "digest": "a6fd43040bc79fa7b7b1b72f8d17861d",
+    "digest": "4fd77478555c95b3b85ad2cc6539d14d",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -377,10 +377,10 @@
     "tool": "cdp:Input+Runtime",
     "command": "{\"action\": \"click\", \"target\": {\"text\": \"Show more\"}}",
     "summary": {
-      "outcome": "panel-opened"
+      "outcome": "layout-swapped"
     },
     "artifact": "025-transition-03-button-show-more.txt",
-    "digest": "2aab8c08f68a85391bb886fd34b51be4",
+    "digest": "ad9e794c2cfad8bb2bfbfd4e690c1fd7",
     "confidence": "observed",
     "limitation": "one observed run; timing/race states not exercised"
   },
@@ -391,10 +391,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 58022
+      "bytes": 58012
     },
     "artifact": "026-screenshot-before-navigate-music.png",
-    "digest": "a6fd43040bc79fa7b7b1b72f8d17861d",
+    "digest": "4fd77478555c95b3b85ad2cc6539d14d",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -403,12 +403,12 @@
     "target": "https://www.youtube.com/youtubei/v1/browse?prettyPrint=false",
     "label": "response body POST youtubei-v1-browse",
     "tool": "cdp:Network.getResponseBody",
-    "command": "Network.getResponseBody(requestId=72395.344)",
+    "command": "Network.getResponseBody(requestId=53010.344)",
     "summary": {
       "bytes": 262144
     },
     "artifact": "027-response-body-post-youtubei-v1-browse.txt",
-    "digest": "c013eab9c4b59c84813eee52221cf9a5",
+    "digest": "590d3641310d4729dbf9341001591f7a",
     "confidence": "observed",
     "limitation": "single response sample; shape is not a contract"
   },
@@ -417,12 +417,26 @@
     "target": "https://www.youtube.com/youtubei/v1/player?prettyPrint=false",
     "label": "response body POST youtubei-v1-player",
     "tool": "cdp:Network.getResponseBody",
-    "command": "Network.getResponseBody(requestId=72395.346)",
+    "command": "Network.getResponseBody(requestId=53010.346)",
     "summary": {
-      "bytes": 12922
+      "bytes": 40733
     },
     "artifact": "028-response-body-post-youtubei-v1-player.txt",
-    "digest": "473fe2df63a54c09236ed0ecae19d308",
+    "digest": "e6c60ef4fc7a25e6bbfb140309c701fe",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/youtubei/v1/next?prettyPrint=false",
+    "label": "response body POST youtubei-v1-next",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=53010.352)",
+    "summary": {
+      "bytes": 262144
+    },
+    "artifact": "029-response-body-post-youtubei-v1-next.txt",
+    "digest": "6d0dea6aed0ee7490a6ef442c69f7a19",
     "confidence": "observed",
     "limitation": "single response sample; shape is not a contract"
   },
@@ -433,10 +447,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 629836
+      "bytes": 545845
     },
-    "artifact": "029-screenshot-after-navigate-music.png",
-    "digest": "4b097603a454df41e0686c4335e2d341",
+    "artifact": "030-screenshot-after-navigate-music.png",
+    "digest": "d2ab68523fbb802b97972ce2d05738b7",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -449,35 +463,35 @@
     "summary": {
       "outcome": "navigated"
     },
-    "artifact": "030-transition-04-ytd-guide-entry-renderer-music.txt",
-    "digest": "3cf6655b78a981c3ec4403986a707a5c",
+    "artifact": "031-transition-04-ytd-guide-entry-renderer-music.txt",
+    "digest": "738c42f683a76265ea40186eebd2afc6",
     "confidence": "observed",
     "limitation": "one observed run; timing/race states not exercised"
   },
   {
     "lane": "behavior",
-    "target": "https://suggestqueries-clients6.youtube.com/complete/search?ds=yt&hl=en&gl=us&client=youtube&gs_ri=youtube&sugexp=uqap13nreweightingh1_h%2Cytpo.bo.me%3D0%2Cytposo.bo.me%3D0%2Cytpo.bo.ro.mi%3D51966626%2Cytposo.bo.ro.mi%3D51966626%2Cymo.ei%3D52283469&h=180&w=320&ytvs=1&gs_id=0&q=&cp=0",
+    "target": "https://suggestqueries-clients6.youtube.com/complete/search?ds=yt&hl=en&gl=us&client=youtube&gs_ri=youtube&sugexp=ytotfrq_ta1_e26%2Cytpo.bo.so.fgf%3D1%2Cytpo.bo.so.fsf%3D29.5%2Cytpo.bo.so.fmb%3D5.0%2Cytposo.bo.so.fgf%3D1%2Cytposo.bo.so.fsf%3D35.0%2Cytposo.bo.so.fmb%3D5.0&h=180&w=320&ytvs=1&gs_id=0&q=&cp=0",
     "label": "response body GET complete-search",
     "tool": "cdp:Network.getResponseBody",
-    "command": "Network.getResponseBody(requestId=72395.370)",
+    "command": "Network.getResponseBody(requestId=53010.378)",
     "summary": {
       "bytes": 43
     },
-    "artifact": "031-response-body-get-complete-search.txt",
+    "artifact": "032-response-body-get-complete-search.txt",
     "digest": "55c491307de69e2d7fb312fe51947121",
     "confidence": "observed",
     "limitation": "single response sample; shape is not a contract"
   },
   {
     "lane": "behavior",
-    "target": "https://suggestqueries-clients6.youtube.com/complete/search?ds=yt&hl=en&gl=us&client=youtube&gs_ri=youtube&sugexp=uqap13nreweightingh1_h%2Cytpo.bo.me%3D0%2Cytposo.bo.me%3D0%2Cytpo.bo.ro.mi%3D51966626%2Cytposo.bo.ro.mi%3D51966626%2Cymo.ei%3D52283469&h=180&w=320&ytvs=1&gs_id=1&q=reverse%20engineer%20app&cp=20",
+    "target": "https://suggestqueries-clients6.youtube.com/complete/search?ds=yt&hl=en&gl=us&client=youtube&gs_ri=youtube&sugexp=ytotfrq_ta1_e26%2Cytpo.bo.so.fgf%3D1%2Cytpo.bo.so.fsf%3D29.5%2Cytpo.bo.so.fmb%3D5.0%2Cytposo.bo.so.fgf%3D1%2Cytposo.bo.so.fsf%3D35.0%2Cytposo.bo.so.fmb%3D5.0&h=180&w=320&ytvs=1&gs_id=1&q=reverse%20engineer%20app&cp=20",
     "label": "response body GET complete-search",
     "tool": "cdp:Network.getResponseBody",
-    "command": "Network.getResponseBody(requestId=72395.371)",
+    "command": "Network.getResponseBody(requestId=53010.379)",
     "summary": {
       "bytes": 63
     },
-    "artifact": "032-response-body-get-complete-search.txt",
+    "artifact": "033-response-body-get-complete-search.txt",
     "digest": "f5c9f3fb7e0982ca6ca58f179baf7f47",
     "confidence": "observed",
     "limitation": "single response sample; shape is not a contract"
@@ -489,10 +503,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 631808
+      "bytes": 552875
     },
-    "artifact": "033-screenshot-after-type-query.png",
-    "digest": "900b17cef9a3fd388f41cac37978c07f",
+    "artifact": "034-screenshot-after-type-query.png",
+    "digest": "fd71ddb16d1f444da4433022a84d19bc",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -503,23 +517,23 @@
     "tool": "cdp:Input+Runtime",
     "command": "{\"action\": \"type\", \"target\": {\"selector\": \"input[name=search_query]\"}}",
     "summary": {
-      "outcome": "panel-opened"
+      "outcome": "layout-swapped"
     },
-    "artifact": "034-transition-05-combobox-search.txt",
-    "digest": "5deb539ab80ff6f22b4bd1f43eb1b27e",
+    "artifact": "035-transition-05-combobox-search.txt",
+    "digest": "bcf218341e252d6b84fb08a4506aea99",
     "confidence": "observed",
     "limitation": "one observed run; timing/race states not exercised"
   },
   {
     "lane": "behavior",
-    "target": "https://suggestqueries-clients6.youtube.com/complete/search?ds=yt&hl=en&gl=us&client=youtube&gs_ri=youtube&sugexp=uqap13nreweightingh1_h%2Cytpo.bo.me%3D0%2Cytposo.bo.me%3D0%2Cytpo.bo.ro.mi%3D51966626%2Cytposo.bo.ro.mi%3D51966626%2Cymo.ei%3D52283469&h=180&w=320&ytvs=1&gs_id=2&q=reverse%20engineer%20app&cp=20&pq=reverse%20engineer%20app",
+    "target": "https://suggestqueries-clients6.youtube.com/complete/search?ds=yt&hl=en&gl=us&client=youtube&gs_ri=youtube&sugexp=ytotfrq_ta1_e26%2Cytpo.bo.so.fgf%3D1%2Cytpo.bo.so.fsf%3D29.5%2Cytpo.bo.so.fmb%3D5.0%2Cytposo.bo.so.fgf%3D1%2Cytposo.bo.so.fsf%3D35.0%2Cytposo.bo.so.fmb%3D5.0&h=180&w=320&ytvs=1&gs_id=2&q=reverse%20engineer%20app&cp=20&pq=reverse%20engineer%20app",
     "label": "response body GET complete-search",
     "tool": "cdp:Network.getResponseBody",
-    "command": "Network.getResponseBody(requestId=72395.373)",
+    "command": "Network.getResponseBody(requestId=53010.382)",
     "summary": {
       "bytes": 63
     },
-    "artifact": "035-response-body-get-complete-search.txt",
+    "artifact": "036-response-body-get-complete-search.txt",
     "digest": "278b8e434c9b642a74c452b0a08c91fb",
     "confidence": "observed",
     "limitation": "single response sample; shape is not a contract"
@@ -531,10 +545,10 @@
     "tool": "cdp:Page.captureScreenshot",
     "command": "Page.captureScreenshot(format=png)",
     "summary": {
-      "bytes": 631857
+      "bytes": 561422
     },
-    "artifact": "036-screenshot-after-submit-search.png",
-    "digest": "a877aae0643eab7b73d6da989d817495",
+    "artifact": "037-screenshot-after-submit-search.png",
+    "digest": "49912e325f54bc9c66caa5cce609242f",
     "confidence": "observed",
     "limitation": "viewport-only; offscreen content not shown"
   },
@@ -547,8 +561,8 @@
     "summary": {
       "outcome": "navigated"
     },
-    "artifact": "037-transition-06-key-enter.txt",
-    "digest": "c7de8bf02fb4be207ea30c6b70fd6455",
+    "artifact": "038-transition-06-key-enter.txt",
+    "digest": "d080662dfd1f880f0acec229bbeff071",
     "confidence": "observed",
     "limitation": "one observed run; timing/race states not exercised"
   }

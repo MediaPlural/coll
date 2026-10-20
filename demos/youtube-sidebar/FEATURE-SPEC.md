@@ -1,13 +1,13 @@
 # Feature spec — YouTube guide sidebar
 
-**YouTube guide sidebar** — reimplemented from an observed run. 5 surface component(s) (main content, sidebar / navigation, tab strip, search). 6 observed interaction(s) across 3 state(s). 5 API endpoint(s) with 14 observed payload shape(s).
+**YouTube guide sidebar** — reimplemented from an observed run. 5 surface component(s) (main content, sidebar / navigation, tab strip, search). 6 observed interaction(s) across 4 state(s). 6 API endpoint(s) with 14 observed payload shape(s).
 
-> Provenance: launch-web capture of `https://www.youtube.com/` at 2026-10-20T19:49:42Z, debuggee Chrome/155.0.8059.85. Every row below is `observed` unless tagged `inferred`; unknowns are listed at the end.
+> Provenance: launch-web capture of `https://www.youtube.com/` at 2026-10-20T21:31:45Z, debuggee Chrome/155.0.8059.85. Every row below is `observed` unless tagged `inferred`; unknowns are listed at the end.
 
 ## 1. Surfaces
 | id | component | kind | role | layouts (px) | controls |
 |----|-----------|------|------|--------------|----------|
-| C1 | main content | main content | `main` | 1200x176, 1368x176, 1200x3984 | 84 |
+| C1 | main content | main content | `main` | 1200x176, 1368x176, 1200x3984 | 83 |
 | C2 | sidebar / navigation | sidebar / navigation | `navigation` | 240x964, 72x844 | 38 |
 | C3 | tab strip | tab strip | `tablist` | 1152x48, 120x48 | 3 |
 | C4 | search | search | `search` | 640x40 | 2 |
@@ -19,10 +19,10 @@ _No static lane evidence for this target._
 ## 3. Interaction contract
 | # | control | effect | state | calls |
 |---|---------|--------|-------|-------|
-| T1 | button 'Guide' | hides 20 control(s); the navigation surface shrinks | S1 → S2 | — |
-| T2 | button 'Guide' | reveals 20 control(s) in navigation | S2 → S1 | — |
-| T3 | button 'Show more' | swaps the panel surface (9 shown, 2 hidden) | S1 → S1 | — |
-| T4 | ytd-guide-entry-renderer 'Music' | navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` → `POST /youtubei/v1/browse` (200), +1 more | S1 → S3 | `POST /youtubei/v1/browse`<br>`POST /youtubei/v1/player` |
+| T1 | button 'Guide' | reshapes the navigation surface in place (+0 / −20 controls) | S1 → S2 | — |
+| T2 | button 'Guide' | reshapes the navigation surface in place (+20 / −0 controls) | S2 → S1 | — |
+| T3 | button 'Show more' | reshapes the panel surface in place (+9 / −2 controls) | S1 → S1 | — |
+| T4 | ytd-guide-entry-renderer 'Music' | navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` → `POST /youtubei/v1/browse` (200), +2 more | S1 → S3 | `POST /youtubei/v1/browse`<br>`POST /youtubei/v1/player`<br>`POST /youtubei/v1/next` |
 | T5 | combobox 'Search' | accepts typed input and requests suggestions → `GET /complete/search` (200), +1 more | S3 → S3 | `GET /complete/search`<br>`GET /complete/search` |
 | T6 | key 'Enter' | navigates to `/results?search_query=reverse+engineer+app` → `GET /complete/search` (200) | S3 → S4 | `GET /complete/search` |
 
@@ -131,9 +131,9 @@ _Sources: POST /youtubei/v1/log_event_
 | `responseContext.webResponseContextExtensionData.hasDecorated` | bool |
 | `playabilityStatus` | object |
 | `playabilityStatus.status` | string |
-| `playabilityStatus.reason` | string |
-| `playabilityStatus.errorScreen` | object |
-| `playabilityStatus.errorScreen.playerInterstitialRenderer` | object |
+| `playabilityStatus.playableInEmbed` | bool |
+| `playabilityStatus.contextParams` | string |
+| `streamingData` | object |
 
 _Sources: POST /youtubei/v1/player_
 
@@ -141,7 +141,7 @@ _Sources: POST /youtubei/v1/player_
 
 | storage | shape |
 |---------|-------|
-| `local storage['V73c188c6||::yt-player::yt-player-lv']` | data: string, creation: number |
+| `local storage['Vaf77d577||::yt-player::yt-player-lv']` | data: string, creation: number |
 | `local storage['ytidb::LAST_RESULT_ENTRY_KEY']` | data: object, data.hasSucceededOnce: boolean, expiration: number, creation: number |
 | `session storage['yt-remote-cast-available']` | data: string, creation: number |
 | `session storage['yt-remote-cast-installed']` | data: string, creation: number |
@@ -158,6 +158,7 @@ _Sources: POST /youtubei/v1/player_
 | POST | `/youtubei/v1/browse` | 200 | 1 | — |
 | POST | `/youtubei/v1/feedback` | 200 | 1 | { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { hasDecorate … |
 | POST | `/youtubei/v1/guide` | 200 | 1 | { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExten … |
+| POST | `/youtubei/v1/next` | 200 | 1 | — |
 | POST | `/youtubei/v1/player` | 200 | 1 | { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExten … |
 
 _146 call(s) excluded from this contract as non-API traffic — document loads, static assets, telemetry, advertising or media delivery._
@@ -167,7 +168,7 @@ _146 call(s) excluded from this contract as non-API traffic — document loads, 
 _kind: ui · evidence: screen snapshots + region inventory_
 - [ ] renders as a `main` region (main content)
 - [ ] observed layouts: 1200x176, 1368x176, 1200x3984 px in a 1440x900 viewport
-- [ ] exposes 84 interactive control(s): button 'A$AP ROCKY - SHROOM CLOUDS (Official Video)', button 'Collaboration channels', button 'Fontaines D.C. - Japan (Official Music Video)', button 'Go to channel Ashe', button 'Go to channel Mollie Elizabeth', button 'Go to channel Rachel Chinouriri'
+- [ ] exposes 83 interactive control(s): button 'A$AP ROCKY - SHROOM CLOUDS (Official Video)', button 'Collaboration channels', button 'Fontaines D.C. - Japan (Official Music Video)', button 'Go to channel Ashe', button 'Go to channel Mollie Elizabeth', button 'Go to channel Rachel Chinouriri'
 
 ### B2 — Build the sidebar / navigation component
 _kind: ui · evidence: screen snapshots + region inventory_
@@ -194,10 +195,10 @@ _kind: ui · evidence: screen snapshots + region inventory_
 
 ### B6 — Implement button interactions (5 observed)
 _kind: interaction · evidence: transition records T1, T2, T3, T4, T6_
-- [ ] button 'Guide' → hides 20 control(s); the navigation surface shrinks
-- [ ] button 'Guide' → reveals 20 control(s) in navigation
-- [ ] button 'Show more' → swaps the panel surface (9 shown, 2 hidden)
-- [ ] ytd-guide-entry-renderer 'Music' → navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` → `POST /youtubei/v1/browse` (200), +1 more
+- [ ] button 'Guide' → reshapes the navigation surface in place (+0 / −20 controls)
+- [ ] button 'Guide' → reshapes the navigation surface in place (+20 / −0 controls)
+- [ ] button 'Show more' → reshapes the panel surface in place (+9 / −2 controls)
+- [ ] ytd-guide-entry-renderer 'Music' → navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` → `POST /youtubei/v1/browse` (200), +2 more
 - [ ] key 'Enter' → navigates to `/results?search_query=reverse+engineer+app` → `GET /complete/search` (200)
 
 ### B7 — Implement form field interactions (1 observed)
@@ -223,29 +224,33 @@ _kind: api · evidence: observed 1 call(s); response body artifact_
 - [ ] `POST /youtubei/v1/guide` returns 200
 - [ ] response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, items: [{ guideSectionRenderer: { items: [{ guideEntryRenderer: ... }], trackingParams: string } }], trackingParams: string }
 
-### B12 — Implement `POST /youtubei/v1/player`
+### B12 — Implement `POST /youtubei/v1/next`
+_kind: api · evidence: observed 1 call(s); response body artifact_
+- [ ] `POST /youtubei/v1/next` returns 200
+
+### B13 — Implement `POST /youtubei/v1/player`
 _kind: api · evidence: observed 1 call(s); response body artifact_
 - [ ] `POST /youtubei/v1/player` returns 200
-- [ ] response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, playabilityStatus: { status: string, reason: string, errorScreen: { playerInterstitialRenderer: { content: { interstitialViewModel: { title: ..., description: ..., loggingDirectives: ... } }, stateEntityStoreKey: string } }, contextParams: string }, videoDetails: { videoId: string, title: string, lengthSeconds: string, keywords: [string], channelId: string, isOwnerViewing: bool, shortDescription: string, isCrawlable: bool, thumbnail: { thumbnails: [{ url: string, width: number, height: number }] }, allowRatings: bool, viewCount: string, author: string }, microformat: { playerMicroformatRenderer: { thumbnail: { thumbnails: [{ url: ..., width: ..., height: ... }] }, embed: { iframeUrl: string, width: number, height: number }, title: { simpleText: string }, description: { simpleText: string }, lengthSeconds: string, ownerProfileUrl: string, externalChannelId: string, isFamilySafe: bool, availableCountries: [string], isUnlisted: bool, hasYpcMetadata: bool, viewCount: string } }, trackingParams: string, adBreakHeartbeatParams: string, frameworkUpdates: { entityBatchUpdate: { mutations: [{ entityKey: string, type: string, payload: { offlineabilityEntity: ... } }], timestamp: { seconds: string, nanos: number } } } }
+- [ ] response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, playabilityStatus: { status: string, playableInEmbed: bool, contextParams: string }, streamingData: { expiresInSeconds: string, adaptiveFormats: [{ itag: number, mimeType: string, bitrate: number, width: number, height: number, initRange: { start: string, end: string }, indexRange: { start: string, end: string }, lastModified: string, contentLength: string, quality: string, fps: number, qualityLabel: string }], serverAbrStreamingUrl: string }, playbackTracking: { videostatsPlaybackUrl: { baseUrl: string }, videostatsDelayplayUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, videostatsWatchtimeUrl: { baseUrl: string }, ptrackingUrl: { baseUrl: string }, qoeUrl: { baseUrl: string }, atrUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, videostatsScheduledFlushWalltimeSeconds: [number], videostatsDefaultFlushIntervalSeconds: number, youtubeRemarketingUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, googleRemarketingUrl: { baseUrl: string, elapsedMediaTimeSeconds: number } }, videoDetails: { videoId: string, title: string, lengthSeconds: string, keywords: [string], channelId: string, isOwnerViewing: bool, shortDescription: string, isCrawlable: bool, thumbnail: { thumbnails: [{ url: string, width: number, height: number }] }, allowRatings: bool, viewCount: string, author: string }, annotations: [{ playerAnnotationsExpandedRenderer: { featuredChannel: { startTimeMs: string, endTimeMs: string, watermark: { thumbnails: ... }, trackingParams: string, navigationEndpoint: { clickTrackingParams: ..., commandMetadata: ..., browseEndpoint: ... }, channelName: string, subscribeButton: { subscribeButtonRenderer: ... } }, allowSwipeDismiss: bool, annotationId: string } }], playerConfig: { granularVariableSpeedConfig: { minimumPlaybackRate: number, maximumPlaybackRate: number, stepSize: number, defaultPlaybackRateOptions: [{ label: string, value: number, isPremiumUpsell: bool, priority: number }] }, vssClientConfig: { vssUsePostRequest: bool }, audioConfig: { loudnessDb: number, perceptualLoudnessDb: number, muteOnStart: bool, enablePerFormatLoudness: bool, trackAbsoluteLoudnessLkfs: number, loudnessTargetLkfs: number, loudnessNormalizationConfig: { applyStatefulNormalization: bool, preserveStatefulLoudnessTarget: bool, maxStatefulTimeThresholdSec: number, minimumLoudnessTargetLkfs: number } }, streamSelectionConfig: { maxBitrate: string }, playerControlsConfig: { showCachedInTimebar: bool }, daiConfig: { sendSsdaiMissingAdBreakReasons: bool }, mediaCommonConfig: { dynamicReadaheadConfig: { maxReadAheadMediaTimeMs: number, minReadAheadMediaTimeMs: number, readAheadGrowthRateMs: number }, mediaUstreamerRequestConfig: { videoPlaybackUstreamerConfig: string }, useServerDrivenAbr: bool, serverPlaybackStartConfig: { enable: bool, playbackStartPolicy: { startMinReadaheadPolicy: [...] } }, platypusUseEnvoyNetFetch: bool, fixLivePlaybackModelDefaultPosition: bool }, webPlayerConfig: { useCobaltTvosDash: bool, webPlayerActionsPorting: { getSharePanelCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, webPlayerShareEntityServiceEndpoint: { serializedShareEntity: ... } }, subscribeCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, subscribeEndpoint: { channelIds: ..., params: ... } }, unsubscribeCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, unsubscribeEndpoint: { channelIds: ..., params: ... } }, addToWatchLaterCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, playlistEditEndpoint: { playlistId: ..., actions: ... } }, removeFromWatchLaterCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, playlistEditEndpoint: { playlistId: ..., actions: ... } } } } }, storyboards: { playerStoryboardSpecRenderer: { spec: string, recommendedLevel: number, fineScrubbingRecommendedLevel: number, highResolutionRecommendedLevel: number } }, microformat: { playerMicroformatRenderer: { thumbnail: { thumbnails: [{ url: ..., width: ..., height: ... }] }, embed: { iframeUrl: string, width: number, height: number }, title: { simpleText: string }, description: { simpleText: string }, lengthSeconds: string, ownerProfileUrl: string, externalChannelId: string, isFamilySafe: bool, availableCountries: [string], isUnlisted: bool, hasYpcMetadata: bool, viewCount: string } }, cards: { cardCollectionRenderer: { cards: [{ cardRenderer: { teaser: ..., cueRanges: ..., trackingParams: ... } }], headerText: { simpleText: string }, icon: { infoCardIconRenderer: { trackingParams: string } }, closeButton: { infoCardIconRenderer: { trackingParams: string } }, trackingParams: string, allowTeaserDismiss: bool, logIconVisibilityUpdates: bool } }, trackingParams: string, adBreakHeartbeatParams: string }
 
-### B13 — Persist client state
+### B14 — Persist client state
 _kind: data · evidence: storage shape probe before/after the run_
-- [ ] writes localStorage['V73c188c6||::yt-player::yt-player-lv'], sessionStorage['yt-remote-cast-available'], sessionStorage['yt-remote-cast-installed'], localStorage['yt-remote-connected-devices'], localStorage['yt-remote-device-id'], sessionStorage['yt-remote-fast-check-period'], sessionStorage['yt-remote-session-app'], sessionStorage['yt-remote-session-name'], localStorage['ytidb::LAST_RESULT_ENTRY_KEY']
+- [ ] writes localStorage['Vaf77d577||::yt-player::yt-player-lv'], sessionStorage['yt-remote-cast-available'], sessionStorage['yt-remote-cast-installed'], localStorage['yt-remote-connected-devices'], localStorage['yt-remote-device-id'], sessionStorage['yt-remote-fast-check-period'], sessionStorage['yt-remote-session-app'], sessionStorage['yt-remote-session-name'], localStorage['ytidb::LAST_RESULT_ENTRY_KEY']
 
 ## 8. Parity checklist
 Ship only when every line holds:
 
-- [ ] Clicking **button 'Guide'** hides 20 control(s); the navigation surface shrinks (state S1 → S2).
-- [ ] Clicking **button 'Guide'** reveals 20 control(s) in navigation (state S2 → S1).
-- [ ] Clicking **button 'Show more'** swaps the panel surface (9 shown, 2 hidden) (state S1 → S1).
-- [ ] Clicking **ytd-guide-entry-renderer 'Music'** navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` → `POST /youtubei/v1/browse` (200), +1 more; fires `POST /youtubei/v1/browse`, `POST /youtubei/v1/player` (state S1 → S3).
+- [ ] Clicking **button 'Guide'** reshapes the navigation surface in place (+0 / −20 controls) (state S1 → S2).
+- [ ] Clicking **button 'Guide'** reshapes the navigation surface in place (+20 / −0 controls) (state S2 → S1).
+- [ ] Clicking **button 'Show more'** reshapes the panel surface in place (+9 / −2 controls) (state S1 → S1).
+- [ ] Clicking **ytd-guide-entry-renderer 'Music'** navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` → `POST /youtubei/v1/browse` (200), +2 more; fires `POST /youtubei/v1/browse`, `POST /youtubei/v1/player`, `POST /youtubei/v1/next` (state S1 → S3).
 - [ ] Typing into **combobox 'Search'** accepts typed input and requests suggestions → `GET /complete/search` (200), +1 more; fires `GET /complete/search`, `GET /complete/search` (state S3 → S3).
 - [ ] Pressing **key 'Enter'** navigates to `/results?search_query=reverse+engineer+app` → `GET /complete/search` (200); fires `GET /complete/search` (state S3 → S4).
 - [ ] Reaching `/`, `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ`, `/results` never requires a full page reload — all transitions above are in-document.
 - [ ] `POST /api/jnn/v1/GenerateIT` keeps its observed response shape: [string]
 - [ ] `POST /youtubei/v1/feedback` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { hasDecorated: bool } }, feedbackResponses: [{ isProcessed: bool }] }
 - [ ] `POST /youtubei/v1/guide` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, items: [{ guideSectionRenderer: { items: [{ guideEntryRenderer: ... }], trackingParams: string } }], trackingParams: string }
-- [ ] `POST /youtubei/v1/player` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, playabilityStatus: { status: string, reason: string, errorScreen: { playerInterstitialRenderer: { content: { interstitialViewModel: { title: ..., description: ..., loggingDirectives: ... } }, stateEntityStoreKey: string } }, contextParams: string }, videoDetails: { videoId: string, title: string, lengthSeconds: string, keywords: [string], channelId: string, isOwnerViewing: bool, shortDescription: string, isCrawlable: bool, thumbnail: { thumbnails: [{ url: string, width: number, height: number }] }, allowRatings: bool, viewCount: string, author: string }, microformat: { playerMicroformatRenderer: { thumbnail: { thumbnails: [{ url: ..., width: ..., height: ... }] }, embed: { iframeUrl: string, width: number, height: number }, title: { simpleText: string }, description: { simpleText: string }, lengthSeconds: string, ownerProfileUrl: string, externalChannelId: string, isFamilySafe: bool, availableCountries: [string], isUnlisted: bool, hasYpcMetadata: bool, viewCount: string } }, trackingParams: string, adBreakHeartbeatParams: string, frameworkUpdates: { entityBatchUpdate: { mutations: [{ entityKey: string, type: string, payload: { offlineabilityEntity: ... } }], timestamp: { seconds: string, nanos: number } } } }
+- [ ] `POST /youtubei/v1/player` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, playabilityStatus: { status: string, playableInEmbed: bool, contextParams: string }, streamingData: { expiresInSeconds: string, adaptiveFormats: [{ itag: number, mimeType: string, bitrate: number, width: number, height: number, initRange: { start: string, end: string }, indexRange: { start: string, end: string }, lastModified: string, contentLength: string, quality: string, fps: number, qualityLabel: string }], serverAbrStreamingUrl: string }, playbackTracking: { videostatsPlaybackUrl: { baseUrl: string }, videostatsDelayplayUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, videostatsWatchtimeUrl: { baseUrl: string }, ptrackingUrl: { baseUrl: string }, qoeUrl: { baseUrl: string }, atrUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, videostatsScheduledFlushWalltimeSeconds: [number], videostatsDefaultFlushIntervalSeconds: number, youtubeRemarketingUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, googleRemarketingUrl: { baseUrl: string, elapsedMediaTimeSeconds: number } }, videoDetails: { videoId: string, title: string, lengthSeconds: string, keywords: [string], channelId: string, isOwnerViewing: bool, shortDescription: string, isCrawlable: bool, thumbnail: { thumbnails: [{ url: string, width: number, height: number }] }, allowRatings: bool, viewCount: string, author: string }, annotations: [{ playerAnnotationsExpandedRenderer: { featuredChannel: { startTimeMs: string, endTimeMs: string, watermark: { thumbnails: ... }, trackingParams: string, navigationEndpoint: { clickTrackingParams: ..., commandMetadata: ..., browseEndpoint: ... }, channelName: string, subscribeButton: { subscribeButtonRenderer: ... } }, allowSwipeDismiss: bool, annotationId: string } }], playerConfig: { granularVariableSpeedConfig: { minimumPlaybackRate: number, maximumPlaybackRate: number, stepSize: number, defaultPlaybackRateOptions: [{ label: string, value: number, isPremiumUpsell: bool, priority: number }] }, vssClientConfig: { vssUsePostRequest: bool }, audioConfig: { loudnessDb: number, perceptualLoudnessDb: number, muteOnStart: bool, enablePerFormatLoudness: bool, trackAbsoluteLoudnessLkfs: number, loudnessTargetLkfs: number, loudnessNormalizationConfig: { applyStatefulNormalization: bool, preserveStatefulLoudnessTarget: bool, maxStatefulTimeThresholdSec: number, minimumLoudnessTargetLkfs: number } }, streamSelectionConfig: { maxBitrate: string }, playerControlsConfig: { showCachedInTimebar: bool }, daiConfig: { sendSsdaiMissingAdBreakReasons: bool }, mediaCommonConfig: { dynamicReadaheadConfig: { maxReadAheadMediaTimeMs: number, minReadAheadMediaTimeMs: number, readAheadGrowthRateMs: number }, mediaUstreamerRequestConfig: { videoPlaybackUstreamerConfig: string }, useServerDrivenAbr: bool, serverPlaybackStartConfig: { enable: bool, playbackStartPolicy: { startMinReadaheadPolicy: [...] } }, platypusUseEnvoyNetFetch: bool, fixLivePlaybackModelDefaultPosition: bool }, webPlayerConfig: { useCobaltTvosDash: bool, webPlayerActionsPorting: { getSharePanelCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, webPlayerShareEntityServiceEndpoint: { serializedShareEntity: ... } }, subscribeCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, subscribeEndpoint: { channelIds: ..., params: ... } }, unsubscribeCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, unsubscribeEndpoint: { channelIds: ..., params: ... } }, addToWatchLaterCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, playlistEditEndpoint: { playlistId: ..., actions: ... } }, removeFromWatchLaterCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, playlistEditEndpoint: { playlistId: ..., actions: ... } } } } }, storyboards: { playerStoryboardSpecRenderer: { spec: string, recommendedLevel: number, fineScrubbingRecommendedLevel: number, highResolutionRecommendedLevel: number } }, microformat: { playerMicroformatRenderer: { thumbnail: { thumbnails: [{ url: ..., width: ..., height: ... }] }, embed: { iframeUrl: string, width: number, height: number }, title: { simpleText: string }, description: { simpleText: string }, lengthSeconds: string, ownerProfileUrl: string, externalChannelId: string, isFamilySafe: bool, availableCountries: [string], isUnlisted: bool, hasYpcMetadata: bool, viewCount: string } }, cards: { cardCollectionRenderer: { cards: [{ cardRenderer: { teaser: ..., cueRanges: ..., trackingParams: ... } }], headerText: { simpleText: string }, icon: { infoCardIconRenderer: { trackingParams: string } }, closeButton: { infoCardIconRenderer: { trackingParams: string } }, trackingParams: string, allowTeaserDismiss: bool, logIconVisibilityUpdates: bool } }, trackingParams: string, adBreakHeartbeatParams: string }
 
 ## 9. Unknowns & limits
 - one observed run: alternate paths, permission states and server-side branches are not exercised

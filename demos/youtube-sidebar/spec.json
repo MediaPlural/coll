@@ -4,7 +4,7 @@
   "target": "https://www.youtube.com/",
   "generated_from": {
     "behavior_mode": "launch-web",
-    "captured_at": "2026-10-20T19:49:42Z",
+    "captured_at": "2026-10-20T21:31:45Z",
     "viewport": {
       "width": 1440,
       "height": 900,
@@ -13,9 +13,9 @@
     },
     "debuggee": "Chrome/155.0.8059.85",
     "static_lane": "web",
-    "cdp_commands": 75
+    "cdp_commands": 77
   },
-  "summary": "**YouTube guide sidebar** \u2014 reimplemented from an observed run. 5 surface component(s) (main content, sidebar / navigation, tab strip, search). 6 observed interaction(s) across 3 state(s). 5 API endpoint(s) with 14 observed payload shape(s).",
+  "summary": "**YouTube guide sidebar** \u2014 reimplemented from an observed run. 5 surface component(s) (main content, sidebar / navigation, tab strip, search). 6 observed interaction(s) across 4 state(s). 6 API endpoint(s) with 14 observed payload shape(s).",
   "components": [
     {
       "id": "C1",
@@ -28,7 +28,7 @@
         "1368x176",
         "1200x3984"
       ],
-      "control_count": 84,
+      "control_count": 83,
       "controls": [
         {
           "role": "button",
@@ -539,8 +539,8 @@
       "action": "click",
       "from_state": "S1",
       "to_state": "S2",
-      "outcome": "panel-opened",
-      "effect": "hides 20 control(s); the navigation surface shrinks",
+      "outcome": "layout-swapped",
+      "effect": "reshapes the navigation surface in place (+0 / \u221220 controls)",
       "calls": [],
       "beacons": 1,
       "screenshot": "018-screenshot-after-collapse-guide.png",
@@ -553,8 +553,8 @@
       "action": "click",
       "from_state": "S2",
       "to_state": "S1",
-      "outcome": "panel-opened",
-      "effect": "reveals 20 control(s) in navigation",
+      "outcome": "layout-swapped",
+      "effect": "reshapes the navigation surface in place (+20 / \u22120 controls)",
       "calls": [],
       "beacons": 0,
       "screenshot": "021-screenshot-after-expand-guide.png",
@@ -567,8 +567,8 @@
       "action": "click",
       "from_state": "S1",
       "to_state": "S1",
-      "outcome": "panel-opened",
-      "effect": "swaps the panel surface (9 shown, 2 hidden)",
+      "outcome": "layout-swapped",
+      "effect": "reshapes the panel surface in place (+9 / \u22122 controls)",
       "calls": [],
       "beacons": 0,
       "screenshot": "024-screenshot-after-expand-sections.png",
@@ -582,13 +582,14 @@
       "from_state": "S1",
       "to_state": "S3",
       "outcome": "navigated",
-      "effect": "navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` \u2192 `POST /youtubei/v1/browse` (200), +1 more",
+      "effect": "navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` \u2192 `POST /youtubei/v1/browse` (200), +2 more",
       "calls": [
         "POST /youtubei/v1/browse",
-        "POST /youtubei/v1/player"
+        "POST /youtubei/v1/player",
+        "POST /youtubei/v1/next"
       ],
-      "beacons": 1,
-      "screenshot": "029-screenshot-after-navigate-music.png",
+      "beacons": 5,
+      "screenshot": "030-screenshot-after-navigate-music.png",
       "risky": false,
       "confidence": "observed"
     },
@@ -598,14 +599,14 @@
       "action": "type",
       "from_state": "S3",
       "to_state": "S3",
-      "outcome": "panel-opened",
+      "outcome": "layout-swapped",
       "effect": "accepts typed input and requests suggestions \u2192 `GET /complete/search` (200), +1 more",
       "calls": [
         "GET /complete/search",
         "GET /complete/search"
       ],
-      "beacons": 0,
-      "screenshot": "033-screenshot-after-type-query.png",
+      "beacons": 1,
+      "screenshot": "034-screenshot-after-type-query.png",
       "risky": false,
       "confidence": "observed"
     },
@@ -621,7 +622,7 @@
         "GET /complete/search"
       ],
       "beacons": 0,
-      "screenshot": "036-screenshot-after-submit-search.png",
+      "screenshot": "037-screenshot-after-submit-search.png",
       "risky": false,
       "confidence": "observed"
     }
@@ -720,16 +721,59 @@
         "responseContext.webResponseContextExtensionData.hasDecorated": "bool",
         "playabilityStatus": "object",
         "playabilityStatus.status": "string",
-        "playabilityStatus.reason": "string",
-        "playabilityStatus.errorScreen": "object",
-        "playabilityStatus.errorScreen.playerInterstitialRenderer": "object",
-        "playabilityStatus.errorScreen.playerInterstitialRenderer.content": "object",
-        "playabilityStatus.errorScreen.playerInterstitialRenderer.content.interstitialViewModel": "object",
-        "playabilityStatus.errorScreen.playerInterstitialRenderer.content.interstitialViewModel.title": "...",
-        "playabilityStatus.errorScreen.playerInterstitialRenderer.content.interstitialViewModel.description": "...",
-        "playabilityStatus.errorScreen.playerInterstitialRenderer.content.interstitialViewModel.loggingDirectives": "...",
-        "playabilityStatus.errorScreen.playerInterstitialRenderer.stateEntityStoreKey": "string",
+        "playabilityStatus.playableInEmbed": "bool",
         "playabilityStatus.contextParams": "string",
+        "streamingData": "object",
+        "streamingData.expiresInSeconds": "string",
+        "streamingData.adaptiveFormats": "array<object>",
+        "streamingData.adaptiveFormats[].itag": "number",
+        "streamingData.adaptiveFormats[].mimeType": "string",
+        "streamingData.adaptiveFormats[].bitrate": "number",
+        "streamingData.adaptiveFormats[].width": "number",
+        "streamingData.adaptiveFormats[].height": "number",
+        "streamingData.adaptiveFormats[].initRange": "object",
+        "streamingData.adaptiveFormats[].initRange.start": "string",
+        "streamingData.adaptiveFormats[].initRange.end": "string",
+        "streamingData.adaptiveFormats[].indexRange": "object",
+        "streamingData.adaptiveFormats[].indexRange.start": "string",
+        "streamingData.adaptiveFormats[].indexRange.end": "string",
+        "streamingData.adaptiveFormats[].lastModified": "string",
+        "streamingData.adaptiveFormats[].contentLength": "string",
+        "streamingData.adaptiveFormats[].quality": "string",
+        "streamingData.adaptiveFormats[].fps": "number",
+        "streamingData.adaptiveFormats[].qualityLabel": "string",
+        "streamingData.adaptiveFormats[].projectionType": "string",
+        "streamingData.adaptiveFormats[].averageBitrate": "number",
+        "streamingData.adaptiveFormats[].colorInfo": "object",
+        "streamingData.adaptiveFormats[].colorInfo.primaries": "string",
+        "streamingData.adaptiveFormats[].colorInfo.transferCharacteristics": "string",
+        "streamingData.adaptiveFormats[].colorInfo.matrixCoefficients": "string",
+        "streamingData.adaptiveFormats[].approxDurationMs": "string",
+        "streamingData.adaptiveFormats[].qualityOrdinal": "string",
+        "streamingData.serverAbrStreamingUrl": "string",
+        "playbackTracking": "object",
+        "playbackTracking.videostatsPlaybackUrl": "object",
+        "playbackTracking.videostatsPlaybackUrl.baseUrl": "string",
+        "playbackTracking.videostatsDelayplayUrl": "object",
+        "playbackTracking.videostatsDelayplayUrl.baseUrl": "string",
+        "playbackTracking.videostatsDelayplayUrl.elapsedMediaTimeSeconds": "number",
+        "playbackTracking.videostatsWatchtimeUrl": "object",
+        "playbackTracking.videostatsWatchtimeUrl.baseUrl": "string",
+        "playbackTracking.ptrackingUrl": "object",
+        "playbackTracking.ptrackingUrl.baseUrl": "string",
+        "playbackTracking.qoeUrl": "object",
+        "playbackTracking.qoeUrl.baseUrl": "string",
+        "playbackTracking.atrUrl": "object",
+        "playbackTracking.atrUrl.baseUrl": "string",
+        "playbackTracking.atrUrl.elapsedMediaTimeSeconds": "number",
+        "playbackTracking.videostatsScheduledFlushWalltimeSeconds": "array<number>",
+        "playbackTracking.videostatsDefaultFlushIntervalSeconds": "number",
+        "playbackTracking.youtubeRemarketingUrl": "object",
+        "playbackTracking.youtubeRemarketingUrl.baseUrl": "string",
+        "playbackTracking.youtubeRemarketingUrl.elapsedMediaTimeSeconds": "number",
+        "playbackTracking.googleRemarketingUrl": "object",
+        "playbackTracking.googleRemarketingUrl.baseUrl": "string",
+        "playbackTracking.googleRemarketingUrl.elapsedMediaTimeSeconds": "number",
         "videoDetails": "object",
         "videoDetails.videoId": "string",
         "videoDetails.title": "string",
@@ -751,6 +795,110 @@
         "videoDetails.isUnpluggedCorpus": "bool",
         "videoDetails.isLiveContent": "bool",
         "videoDetails.isTvfilmVideo": "bool",
+        "annotations": "array<object>",
+        "annotations[].playerAnnotationsExpandedRenderer": "object",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel": "object",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.startTimeMs": "string",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.endTimeMs": "string",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.watermark": "object",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.watermark.thumbnails": "...",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.trackingParams": "string",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.navigationEndpoint": "object",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.navigationEndpoint.clickTrackingParams": "...",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.navigationEndpoint.commandMetadata": "...",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.navigationEndpoint.browseEndpoint": "...",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.channelName": "string",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.subscribeButton": "object",
+        "annotations[].playerAnnotationsExpandedRenderer.featuredChannel.subscribeButton.subscribeButtonRenderer": "...",
+        "annotations[].playerAnnotationsExpandedRenderer.allowSwipeDismiss": "bool",
+        "annotations[].playerAnnotationsExpandedRenderer.annotationId": "string",
+        "playerConfig": "object",
+        "playerConfig.granularVariableSpeedConfig": "object",
+        "playerConfig.granularVariableSpeedConfig.minimumPlaybackRate": "number",
+        "playerConfig.granularVariableSpeedConfig.maximumPlaybackRate": "number",
+        "playerConfig.granularVariableSpeedConfig.stepSize": "number",
+        "playerConfig.granularVariableSpeedConfig.defaultPlaybackRateOptions": "array<object>",
+        "playerConfig.granularVariableSpeedConfig.defaultPlaybackRateOptions[].label": "string",
+        "playerConfig.granularVariableSpeedConfig.defaultPlaybackRateOptions[].value": "number",
+        "playerConfig.granularVariableSpeedConfig.defaultPlaybackRateOptions[].isPremiumUpsell": "bool",
+        "playerConfig.granularVariableSpeedConfig.defaultPlaybackRateOptions[].priority": "number",
+        "playerConfig.vssClientConfig": "object",
+        "playerConfig.vssClientConfig.vssUsePostRequest": "bool",
+        "playerConfig.audioConfig": "object",
+        "playerConfig.audioConfig.loudnessDb": "number",
+        "playerConfig.audioConfig.perceptualLoudnessDb": "number",
+        "playerConfig.audioConfig.muteOnStart": "bool",
+        "playerConfig.audioConfig.enablePerFormatLoudness": "bool",
+        "playerConfig.audioConfig.trackAbsoluteLoudnessLkfs": "number",
+        "playerConfig.audioConfig.loudnessTargetLkfs": "number",
+        "playerConfig.audioConfig.loudnessNormalizationConfig": "object",
+        "playerConfig.audioConfig.loudnessNormalizationConfig.applyStatefulNormalization": "bool",
+        "playerConfig.audioConfig.loudnessNormalizationConfig.preserveStatefulLoudnessTarget": "bool",
+        "playerConfig.audioConfig.loudnessNormalizationConfig.maxStatefulTimeThresholdSec": "number",
+        "playerConfig.audioConfig.loudnessNormalizationConfig.minimumLoudnessTargetLkfs": "number",
+        "playerConfig.streamSelectionConfig": "object",
+        "playerConfig.streamSelectionConfig.maxBitrate": "string",
+        "playerConfig.playerControlsConfig": "object",
+        "playerConfig.playerControlsConfig.showCachedInTimebar": "bool",
+        "playerConfig.daiConfig": "object",
+        "playerConfig.daiConfig.sendSsdaiMissingAdBreakReasons": "bool",
+        "playerConfig.mediaCommonConfig": "object",
+        "playerConfig.mediaCommonConfig.dynamicReadaheadConfig": "object",
+        "playerConfig.mediaCommonConfig.dynamicReadaheadConfig.maxReadAheadMediaTimeMs": "number",
+        "playerConfig.mediaCommonConfig.dynamicReadaheadConfig.minReadAheadMediaTimeMs": "number",
+        "playerConfig.mediaCommonConfig.dynamicReadaheadConfig.readAheadGrowthRateMs": "number",
+        "playerConfig.mediaCommonConfig.mediaUstreamerRequestConfig": "object",
+        "playerConfig.mediaCommonConfig.mediaUstreamerRequestConfig.videoPlaybackUstreamerConfig": "string",
+        "playerConfig.mediaCommonConfig.useServerDrivenAbr": "bool",
+        "playerConfig.mediaCommonConfig.serverPlaybackStartConfig": "object",
+        "playerConfig.mediaCommonConfig.serverPlaybackStartConfig.enable": "bool",
+        "playerConfig.mediaCommonConfig.serverPlaybackStartConfig.playbackStartPolicy": "object",
+        "playerConfig.mediaCommonConfig.serverPlaybackStartConfig.playbackStartPolicy.startMinReadaheadPolicy": "array<...>",
+        "playerConfig.mediaCommonConfig.platypusUseEnvoyNetFetch": "bool",
+        "playerConfig.mediaCommonConfig.fixLivePlaybackModelDefaultPosition": "bool",
+        "playerConfig.webPlayerConfig": "object",
+        "playerConfig.webPlayerConfig.useCobaltTvosDash": "bool",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.getSharePanelCommand": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.getSharePanelCommand.clickTrackingParams": "string",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.getSharePanelCommand.commandMetadata": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.getSharePanelCommand.commandMetadata.webCommandMetadata": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.getSharePanelCommand.webPlayerShareEntityServiceEndpoint": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.getSharePanelCommand.webPlayerShareEntityServiceEndpoint.serializedShareEntity": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.subscribeCommand": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.subscribeCommand.clickTrackingParams": "string",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.subscribeCommand.commandMetadata": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.subscribeCommand.commandMetadata.webCommandMetadata": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.subscribeCommand.subscribeEndpoint": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.subscribeCommand.subscribeEndpoint.channelIds": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.subscribeCommand.subscribeEndpoint.params": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.unsubscribeCommand": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.unsubscribeCommand.clickTrackingParams": "string",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.unsubscribeCommand.commandMetadata": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.unsubscribeCommand.commandMetadata.webCommandMetadata": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.unsubscribeCommand.unsubscribeEndpoint": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.unsubscribeCommand.unsubscribeEndpoint.channelIds": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.unsubscribeCommand.unsubscribeEndpoint.params": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.addToWatchLaterCommand": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.addToWatchLaterCommand.clickTrackingParams": "string",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.addToWatchLaterCommand.commandMetadata": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.addToWatchLaterCommand.commandMetadata.webCommandMetadata": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.addToWatchLaterCommand.playlistEditEndpoint": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.addToWatchLaterCommand.playlistEditEndpoint.playlistId": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.addToWatchLaterCommand.playlistEditEndpoint.actions": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.removeFromWatchLaterCommand": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.removeFromWatchLaterCommand.clickTrackingParams": "string",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.removeFromWatchLaterCommand.commandMetadata": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.removeFromWatchLaterCommand.commandMetadata.webCommandMetadata": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.removeFromWatchLaterCommand.playlistEditEndpoint": "object",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.removeFromWatchLaterCommand.playlistEditEndpoint.playlistId": "...",
+        "playerConfig.webPlayerConfig.webPlayerActionsPorting.removeFromWatchLaterCommand.playlistEditEndpoint.actions": "...",
+        "storyboards": "object",
+        "storyboards.playerStoryboardSpecRenderer": "object",
+        "storyboards.playerStoryboardSpecRenderer.spec": "string",
+        "storyboards.playerStoryboardSpecRenderer.recommendedLevel": "number",
+        "storyboards.playerStoryboardSpecRenderer.fineScrubbingRecommendedLevel": "number",
+        "storyboards.playerStoryboardSpecRenderer.highResolutionRecommendedLevel": "number",
         "microformat": "object",
         "microformat.playerMicroformatRenderer": "object",
         "microformat.playerMicroformatRenderer.thumbnail": "object",
@@ -782,6 +930,24 @@
         "microformat.playerMicroformatRenderer.externalVideoId": "string",
         "microformat.playerMicroformatRenderer.likeCount": "string",
         "microformat.playerMicroformatRenderer.canonicalUrl": "string",
+        "cards": "object",
+        "cards.cardCollectionRenderer": "object",
+        "cards.cardCollectionRenderer.cards": "array<object>",
+        "cards.cardCollectionRenderer.cards[].cardRenderer": "object",
+        "cards.cardCollectionRenderer.cards[].cardRenderer.teaser": "...",
+        "cards.cardCollectionRenderer.cards[].cardRenderer.cueRanges": "...",
+        "cards.cardCollectionRenderer.cards[].cardRenderer.trackingParams": "...",
+        "cards.cardCollectionRenderer.headerText": "object",
+        "cards.cardCollectionRenderer.headerText.simpleText": "string",
+        "cards.cardCollectionRenderer.icon": "object",
+        "cards.cardCollectionRenderer.icon.infoCardIconRenderer": "object",
+        "cards.cardCollectionRenderer.icon.infoCardIconRenderer.trackingParams": "string",
+        "cards.cardCollectionRenderer.closeButton": "object",
+        "cards.cardCollectionRenderer.closeButton.infoCardIconRenderer": "object",
+        "cards.cardCollectionRenderer.closeButton.infoCardIconRenderer.trackingParams": "string",
+        "cards.cardCollectionRenderer.trackingParams": "string",
+        "cards.cardCollectionRenderer.allowTeaserDismiss": "bool",
+        "cards.cardCollectionRenderer.logIconVisibilityUpdates": "bool",
         "trackingParams": "string",
         "adBreakHeartbeatParams": "string",
         "frameworkUpdates": "object",
@@ -801,13 +967,13 @@
       "confidence": "observed"
     },
     {
-      "name": "V73c188c6YtPlayerYtPlayerLv",
+      "name": "Vaf77d577YtPlayerYtPlayerLv",
       "fields": {
         "data": "string",
         "creation": "number"
       },
       "sources": [
-        "localStorage['V73c188c6||::yt-player::yt-player-lv']"
+        "localStorage['Vaf77d577||::yt-player::yt-player-lv']"
       ],
       "confidence": "observed"
     },
@@ -1042,6 +1208,20 @@
     },
     {
       "method": "POST",
+      "path": "/youtubei/v1/next",
+      "host": "www.youtube.com",
+      "hits": 1,
+      "statuses": [
+        200
+      ],
+      "types": [
+        "Fetch"
+      ],
+      "schema": null,
+      "confidence": "observed"
+    },
+    {
+      "method": "POST",
       "path": "/youtubei/v1/player",
       "host": "www.youtube.com",
       "hits": 1,
@@ -1084,20 +1264,79 @@
         },
         "playabilityStatus": {
           "status": "string",
-          "reason": "string",
-          "errorScreen": {
-            "playerInterstitialRenderer": {
-              "content": {
-                "interstitialViewModel": {
-                  "title": "...",
-                  "description": "...",
-                  "loggingDirectives": "..."
-                }
-              },
-              "stateEntityStoreKey": "string"
-            }
-          },
+          "playableInEmbed": "bool",
           "contextParams": "string"
+        },
+        "streamingData": {
+          "expiresInSeconds": "string",
+          "adaptiveFormats": [
+            "array",
+            {
+              "itag": "number",
+              "mimeType": "string",
+              "bitrate": "number",
+              "width": "number",
+              "height": "number",
+              "initRange": {
+                "start": "string",
+                "end": "string"
+              },
+              "indexRange": {
+                "start": "string",
+                "end": "string"
+              },
+              "lastModified": "string",
+              "contentLength": "string",
+              "quality": "string",
+              "fps": "number",
+              "qualityLabel": "string",
+              "projectionType": "string",
+              "averageBitrate": "number",
+              "colorInfo": {
+                "primaries": "string",
+                "transferCharacteristics": "string",
+                "matrixCoefficients": "string"
+              },
+              "approxDurationMs": "string",
+              "qualityOrdinal": "string"
+            }
+          ],
+          "serverAbrStreamingUrl": "string"
+        },
+        "playbackTracking": {
+          "videostatsPlaybackUrl": {
+            "baseUrl": "string"
+          },
+          "videostatsDelayplayUrl": {
+            "baseUrl": "string",
+            "elapsedMediaTimeSeconds": "number"
+          },
+          "videostatsWatchtimeUrl": {
+            "baseUrl": "string"
+          },
+          "ptrackingUrl": {
+            "baseUrl": "string"
+          },
+          "qoeUrl": {
+            "baseUrl": "string"
+          },
+          "atrUrl": {
+            "baseUrl": "string",
+            "elapsedMediaTimeSeconds": "number"
+          },
+          "videostatsScheduledFlushWalltimeSeconds": [
+            "array",
+            "number"
+          ],
+          "videostatsDefaultFlushIntervalSeconds": "number",
+          "youtubeRemarketingUrl": {
+            "baseUrl": "string",
+            "elapsedMediaTimeSeconds": "number"
+          },
+          "googleRemarketingUrl": {
+            "baseUrl": "string",
+            "elapsedMediaTimeSeconds": "number"
+          }
         },
         "videoDetails": {
           "videoId": "string",
@@ -1128,6 +1367,158 @@
           "isUnpluggedCorpus": "bool",
           "isLiveContent": "bool",
           "isTvfilmVideo": "bool"
+        },
+        "annotations": [
+          "array",
+          {
+            "playerAnnotationsExpandedRenderer": {
+              "featuredChannel": {
+                "startTimeMs": "string",
+                "endTimeMs": "string",
+                "watermark": {
+                  "thumbnails": "..."
+                },
+                "trackingParams": "string",
+                "navigationEndpoint": {
+                  "clickTrackingParams": "...",
+                  "commandMetadata": "...",
+                  "browseEndpoint": "..."
+                },
+                "channelName": "string",
+                "subscribeButton": {
+                  "subscribeButtonRenderer": "..."
+                }
+              },
+              "allowSwipeDismiss": "bool",
+              "annotationId": "string"
+            }
+          }
+        ],
+        "playerConfig": {
+          "granularVariableSpeedConfig": {
+            "minimumPlaybackRate": "number",
+            "maximumPlaybackRate": "number",
+            "stepSize": "number",
+            "defaultPlaybackRateOptions": [
+              "array",
+              {
+                "label": "string",
+                "value": "number",
+                "isPremiumUpsell": "bool",
+                "priority": "number"
+              }
+            ]
+          },
+          "vssClientConfig": {
+            "vssUsePostRequest": "bool"
+          },
+          "audioConfig": {
+            "loudnessDb": "number",
+            "perceptualLoudnessDb": "number",
+            "muteOnStart": "bool",
+            "enablePerFormatLoudness": "bool",
+            "trackAbsoluteLoudnessLkfs": "number",
+            "loudnessTargetLkfs": "number",
+            "loudnessNormalizationConfig": {
+              "applyStatefulNormalization": "bool",
+              "preserveStatefulLoudnessTarget": "bool",
+              "maxStatefulTimeThresholdSec": "number",
+              "minimumLoudnessTargetLkfs": "number"
+            }
+          },
+          "streamSelectionConfig": {
+            "maxBitrate": "string"
+          },
+          "playerControlsConfig": {
+            "showCachedInTimebar": "bool"
+          },
+          "daiConfig": {
+            "sendSsdaiMissingAdBreakReasons": "bool"
+          },
+          "mediaCommonConfig": {
+            "dynamicReadaheadConfig": {
+              "maxReadAheadMediaTimeMs": "number",
+              "minReadAheadMediaTimeMs": "number",
+              "readAheadGrowthRateMs": "number"
+            },
+            "mediaUstreamerRequestConfig": {
+              "videoPlaybackUstreamerConfig": "string"
+            },
+            "useServerDrivenAbr": "bool",
+            "serverPlaybackStartConfig": {
+              "enable": "bool",
+              "playbackStartPolicy": {
+                "startMinReadaheadPolicy": [
+                  "array",
+                  "..."
+                ]
+              }
+            },
+            "platypusUseEnvoyNetFetch": "bool",
+            "fixLivePlaybackModelDefaultPosition": "bool"
+          },
+          "webPlayerConfig": {
+            "useCobaltTvosDash": "bool",
+            "webPlayerActionsPorting": {
+              "getSharePanelCommand": {
+                "clickTrackingParams": "string",
+                "commandMetadata": {
+                  "webCommandMetadata": "..."
+                },
+                "webPlayerShareEntityServiceEndpoint": {
+                  "serializedShareEntity": "..."
+                }
+              },
+              "subscribeCommand": {
+                "clickTrackingParams": "string",
+                "commandMetadata": {
+                  "webCommandMetadata": "..."
+                },
+                "subscribeEndpoint": {
+                  "channelIds": "...",
+                  "params": "..."
+                }
+              },
+              "unsubscribeCommand": {
+                "clickTrackingParams": "string",
+                "commandMetadata": {
+                  "webCommandMetadata": "..."
+                },
+                "unsubscribeEndpoint": {
+                  "channelIds": "...",
+                  "params": "..."
+                }
+              },
+              "addToWatchLaterCommand": {
+                "clickTrackingParams": "string",
+                "commandMetadata": {
+                  "webCommandMetadata": "..."
+                },
+                "playlistEditEndpoint": {
+                  "playlistId": "...",
+                  "actions": "..."
+                }
+              },
+              "removeFromWatchLaterCommand": {
+                "clickTrackingParams": "string",
+                "commandMetadata": {
+                  "webCommandMetadata": "..."
+                },
+                "playlistEditEndpoint": {
+                  "playlistId": "...",
+                  "actions": "..."
+                }
+              }
+            }
+          }
+        },
+        "storyboards": {
+          "playerStoryboardSpecRenderer": {
+            "spec": "string",
+            "recommendedLevel": "number",
+            "fineScrubbingRecommendedLevel": "number",
+            "highResolutionRecommendedLevel": "number"
+          }
         },
         "microformat": {
           "playerMicroformatRenderer": {
@@ -1173,6 +1564,36 @@
             "canonicalUrl": "string"
           }
         },
+        "cards": {
+          "cardCollectionRenderer": {
+            "cards": [
+              "array",
+              {
+                "cardRenderer": {
+                  "teaser": "...",
+                  "cueRanges": "...",
+                  "trackingParams": "..."
+                }
+              }
+            ],
+            "headerText": {
+              "simpleText": "string"
+            },
+            "icon": {
+              "infoCardIconRenderer": {
+                "trackingParams": "string"
+              }
+            },
+            "closeButton": {
+              "infoCardIconRenderer": {
+                "trackingParams": "string"
+              }
+            },
+            "trackingParams": "string",
+            "allowTeaserDismiss": "bool",
+            "logIconVisibilityUpdates": "bool"
+          }
+        },
         "trackingParams": "string",
         "adBreakHeartbeatParams": "string",
         "frameworkUpdates": {
@@ -1206,7 +1627,7 @@
       "acceptance": [
         "renders as a `main` region (main content)",
         "observed layouts: 1200x176, 1368x176, 1200x3984 px in a 1440x900 viewport",
-        "exposes 84 interactive control(s): button 'A$AP ROCKY - SHROOM CLOUDS (Official Video)', button 'Collaboration channels', button 'Fontaines D.C. - Japan (Official Music Video)', button 'Go to channel Ashe', button 'Go to channel Mollie Elizabeth', button 'Go to channel Rachel Chinouriri'"
+        "exposes 83 interactive control(s): button 'A$AP ROCKY - SHROOM CLOUDS (Official Video)', button 'Collaboration channels', button 'Fontaines D.C. - Japan (Official Music Video)', button 'Go to channel Ashe', button 'Go to channel Mollie Elizabeth', button 'Go to channel Rachel Chinouriri'"
       ],
       "evidence": "screen snapshots + region inventory"
     },
@@ -1263,10 +1684,10 @@
       "kind": "interaction",
       "depends_on": [],
       "acceptance": [
-        "button 'Guide' \u2192 hides 20 control(s); the navigation surface shrinks",
-        "button 'Guide' \u2192 reveals 20 control(s) in navigation",
-        "button 'Show more' \u2192 swaps the panel surface (9 shown, 2 hidden)",
-        "ytd-guide-entry-renderer 'Music' \u2192 navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` \u2192 `POST /youtubei/v1/browse` (200), +1 more",
+        "button 'Guide' \u2192 reshapes the navigation surface in place (+0 / \u221220 controls)",
+        "button 'Guide' \u2192 reshapes the navigation surface in place (+20 / \u22120 controls)",
+        "button 'Show more' \u2192 reshapes the panel surface in place (+9 / \u22122 controls)",
+        "ytd-guide-entry-renderer 'Music' \u2192 navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` \u2192 `POST /youtubei/v1/browse` (200), +2 more",
         "key 'Enter' \u2192 navigates to `/results?search_query=reverse+engineer+app` \u2192 `GET /complete/search` (200)"
       ],
       "controls": [
@@ -1335,38 +1756,48 @@
     },
     {
       "id": "B12",
-      "title": "Implement `POST /youtubei/v1/player`",
+      "title": "Implement `POST /youtubei/v1/next`",
       "kind": "api",
       "depends_on": [],
       "acceptance": [
-        "`POST /youtubei/v1/player` returns 200",
-        "response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, playabilityStatus: { status: string, reason: string, errorScreen: { playerInterstitialRenderer: { content: { interstitialViewModel: { title: ..., description: ..., loggingDirectives: ... } }, stateEntityStoreKey: string } }, contextParams: string }, videoDetails: { videoId: string, title: string, lengthSeconds: string, keywords: [string], channelId: string, isOwnerViewing: bool, shortDescription: string, isCrawlable: bool, thumbnail: { thumbnails: [{ url: string, width: number, height: number }] }, allowRatings: bool, viewCount: string, author: string }, microformat: { playerMicroformatRenderer: { thumbnail: { thumbnails: [{ url: ..., width: ..., height: ... }] }, embed: { iframeUrl: string, width: number, height: number }, title: { simpleText: string }, description: { simpleText: string }, lengthSeconds: string, ownerProfileUrl: string, externalChannelId: string, isFamilySafe: bool, availableCountries: [string], isUnlisted: bool, hasYpcMetadata: bool, viewCount: string } }, trackingParams: string, adBreakHeartbeatParams: string, frameworkUpdates: { entityBatchUpdate: { mutations: [{ entityKey: string, type: string, payload: { offlineabilityEntity: ... } }], timestamp: { seconds: string, nanos: number } } } }"
+        "`POST /youtubei/v1/next` returns 200"
       ],
       "evidence": "observed 1 call(s); response body artifact"
     },
     {
       "id": "B13",
+      "title": "Implement `POST /youtubei/v1/player`",
+      "kind": "api",
+      "depends_on": [],
+      "acceptance": [
+        "`POST /youtubei/v1/player` returns 200",
+        "response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, playabilityStatus: { status: string, playableInEmbed: bool, contextParams: string }, streamingData: { expiresInSeconds: string, adaptiveFormats: [{ itag: number, mimeType: string, bitrate: number, width: number, height: number, initRange: { start: string, end: string }, indexRange: { start: string, end: string }, lastModified: string, contentLength: string, quality: string, fps: number, qualityLabel: string }], serverAbrStreamingUrl: string }, playbackTracking: { videostatsPlaybackUrl: { baseUrl: string }, videostatsDelayplayUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, videostatsWatchtimeUrl: { baseUrl: string }, ptrackingUrl: { baseUrl: string }, qoeUrl: { baseUrl: string }, atrUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, videostatsScheduledFlushWalltimeSeconds: [number], videostatsDefaultFlushIntervalSeconds: number, youtubeRemarketingUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, googleRemarketingUrl: { baseUrl: string, elapsedMediaTimeSeconds: number } }, videoDetails: { videoId: string, title: string, lengthSeconds: string, keywords: [string], channelId: string, isOwnerViewing: bool, shortDescription: string, isCrawlable: bool, thumbnail: { thumbnails: [{ url: string, width: number, height: number }] }, allowRatings: bool, viewCount: string, author: string }, annotations: [{ playerAnnotationsExpandedRenderer: { featuredChannel: { startTimeMs: string, endTimeMs: string, watermark: { thumbnails: ... }, trackingParams: string, navigationEndpoint: { clickTrackingParams: ..., commandMetadata: ..., browseEndpoint: ... }, channelName: string, subscribeButton: { subscribeButtonRenderer: ... } }, allowSwipeDismiss: bool, annotationId: string } }], playerConfig: { granularVariableSpeedConfig: { minimumPlaybackRate: number, maximumPlaybackRate: number, stepSize: number, defaultPlaybackRateOptions: [{ label: string, value: number, isPremiumUpsell: bool, priority: number }] }, vssClientConfig: { vssUsePostRequest: bool }, audioConfig: { loudnessDb: number, perceptualLoudnessDb: number, muteOnStart: bool, enablePerFormatLoudness: bool, trackAbsoluteLoudnessLkfs: number, loudnessTargetLkfs: number, loudnessNormalizationConfig: { applyStatefulNormalization: bool, preserveStatefulLoudnessTarget: bool, maxStatefulTimeThresholdSec: number, minimumLoudnessTargetLkfs: number } }, streamSelectionConfig: { maxBitrate: string }, playerControlsConfig: { showCachedInTimebar: bool }, daiConfig: { sendSsdaiMissingAdBreakReasons: bool }, mediaCommonConfig: { dynamicReadaheadConfig: { maxReadAheadMediaTimeMs: number, minReadAheadMediaTimeMs: number, readAheadGrowthRateMs: number }, mediaUstreamerRequestConfig: { videoPlaybackUstreamerConfig: string }, useServerDrivenAbr: bool, serverPlaybackStartConfig: { enable: bool, playbackStartPolicy: { startMinReadaheadPolicy: [...] } }, platypusUseEnvoyNetFetch: bool, fixLivePlaybackModelDefaultPosition: bool }, webPlayerConfig: { useCobaltTvosDash: bool, webPlayerActionsPorting: { getSharePanelCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, webPlayerShareEntityServiceEndpoint: { serializedShareEntity: ... } }, subscribeCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, subscribeEndpoint: { channelIds: ..., params: ... } }, unsubscribeCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, unsubscribeEndpoint: { channelIds: ..., params: ... } }, addToWatchLaterCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, playlistEditEndpoint: { playlistId: ..., actions: ... } }, removeFromWatchLaterCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, playlistEditEndpoint: { playlistId: ..., actions: ... } } } } }, storyboards: { playerStoryboardSpecRenderer: { spec: string, recommendedLevel: number, fineScrubbingRecommendedLevel: number, highResolutionRecommendedLevel: number } }, microformat: { playerMicroformatRenderer: { thumbnail: { thumbnails: [{ url: ..., width: ..., height: ... }] }, embed: { iframeUrl: string, width: number, height: number }, title: { simpleText: string }, description: { simpleText: string }, lengthSeconds: string, ownerProfileUrl: string, externalChannelId: string, isFamilySafe: bool, availableCountries: [string], isUnlisted: bool, hasYpcMetadata: bool, viewCount: string } }, cards: { cardCollectionRenderer: { cards: [{ cardRenderer: { teaser: ..., cueRanges: ..., trackingParams: ... } }], headerText: { simpleText: string }, icon: { infoCardIconRenderer: { trackingParams: string } }, closeButton: { infoCardIconRenderer: { trackingParams: string } }, trackingParams: string, allowTeaserDismiss: bool, logIconVisibilityUpdates: bool } }, trackingParams: string, adBreakHeartbeatParams: string }"
+      ],
+      "evidence": "observed 1 call(s); response body artifact"
+    },
+    {
+      "id": "B14",
       "title": "Persist client state",
       "kind": "data",
       "depends_on": [],
       "acceptance": [
-        "writes localStorage['V73c188c6||::yt-player::yt-player-lv'], sessionStorage['yt-remote-cast-available'], sessionStorage['yt-remote-cast-installed'], localStorage['yt-remote-connected-devices'], localStorage['yt-remote-device-id'], sessionStorage['yt-remote-fast-check-period'], sessionStorage['yt-remote-session-app'], sessionStorage['yt-remote-session-name'], localStorage['ytidb::LAST_RESULT_ENTRY_KEY']"
+        "writes localStorage['Vaf77d577||::yt-player::yt-player-lv'], sessionStorage['yt-remote-cast-available'], sessionStorage['yt-remote-cast-installed'], localStorage['yt-remote-connected-devices'], localStorage['yt-remote-device-id'], sessionStorage['yt-remote-fast-check-period'], sessionStorage['yt-remote-session-app'], sessionStorage['yt-remote-session-name'], localStorage['ytidb::LAST_RESULT_ENTRY_KEY']"
       ],
       "evidence": "storage shape probe before/after the run"
     }
   ],
   "parity_checks": [
-    "Clicking **button 'Guide'** hides 20 control(s); the navigation surface shrinks (state S1 \u2192 S2).",
-    "Clicking **button 'Guide'** reveals 20 control(s) in navigation (state S2 \u2192 S1).",
-    "Clicking **button 'Show more'** swaps the panel surface (9 shown, 2 hidden) (state S1 \u2192 S1).",
-    "Clicking **ytd-guide-entry-renderer 'Music'** navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` \u2192 `POST /youtubei/v1/browse` (200), +1 more; fires `POST /youtubei/v1/browse`, `POST /youtubei/v1/player` (state S1 \u2192 S3).",
+    "Clicking **button 'Guide'** reshapes the navigation surface in place (+0 / \u221220 controls) (state S1 \u2192 S2).",
+    "Clicking **button 'Guide'** reshapes the navigation surface in place (+20 / \u22120 controls) (state S2 \u2192 S1).",
+    "Clicking **button 'Show more'** reshapes the panel surface in place (+9 / \u22122 controls) (state S1 \u2192 S1).",
+    "Clicking **ytd-guide-entry-renderer 'Music'** navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` \u2192 `POST /youtubei/v1/browse` (200), +2 more; fires `POST /youtubei/v1/browse`, `POST /youtubei/v1/player`, `POST /youtubei/v1/next` (state S1 \u2192 S3).",
     "Typing into **combobox 'Search'** accepts typed input and requests suggestions \u2192 `GET /complete/search` (200), +1 more; fires `GET /complete/search`, `GET /complete/search` (state S3 \u2192 S3).",
     "Pressing **key 'Enter'** navigates to `/results?search_query=reverse+engineer+app` \u2192 `GET /complete/search` (200); fires `GET /complete/search` (state S3 \u2192 S4).",
     "Reaching `/`, `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ`, `/results` never requires a full page reload \u2014 all transitions above are in-document.",
     "`POST /api/jnn/v1/GenerateIT` keeps its observed response shape: [string]",
     "`POST /youtubei/v1/feedback` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { hasDecorated: bool } }, feedbackResponses: [{ isProcessed: bool }] }",
     "`POST /youtubei/v1/guide` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, items: [{ guideSectionRenderer: { items: [{ guideEntryRenderer: ... }], trackingParams: string } }], trackingParams: string }",
-    "`POST /youtubei/v1/player` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, playabilityStatus: { status: string, reason: string, errorScreen: { playerInterstitialRenderer: { content: { interstitialViewModel: { title: ..., description: ..., loggingDirectives: ... } }, stateEntityStoreKey: string } }, contextParams: string }, videoDetails: { videoId: string, title: string, lengthSeconds: string, keywords: [string], channelId: string, isOwnerViewing: bool, shortDescription: string, isCrawlable: bool, thumbnail: { thumbnails: [{ url: string, width: number, height: number }] }, allowRatings: bool, viewCount: string, author: string }, microformat: { playerMicroformatRenderer: { thumbnail: { thumbnails: [{ url: ..., width: ..., height: ... }] }, embed: { iframeUrl: string, width: number, height: number }, title: { simpleText: string }, description: { simpleText: string }, lengthSeconds: string, ownerProfileUrl: string, externalChannelId: string, isFamilySafe: bool, availableCountries: [string], isUnlisted: bool, hasYpcMetadata: bool, viewCount: string } }, trackingParams: string, adBreakHeartbeatParams: string, frameworkUpdates: { entityBatchUpdate: { mutations: [{ entityKey: string, type: string, payload: { offlineabilityEntity: ... } }], timestamp: { seconds: string, nanos: number } } } }"
+    "`POST /youtubei/v1/player` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, playabilityStatus: { status: string, playableInEmbed: bool, contextParams: string }, streamingData: { expiresInSeconds: string, adaptiveFormats: [{ itag: number, mimeType: string, bitrate: number, width: number, height: number, initRange: { start: string, end: string }, indexRange: { start: string, end: string }, lastModified: string, contentLength: string, quality: string, fps: number, qualityLabel: string }], serverAbrStreamingUrl: string }, playbackTracking: { videostatsPlaybackUrl: { baseUrl: string }, videostatsDelayplayUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, videostatsWatchtimeUrl: { baseUrl: string }, ptrackingUrl: { baseUrl: string }, qoeUrl: { baseUrl: string }, atrUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, videostatsScheduledFlushWalltimeSeconds: [number], videostatsDefaultFlushIntervalSeconds: number, youtubeRemarketingUrl: { baseUrl: string, elapsedMediaTimeSeconds: number }, googleRemarketingUrl: { baseUrl: string, elapsedMediaTimeSeconds: number } }, videoDetails: { videoId: string, title: string, lengthSeconds: string, keywords: [string], channelId: string, isOwnerViewing: bool, shortDescription: string, isCrawlable: bool, thumbnail: { thumbnails: [{ url: string, width: number, height: number }] }, allowRatings: bool, viewCount: string, author: string }, annotations: [{ playerAnnotationsExpandedRenderer: { featuredChannel: { startTimeMs: string, endTimeMs: string, watermark: { thumbnails: ... }, trackingParams: string, navigationEndpoint: { clickTrackingParams: ..., commandMetadata: ..., browseEndpoint: ... }, channelName: string, subscribeButton: { subscribeButtonRenderer: ... } }, allowSwipeDismiss: bool, annotationId: string } }], playerConfig: { granularVariableSpeedConfig: { minimumPlaybackRate: number, maximumPlaybackRate: number, stepSize: number, defaultPlaybackRateOptions: [{ label: string, value: number, isPremiumUpsell: bool, priority: number }] }, vssClientConfig: { vssUsePostRequest: bool }, audioConfig: { loudnessDb: number, perceptualLoudnessDb: number, muteOnStart: bool, enablePerFormatLoudness: bool, trackAbsoluteLoudnessLkfs: number, loudnessTargetLkfs: number, loudnessNormalizationConfig: { applyStatefulNormalization: bool, preserveStatefulLoudnessTarget: bool, maxStatefulTimeThresholdSec: number, minimumLoudnessTargetLkfs: number } }, streamSelectionConfig: { maxBitrate: string }, playerControlsConfig: { showCachedInTimebar: bool }, daiConfig: { sendSsdaiMissingAdBreakReasons: bool }, mediaCommonConfig: { dynamicReadaheadConfig: { maxReadAheadMediaTimeMs: number, minReadAheadMediaTimeMs: number, readAheadGrowthRateMs: number }, mediaUstreamerRequestConfig: { videoPlaybackUstreamerConfig: string }, useServerDrivenAbr: bool, serverPlaybackStartConfig: { enable: bool, playbackStartPolicy: { startMinReadaheadPolicy: [...] } }, platypusUseEnvoyNetFetch: bool, fixLivePlaybackModelDefaultPosition: bool }, webPlayerConfig: { useCobaltTvosDash: bool, webPlayerActionsPorting: { getSharePanelCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, webPlayerShareEntityServiceEndpoint: { serializedShareEntity: ... } }, subscribeCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, subscribeEndpoint: { channelIds: ..., params: ... } }, unsubscribeCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, unsubscribeEndpoint: { channelIds: ..., params: ... } }, addToWatchLaterCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, playlistEditEndpoint: { playlistId: ..., actions: ... } }, removeFromWatchLaterCommand: { clickTrackingParams: string, commandMetadata: { webCommandMetadata: ... }, playlistEditEndpoint: { playlistId: ..., actions: ... } } } } }, storyboards: { playerStoryboardSpecRenderer: { spec: string, recommendedLevel: number, fineScrubbingRecommendedLevel: number, highResolutionRecommendedLevel: number } }, microformat: { playerMicroformatRenderer: { thumbnail: { thumbnails: [{ url: ..., width: ..., height: ... }] }, embed: { iframeUrl: string, width: number, height: number }, title: { simpleText: string }, description: { simpleText: string }, lengthSeconds: string, ownerProfileUrl: string, externalChannelId: string, isFamilySafe: bool, availableCountries: [string], isUnlisted: bool, hasYpcMetadata: bool, viewCount: string } }, cards: { cardCollectionRenderer: { cards: [{ cardRenderer: { teaser: ..., cueRanges: ..., trackingParams: ... } }], headerText: { simpleText: string }, icon: { infoCardIconRenderer: { trackingParams: string } }, closeButton: { infoCardIconRenderer: { trackingParams: string } }, trackingParams: string, allowTeaserDismiss: bool, logIconVisibilityUpdates: bool } }, trackingParams: string, adBreakHeartbeatParams: string }"
   ],
   "excluded_traffic": 146,
   "unknowns": [
