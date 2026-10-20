@@ -1,0 +1,213 @@
+[
+  {
+    "lane": "electron",
+    "target": "/Applications/Notion.app",
+    "label": "asar file inventory",
+    "tool": "asar list",
+    "command": "asar list /Applications/Notion.app/Contents/Resources/app.asar",
+    "summary": {
+      "file_count": 282
+    },
+    "artifact": "000-asar-file-inventory.txt",
+    "digest": "720f1228cc9c74dc1e9883642e6ac862",
+    "confidence": "observed",
+    "limitation": ""
+  },
+  {
+    "lane": "electron",
+    "target": "/Applications/Notion.app",
+    "label": "js surface analysis",
+    "tool": "coll-regex",
+    "command": "static regex over extracted JS",
+    "summary": {
+      "js_files_analyzed": 59,
+      "external_modules": [
+        [
+          "path",
+          46
+        ],
+        [
+          "electron",
+          14
+        ],
+        [
+          "fs/promises",
+          12
+        ],
+        [
+          "@jest/globals",
+          11
+        ],
+        [
+          "os",
+          11
+        ],
+        [
+          "crypto",
+          10
+        ],
+        [
+          "url",
+          10
+        ],
+        [
+          "fs",
+          5
+        ],
+        [
+          "@common/utils/validatorCore",
+          4
+        ],
+        [
+          "@common/utils/validatorTypesWithJsonSchemas",
+          4
+        ],
+        [
+          "util",
+          4
+        ],
+        [
+          "@notionhq/shared-mcpFileTransfer/fileTransfer",
+          3
+        ],
+        [
+          "child_process",
+          3
+        ],
+        [
+          "events",
+          3
+        ],
+        [
+          "http",
+          3
+        ],
+        [
+          "https",
+          3
+        ],
+        [
+          "querystring",
+          3
+        ],
+        [
+          "@common/utils/validatorTypes",
+          2
+        ],
+        [
+          "@notionhq/shared-clientMcp/access.validators",
+          2
+        ],
+        [
+          "@notionhq/shared-clientMcp/access",
+          2
+        ],
+        [
+          "@notionhq/shared-clientMcp/relay",
+          2
+        ],
+        [
+          "@notionhq/shared-clientMcp/validation",
+          2
+        ],
+        [
+          "@common/utils/typeUtils.validators",
+          2
+        ],
+        [
+          "@notionhq/shared-mcpFileTransfer/fileTransferValidation",
+          2
+        ],
+        [
+          "module",
+          2
+        ],
+        [
+          "node:crypto",
+          2
+        ],
+        [
+          "node:fs",
+          2
+        ],
+        [
+          "tty",
+          2
+        ],
+        [
+          "worker_threads",
+          2
+        ],
+        [
+          "@notionhq/shared/clientMcpRelay",
+          1
+        ],
+        [
+          "@common/utils/PromiseUtils",
+          1
+        ],
+        [
+          "@common/utils/AsyncQueue",
+          1
+        ],
+        [
+          "electron-log",
+          1
+        ],
+        [
+          "@common/utils/typeUtils",
+          1
+        ]
+      ],
+      "ipc_main_channels": [
+        "migration-dump-done",
+        "migration-restore-done"
+      ],
+      "ipc_renderer_channels": [
+        "client-placeholder:message-port",
+        "migration-dump",
+        "migration-dump-done",
+        "migration-restore",
+        "migration-restore-done",
+        "notion:new-message-port"
+      ],
+      "contextbridge_exposures": [
+        "__SENTRY_IPC__",
+        "__activityMonitorApi",
+        "__desktopConfig",
+        "__desktopDeviceInfo",
+        "__electronApi",
+        "__internalSettingsApi",
+        "__isElectron",
+        "__mediaApi",
+        "__opener",
+        "__platform",
+        "__sqliteBrowserApi",
+        "__windowListApi",
+        "tabsApi"
+      ],
+      "routes": [
+        "${t}",
+        "/",
+        "Existing",
+        "Exports",
+        "Exports/Reports",
+        "Exports/report.pdf",
+        "Private/notes.txt",
+        "created.txt",
+        "desktop",
+        "docs",
+        "existing.txt",
+        "host",
+        "large.txt",
+        "notes.txt",
+        "number",
+        "path"
+      ]
+    },
+    "artifact": "001-js-surface-analysis.txt",
+    "digest": "a9aeac7351a74406b1a6cfe68050e35a",
+    "confidence": "inferred",
+    "limitation": "static text patterns; minified/bundled code may hide channels; no runtime tracing"
+  }
+]

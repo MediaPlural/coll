@@ -1,0 +1,555 @@
+[
+  {
+    "lane": "web",
+    "target": "https://www.youtube.com/",
+    "label": "html (raw)",
+    "tool": "curl",
+    "command": "curl -sL https://www.youtube.com/",
+    "summary": {
+      "bytes": 955327
+    },
+    "artifact": "000-html-raw.txt",
+    "digest": "a2895fb1d10ee05b30c42723d9113fbf",
+    "confidence": "observed",
+    "limitation": "rendered DOM differs from static HTML; SPA content lives in JS"
+  },
+  {
+    "lane": "web",
+    "target": "https://www.youtube.com/s/desktop/2fe123f7/jsbin/web-animations-next-lite.min.vflset/web-animations-next-lite.min.js",
+    "label": "bundle (bounded)",
+    "tool": "curl",
+    "command": "curl -sL https://www.youtube.com/s/desktop/2fe123f7/jsbin/web-animations-next-lite.min.vflset/web-animations-next-lite.min.js",
+    "summary": {
+      "bytes": 50871,
+      "bounded": false
+    },
+    "artifact": "001-bundle-bounded.txt",
+    "digest": "de34c7f8942c400d0311c62d6d9ed765",
+    "confidence": "observed",
+    "limitation": "minified bundle; symbol names are heuristically recovered, not resolved"
+  },
+  {
+    "lane": "web",
+    "target": "https://www.youtube.com/s/desktop/2fe123f7/jsbin/webcomponents-all-noPatch.vflset/webcomponents-all-noPatch.js",
+    "label": "bundle (bounded)",
+    "tool": "curl",
+    "command": "curl -sL https://www.youtube.com/s/desktop/2fe123f7/jsbin/webcomponents-all-noPatch.vflset/webcomponents-all-noPatch.js",
+    "summary": {
+      "bytes": 109375,
+      "bounded": false
+    },
+    "artifact": "002-bundle-bounded.txt",
+    "digest": "10d84cac71fe8c8bf7c669e2ed6a5d93",
+    "confidence": "observed",
+    "limitation": "minified bundle; symbol names are heuristically recovered, not resolved"
+  },
+  {
+    "lane": "web",
+    "target": "https://www.youtube.com/s/desktop/2fe123f7/jsbin/fetch-polyfill.vflset/fetch-polyfill.js",
+    "label": "bundle (bounded)",
+    "tool": "curl",
+    "command": "curl -sL https://www.youtube.com/s/desktop/2fe123f7/jsbin/fetch-polyfill.vflset/fetch-polyfill.js",
+    "summary": {
+      "bytes": 19400,
+      "bounded": false
+    },
+    "artifact": "003-bundle-bounded.txt",
+    "digest": "a3f12c4675a13314411651d52970b9e6",
+    "confidence": "observed",
+    "limitation": "minified bundle; symbol names are heuristically recovered, not resolved"
+  },
+  {
+    "lane": "web",
+    "target": "https://www.youtube.com/s/desktop/2fe123f7/jsbin/intersection-observer.min.vflset/intersection-observer.min.js",
+    "label": "bundle (bounded)",
+    "tool": "curl",
+    "command": "curl -sL https://www.youtube.com/s/desktop/2fe123f7/jsbin/intersection-observer.min.vflset/intersection-observer.min.js",
+    "summary": {
+      "bytes": 5559,
+      "bounded": false
+    },
+    "artifact": "004-bundle-bounded.txt",
+    "digest": "52713c9606f1d38b5324cbadadfd884f",
+    "confidence": "observed",
+    "limitation": "minified bundle; symbol names are heuristically recovered, not resolved"
+  },
+  {
+    "lane": "web",
+    "target": "https://www.youtube.com/s/desktop/2fe123f7/jsbin/scheduler.vflset/scheduler.js",
+    "label": "bundle (bounded)",
+    "tool": "curl",
+    "command": "curl -sL https://www.youtube.com/s/desktop/2fe123f7/jsbin/scheduler.vflset/scheduler.js",
+    "summary": {
+      "bytes": 8197,
+      "bounded": false
+    },
+    "artifact": "005-bundle-bounded.txt",
+    "digest": "39cab4424bbc70744b7f2473d59df2fb",
+    "confidence": "observed",
+    "limitation": "minified bundle; symbol names are heuristically recovered, not resolved"
+  },
+  {
+    "lane": "web",
+    "target": "https://www.youtube.com/s/desktop/2fe123f7/jsbin/www-i18n-constants-en_US.vflset/www-i18n-constants.js",
+    "label": "bundle (bounded)",
+    "tool": "curl",
+    "command": "curl -sL https://www.youtube.com/s/desktop/2fe123f7/jsbin/www-i18n-constants-en_US.vflset/www-i18n-constants.js",
+    "summary": {
+      "bytes": 5811,
+      "bounded": false
+    },
+    "artifact": "006-bundle-bounded.txt",
+    "digest": "f34aa0290b1e446af7450dbb8d53085b",
+    "confidence": "observed",
+    "limitation": "minified bundle; symbol names are heuristically recovered, not resolved"
+  },
+  {
+    "lane": "web",
+    "target": "https://www.youtube.com/s/desktop/2fe123f7/jsbin/spf.vflset/spf.js",
+    "label": "bundle (bounded)",
+    "tool": "curl",
+    "command": "curl -sL https://www.youtube.com/s/desktop/2fe123f7/jsbin/spf.vflset/spf.js",
+    "summary": {
+      "bytes": 38448,
+      "bounded": false
+    },
+    "artifact": "007-bundle-bounded.txt",
+    "digest": "6982f5d904d7666607fb931bf64f7a59",
+    "confidence": "observed",
+    "limitation": "minified bundle; symbol names are heuristically recovered, not resolved"
+  },
+  {
+    "lane": "web",
+    "target": "https://www.youtube.com/s/desktop/2fe123f7/jsbin/network.vflset/network.js",
+    "label": "bundle (bounded)",
+    "tool": "curl",
+    "command": "curl -sL https://www.youtube.com/s/desktop/2fe123f7/jsbin/network.vflset/network.js",
+    "summary": {
+      "bytes": 14351,
+      "bounded": false
+    },
+    "artifact": "008-bundle-bounded.txt",
+    "digest": "3f5087c8a252c699e0b346a63af09e27",
+    "confidence": "observed",
+    "limitation": "minified bundle; symbol names are heuristically recovered, not resolved"
+  },
+  {
+    "lane": "web",
+    "target": "https://www.youtube.com/s/_/ytmainappweb/_/js/k=ytmainappweb.kevlar_base.en_US.Yr8Cp34MrMI.es5.O/am=AAAAAAEACEBK/d=1/rs=AGKMywFcRu15kXCbb0UB14_r6NgWtvgwww/m=kevlar_base_module,kevlar_main_module,kevlar_base_sync_mod_chunk",
+    "label": "bundle (bounded)",
+    "tool": "curl",
+    "command": "curl -sL https://www.youtube.com/s/_/ytmainappweb/_/js/k=ytmainappweb.kevlar_base.en_US.Yr8Cp34MrMI.es5.O/am=AAAAAAEACEBK/d=1/rs=AGKMywFcRu15kXCbb0UB14_r6NgWtvgwww/m=kevlar_base_module,kevlar_main_module,kevlar_base_sync_mod_chunk",
+    "summary": {
+      "bytes": 10877783,
+      "bounded": true
+    },
+    "artifact": "009-bundle-bounded.txt",
+    "digest": "0fa050233ce284537d838c5414127679",
+    "confidence": "observed",
+    "limitation": "minified bundle; symbol names are heuristically recovered, not resolved"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://googleads.g.doubleclick.net/pagead/id?slf_rd=1",
+    "label": "response body GET pagead-id",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=72395.166)",
+    "summary": {
+      "bytes": 100
+    },
+    "artifact": "010-response-body-get-pagead-id.txt",
+    "digest": "92d158f02080b4faf2a5aec9d57a6666",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/api/jnn/v1/GenerateIT",
+    "label": "response body POST api-jnn-v1-GenerateIT",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=72395.186)",
+    "summary": {
+      "bytes": 102
+    },
+    "artifact": "011-response-body-post-api-jnn-v1-generateit.txt",
+    "digest": "b67e17e3460634c4a3d33f99353e188a",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/youtubei/v1/guide?prettyPrint=false",
+    "label": "response body POST youtubei-v1-guide",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=72395.178)",
+    "summary": {
+      "bytes": 14954
+    },
+    "artifact": "012-response-body-post-youtubei-v1-guide.txt",
+    "digest": "b143b4ca151be8fadeadd91b495d6cc9",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/youtubei/v1/feedback?prettyPrint=false",
+    "label": "response body POST youtubei-v1-feedback",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=72395.190)",
+    "summary": {
+      "bytes": 1284
+    },
+    "artifact": "013-response-body-post-youtubei-v1-feedback.txt",
+    "digest": "c7355579653c15945ef743ac6a531daf",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "accessibility tree",
+    "tool": "cdp:Accessibility.getFullAXTree",
+    "command": "Accessibility.getFullAXTree()",
+    "summary": {
+      "nodes": 429,
+      "roles": {
+        "generic": 176,
+        "link": 44,
+        "InlineTextBox": 37,
+        "StaticText": 36,
+        "button": 6,
+        "heading": 3,
+        "RootWebArea": 1,
+        "navigation": 1,
+        "banner": 1,
+        "main": 1
+      }
+    },
+    "artifact": "014-accessibility-tree.txt",
+    "digest": "e23b677fa66eb4f91183237a473d37b3",
+    "confidence": "observed",
+    "limitation": "AX tree is platform-normalized; not a 1:1 DOM map"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot initial",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 57345
+    },
+    "artifact": "015-screenshot-initial.png",
+    "digest": "d3f4a45bf1243758842776a2d06d2dd5",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot before-collapse-guide",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 57345
+    },
+    "artifact": "016-screenshot-before-collapse-guide.png",
+    "digest": "d3f4a45bf1243758842776a2d06d2dd5",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/youtubei/v1/log_event?alt=json",
+    "label": "response body POST youtubei-v1-log_event",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=72395.340)",
+    "summary": {
+      "bytes": 28
+    },
+    "artifact": "017-response-body-post-youtubei-v1-log-event.txt",
+    "digest": "d716916bcbf89f9a932180ead93cb6e8",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot after-collapse-guide",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 29961
+    },
+    "artifact": "018-screenshot-after-collapse-guide.png",
+    "digest": "2df6fa9f771e33903c04af452e1d4361",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "transition 01 button 'Guide'",
+    "tool": "cdp:Input+Runtime",
+    "command": "{\"action\": \"click\", \"target\": {\"name\": \"Guide\", \"role\": \"button\"}}",
+    "summary": {
+      "outcome": "panel-opened"
+    },
+    "artifact": "019-transition-01-button-guide.txt",
+    "digest": "ab0031afb41f5242c0b863b2fd69e50b",
+    "confidence": "observed",
+    "limitation": "one observed run; timing/race states not exercised"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot before-expand-guide",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 29961
+    },
+    "artifact": "020-screenshot-before-expand-guide.png",
+    "digest": "2df6fa9f771e33903c04af452e1d4361",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot after-expand-guide",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 57751
+    },
+    "artifact": "021-screenshot-after-expand-guide.png",
+    "digest": "adace5b07d2cfe6aa1b8df9eff13f3e3",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "transition 02 button 'Guide'",
+    "tool": "cdp:Input+Runtime",
+    "command": "{\"action\": \"click\", \"target\": {\"name\": \"Guide\", \"role\": \"button\"}}",
+    "summary": {
+      "outcome": "panel-opened"
+    },
+    "artifact": "022-transition-02-button-guide.txt",
+    "digest": "040d674939cd79570f8a4e9b2eb99641",
+    "confidence": "observed",
+    "limitation": "one observed run; timing/race states not exercised"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot before-expand-sections",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 57751
+    },
+    "artifact": "023-screenshot-before-expand-sections.png",
+    "digest": "adace5b07d2cfe6aa1b8df9eff13f3e3",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot after-expand-sections",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 58022
+    },
+    "artifact": "024-screenshot-after-expand-sections.png",
+    "digest": "a6fd43040bc79fa7b7b1b72f8d17861d",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "transition 03 button 'Show more'",
+    "tool": "cdp:Input+Runtime",
+    "command": "{\"action\": \"click\", \"target\": {\"text\": \"Show more\"}}",
+    "summary": {
+      "outcome": "panel-opened"
+    },
+    "artifact": "025-transition-03-button-show-more.txt",
+    "digest": "2aab8c08f68a85391bb886fd34b51be4",
+    "confidence": "observed",
+    "limitation": "one observed run; timing/race states not exercised"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot before-navigate-music",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 58022
+    },
+    "artifact": "026-screenshot-before-navigate-music.png",
+    "digest": "a6fd43040bc79fa7b7b1b72f8d17861d",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/youtubei/v1/browse?prettyPrint=false",
+    "label": "response body POST youtubei-v1-browse",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=72395.344)",
+    "summary": {
+      "bytes": 262144
+    },
+    "artifact": "027-response-body-post-youtubei-v1-browse.txt",
+    "digest": "c013eab9c4b59c84813eee52221cf9a5",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/youtubei/v1/player?prettyPrint=false",
+    "label": "response body POST youtubei-v1-player",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=72395.346)",
+    "summary": {
+      "bytes": 12922
+    },
+    "artifact": "028-response-body-post-youtubei-v1-player.txt",
+    "digest": "473fe2df63a54c09236ed0ecae19d308",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot after-navigate-music",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 629836
+    },
+    "artifact": "029-screenshot-after-navigate-music.png",
+    "digest": "4b097603a454df41e0686c4335e2d341",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "transition 04 ytd-guide-entry-renderer 'Music'",
+    "tool": "cdp:Input+Runtime",
+    "command": "{\"action\": \"click\", \"target\": {\"text\": \"Music\"}}",
+    "summary": {
+      "outcome": "navigated"
+    },
+    "artifact": "030-transition-04-ytd-guide-entry-renderer-music.txt",
+    "digest": "3cf6655b78a981c3ec4403986a707a5c",
+    "confidence": "observed",
+    "limitation": "one observed run; timing/race states not exercised"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://suggestqueries-clients6.youtube.com/complete/search?ds=yt&hl=en&gl=us&client=youtube&gs_ri=youtube&sugexp=uqap13nreweightingh1_h%2Cytpo.bo.me%3D0%2Cytposo.bo.me%3D0%2Cytpo.bo.ro.mi%3D51966626%2Cytposo.bo.ro.mi%3D51966626%2Cymo.ei%3D52283469&h=180&w=320&ytvs=1&gs_id=0&q=&cp=0",
+    "label": "response body GET complete-search",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=72395.370)",
+    "summary": {
+      "bytes": 43
+    },
+    "artifact": "031-response-body-get-complete-search.txt",
+    "digest": "55c491307de69e2d7fb312fe51947121",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://suggestqueries-clients6.youtube.com/complete/search?ds=yt&hl=en&gl=us&client=youtube&gs_ri=youtube&sugexp=uqap13nreweightingh1_h%2Cytpo.bo.me%3D0%2Cytposo.bo.me%3D0%2Cytpo.bo.ro.mi%3D51966626%2Cytposo.bo.ro.mi%3D51966626%2Cymo.ei%3D52283469&h=180&w=320&ytvs=1&gs_id=1&q=reverse%20engineer%20app&cp=20",
+    "label": "response body GET complete-search",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=72395.371)",
+    "summary": {
+      "bytes": 63
+    },
+    "artifact": "032-response-body-get-complete-search.txt",
+    "digest": "f5c9f3fb7e0982ca6ca58f179baf7f47",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot after-type-query",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 631808
+    },
+    "artifact": "033-screenshot-after-type-query.png",
+    "digest": "900b17cef9a3fd388f41cac37978c07f",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "transition 05 combobox 'Search'",
+    "tool": "cdp:Input+Runtime",
+    "command": "{\"action\": \"type\", \"target\": {\"selector\": \"input[name=search_query]\"}}",
+    "summary": {
+      "outcome": "panel-opened"
+    },
+    "artifact": "034-transition-05-combobox-search.txt",
+    "digest": "5deb539ab80ff6f22b4bd1f43eb1b27e",
+    "confidence": "observed",
+    "limitation": "one observed run; timing/race states not exercised"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://suggestqueries-clients6.youtube.com/complete/search?ds=yt&hl=en&gl=us&client=youtube&gs_ri=youtube&sugexp=uqap13nreweightingh1_h%2Cytpo.bo.me%3D0%2Cytposo.bo.me%3D0%2Cytpo.bo.ro.mi%3D51966626%2Cytposo.bo.ro.mi%3D51966626%2Cymo.ei%3D52283469&h=180&w=320&ytvs=1&gs_id=2&q=reverse%20engineer%20app&cp=20&pq=reverse%20engineer%20app",
+    "label": "response body GET complete-search",
+    "tool": "cdp:Network.getResponseBody",
+    "command": "Network.getResponseBody(requestId=72395.373)",
+    "summary": {
+      "bytes": 63
+    },
+    "artifact": "035-response-body-get-complete-search.txt",
+    "digest": "278b8e434c9b642a74c452b0a08c91fb",
+    "confidence": "observed",
+    "limitation": "single response sample; shape is not a contract"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "screenshot after-submit-search",
+    "tool": "cdp:Page.captureScreenshot",
+    "command": "Page.captureScreenshot(format=png)",
+    "summary": {
+      "bytes": 631857
+    },
+    "artifact": "036-screenshot-after-submit-search.png",
+    "digest": "a877aae0643eab7b73d6da989d817495",
+    "confidence": "observed",
+    "limitation": "viewport-only; offscreen content not shown"
+  },
+  {
+    "lane": "behavior",
+    "target": "https://www.youtube.com/",
+    "label": "transition 06 key 'Enter'",
+    "tool": "cdp:Input+Runtime",
+    "command": "{\"action\": \"key\", \"target\": {\"key\": \"Enter\"}}",
+    "summary": {
+      "outcome": "navigated"
+    },
+    "artifact": "037-transition-06-key-enter.txt",
+    "digest": "c7de8bf02fb4be207ea30c6b70fd6455",
+    "confidence": "observed",
+    "limitation": "one observed run; timing/race states not exercised"
+  }
+]

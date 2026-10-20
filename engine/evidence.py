@@ -39,11 +39,11 @@ class EvidenceBank:
         os.makedirs(self.root, exist_ok=True)
 
     def add(self, lane, target, label, tool, command, raw, summary=None,
-            confidence="observed", limitation="") -> Finding:
+            confidence="observed", limitation="", ext="txt") -> Finding:
         if isinstance(raw, str):
             raw = raw.encode()
         digest = hashlib.blake2b(raw, digest_size=16).hexdigest()
-        fname = f"{len(self.findings):03d}-{slug(label)}.txt"
+        fname = f"{len(self.findings):03d}-{slug(label)}.{ext}"
         with open(os.path.join(self.root, fname), "wb") as f:
             f.write(raw)
         fnd = Finding(

@@ -59,7 +59,9 @@ _URL_RE = re.compile(r"https?://[a-z0-9.-]+\.[a-z]{2,}[^\s\"'<>)]*")
 _ROUTE_RE = re.compile(r"""["'](/[a-zA-Z][a-zA-Z0-9/_.-]{1,60})["']""")
 _API_RE = re.compile(r"""["'](/api/[a-zA-Z0-9/_.${}-]{1,80})["']""")
 _ENV_KEY_RE = re.compile(r"\b([A-Z][A-Z0-9_]{2,40})\s*[:=]")
-_OAUTH_RE = re.compile(r"oauth|google|facebook|apple|signin|magic.?link|passwordless", re.I)
+_OAUTH_RE = re.compile(
+    r"\b(oauth|oauth2|openid|signin|sign-in|magic.?link|passwordless|sso|saml|"
+    r"google_sign_in|appleid|facebook_login|github_login|totp|2fa)\b", re.I)
 
 _SCRIPT_SRC = re.compile(r"""<script[^>]+src=["']([^"']+)["']""")
 _LINK_HREF = re.compile(r"""<link[^>]+href=["']([^"']+)["']""")

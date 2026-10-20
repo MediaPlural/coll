@@ -27,10 +27,11 @@
 | REA's way | Coll's way |
 |-----------|----------------|
 | Hopper/Ghidra/IDA seats (paid / heavy) | installed free Apple toolchain + `lldb` |
-| Node/TS tree: Playwright, WABT, JADX, apktool, Binwalk, pwntools | Python 3 stdlib orchestrator |
+| Node/TS tree: Playwright, WABT, JADX, apktool, Binwalk, pwntools | Python 3 stdlib orchestrator (incl. a hand-rolled CDP client) |
 | Claude Code-first npm package | native CLI + (next) MCP + skill, callable by any agent |
 | kitchen-sink catalog of 20 target types | the lanes you actually use, done deep |
 | macOS parser bolted on late | Apple/macOS-native from day one |
+| surface inventory as the deliverable | a build-ready feature spec as the deliverable |
 
 ## Evidence contract
 ```
@@ -50,22 +51,64 @@ Finding: {lane, target, label, tool, command, summary, artifact, digest, confide
 - ✅ **electron** — `.asar`/JS: package facts, external-module histogram, IPC
   main/renderer channels, contextBridge exposures, routes. Verified on
   Notion.app (13 exposures incl. `__electronApi`, `__mediaApi`,
-  `__sqliteBrowserApi`, `tabsApi`).
+  `__sqliteBrowserApi`).
+- ✅ **web** — HTML + own JS bundles: framework/version, libraries, routes, API
+  paths, auth signals, analytics, env keys, domains.
+- ✅ **behavior** — CDP-driven capture (see below). Verified live on
+  youtube.com (4 states, 6 transitions, InnerTube API graph with response
+  schemas) and on the fixture SPA in `tests/`.
+- ✅ **trace** — lldb attach / launch-under-debugger, backtrace, breakpoint-on-
+  symbol. SIP-denied attaches are detected and reported with the fallback.
+- ✅ **linux / windows / unix** — ELF/PE/other: identity, arch, libs/imports,
+  symbol + strings surface.
+
+## Behaviour lane (Lane D) — the upgrade that mattered
+
+Static lanes answer "what classes exist". They cannot answer "what happens when
+I click this". Lane D answers the second question, and it is what makes the
+output build-ready.
+
+```
+launch/attach ──► CDP session ──► probes ──► state clustering ──► spec
+ Chrome/Electron    ws.py + cdp.py   probes.py    behavior.py       spec.py
+```
+
+1. **Transport (`ws.py`, `cdp.py`)** — hand-rolled RFC 6455 client and a CDP
+   session with command/response correlation and an event pump. `ws.py` is
+   ~200 lines and removes Playwright/selenium from the dependency graph.
+2. **Probes (`probes.py`)** — one self-evaluating JS expression per question:
+   visible regions (`nav/aside/main/dialog/…`), interactive controls with the
+   region that owns them, storage shapes, a MutationObserver + history/fetch
+   hook, and target resolution that climbs from text to the nearest clickable
+   ancestor (real apps nest text inside custom elements).
+3. **Capture (`behavior.py`)** — screen snapshots with PNG evidence, state
+   clustering on `(route, region anatomy incl. geometry, dialog presence)`,
+   transitions with the network calls they caused, JSON response schemas pulled
+   via `Network.getResponseBody`, storage before/after, AX-tree walk.
+   Interactions are dispatched as real input events (trusted clicks), and a
+   fresh reload per auto-explored control keeps the state graph honest.
+4. **Synthesis (`spec.py`)** — deterministic, rule-based: components (grouped by
+   conceptual region, with layout variants), interaction contract, state machine,
+   data model (flattened schema paths), API surface (same-host XHR only;
+   telemetry/ads/assets excluded and counted), build plan, parity checklist.
+
+Deliberate constraints, stated in every report: one observed run (no permission
+or server-side branches), one viewport, logged-out unless the attached profile
+was already signed in, and no auto-click of destructive controls.
 
 ## Roadmap (unbuilt, in priority order)
 1. **Lane A v2 — full ObjC method dump** via `objdump --macho --objc-meta-data`
    (Telegram yields 517k lines: classes + methods + protocols), parsed to a
    queryable class/method index. This is the "find the exact method behind a
    feature" upgrade.
-2. **`trace` lane** — `lldb`-driven runtime tracing: attach to a running app,
-   set breakpoints/watchpoints, capture call stacks + args while a feature runs.
-   Turns "what's in the binary" into "what actually happens."
-3. **MCP + skill wiring** — expose as an MCP server + a discoverable skill so
-   any agent invokes it the same way.
-4. **`web` lane** — delegate website feature capture to the existing
-   `browser_exec` tool, reuse the same evidence contract.
-5. **Other platforms on demand** — ELF/Linux, PE/Windows, APK — only when a real
-   job demands one; contracts are already platform-agnostic.
+2. **Multi-viewport capture** — the same flow at 2–3 breakpoints so responsive
+   behaviour lands in the state model instead of the unknowns.
+3. **Diff mode** — run the same flow against two builds and diff the spec
+   (`coll diff old.json new.json`) → a behavior-drift report.
+4. **MCP + skill wiring** — expose the engine as an MCP server + a discoverable
+   skill so any agent invokes it the same way.
+5. **Other platforms on demand** — APK lane only when a real job demands it;
+   contracts are already platform-agnostic.
 
 ## Open decisions
 - **Name** — "Coll" is a working title. Run through the naming protocol or

@@ -1,0 +1,104 @@
+{
+  "schema": "coll/feature-spec@1",
+  "feature": "Notion desktop shell",
+  "target": "/Applications/Notion.app",
+  "generated_from": {
+    "behavior_mode": "electron-unavailable",
+    "captured_at": "2026-10-20T19:49:03Z",
+    "viewport": null,
+    "debuggee": null,
+    "static_lane": "electron",
+    "cdp_commands": null
+  },
+  "summary": "**Notion desktop shell** \u2014 reimplemented from an observed run.",
+  "components": [],
+  "static_surface": {
+    "lane": "electron",
+    "ipc": {
+      "main": [
+        "migration-dump-done",
+        "migration-restore-done"
+      ],
+      "renderer": [
+        "client-placeholder:message-port",
+        "migration-dump",
+        "migration-dump-done",
+        "migration-restore",
+        "migration-restore-done",
+        "notion:new-message-port"
+      ],
+      "context_bridge": [
+        "__SENTRY_IPC__",
+        "__activityMonitorApi",
+        "__desktopConfig",
+        "__desktopDeviceInfo",
+        "__electronApi",
+        "__internalSettingsApi",
+        "__isElectron",
+        "__mediaApi",
+        "__opener",
+        "__platform",
+        "__sqliteBrowserApi",
+        "__windowListApi",
+        "tabsApi"
+      ]
+    },
+    "js_files_analyzed": 59,
+    "bundle_routes": [
+      "${t}",
+      "/",
+      "Existing",
+      "Exports",
+      "Exports/Reports",
+      "Exports/report.pdf",
+      "Private/notes.txt",
+      "created.txt",
+      "desktop",
+      "docs",
+      "existing.txt",
+      "host",
+      "large.txt",
+      "notes.txt",
+      "number",
+      "path"
+    ],
+    "error": null
+  },
+  "states": [],
+  "transitions": [],
+  "entities": [],
+  "endpoints": [],
+  "build_plan": [
+    {
+      "id": "B1",
+      "title": "Implement the main-process IPC handlers",
+      "kind": "backend",
+      "depends_on": [],
+      "acceptance": [
+        "handles 2 observed channel(s): `migration-dump-done`, `migration-restore-done`"
+      ],
+      "evidence": "asar static analysis (ipcMain handle/on call sites)",
+      "confidence": "inferred"
+    },
+    {
+      "id": "B2",
+      "title": "Expose the preload bridge",
+      "kind": "backend",
+      "depends_on": [],
+      "acceptance": [
+        "preload exposes 13 name(s) via contextBridge: `__SENTRY_IPC__`, `__activityMonitorApi`, `__desktopConfig`, `__desktopDeviceInfo`, `__electronApi`, `__internalSettingsApi`, `__isElectron`, `__mediaApi`, `__opener`, `__platform`",
+        "renderer reaches main only through this surface (no direct nodeIntegration)"
+      ],
+      "evidence": "asar static analysis (contextBridge.exposeInMainWorld)",
+      "confidence": "inferred"
+    }
+  ],
+  "parity_checks": [],
+  "excluded_traffic": 0,
+  "unknowns": [
+    "behavioural capture unavailable: no debug port open on this app",
+    "to capture behaviour: start it with: /Applications/Notion.app/Contents/MacOS/Notion --remote-debugging-port=9222 (or rerun coll with --launch-app)",
+    "no surfaces captured: sections 1, 3, 4 and 6 are unknown for this target; only static evidence stands",
+    "no JSON responses captured: the data model is inferred from storage and UI only"
+  ]
+}

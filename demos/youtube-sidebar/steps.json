@@ -1,0 +1,38 @@
+{
+  "feature": "YouTube guide sidebar",
+  "steps": [
+    {
+      "action": "click",
+      "role": "button",
+      "name": "Guide",
+      "label": "collapse-guide"
+    },
+    {
+      "action": "click",
+      "role": "button",
+      "name": "Guide",
+      "label": "expand-guide"
+    },
+    {
+      "action": "click",
+      "text": "Show more",
+      "label": "expand-sections"
+    },
+    {
+      "action": "click",
+      "text": "Music",
+      "label": "navigate-music"
+    },
+    {
+      "action": "type",
+      "selector": "input[name=search_query]",
+      "text": "reverse engineer app",
+      "label": "type-query"
+    },
+    {
+      "action": "key",
+      "key": "Enter",
+      "label": "submit-search"
+    }
+  ]
+}

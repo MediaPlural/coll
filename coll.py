@@ -2,9 +2,10 @@
 """Coll — reverse-engineer a feature from an app, our way.
 
 Usage:
-  python3 coll.py <target> [--lane auto|apple|electron|web|linux|windows|unix] [--out DIR]
+  python3 coll.py <target> [--lane auto|apple|electron|web|linux|windows|unix]
+                           [--out DIR] [--capture] [--spec] [--steps FILE]
 
-Lanes:
+Static lanes (default — nothing is executed):
   apple    — macOS .app / Mach-O (Info.plist, entitlements, symbols, strings)
   electron — Electron/JS bundle (asar, module graph, IPC, routes)
   web      — web app / SPA surface (frameworks, routes, APIs, analytics)
@@ -12,8 +13,17 @@ Lanes:
   windows  — PE binaries (identity, arch, imported DLLs/functions, strings)
   unix     — generic non-Mach-O Unix binaries (best-effort object scan)
 
+Behaviour + runtime lanes (opt-in):
+  --capture     drive a real browser/app over CDP: screens, controls, clicks,
+                state transitions, API call graph, response schemas, storage
+  --spec        synthesize a build-ready FEATURE-SPEC.md + spec.json
+  --trace PID   attach lldb to a live process and capture its stack
+  --trace EXE   launch under lldb instead (works when attach is SIP-denied)
+
 Findings print concisely to stdout; full evidence + a verifiable manifest
-land in --out. Nothing is executed from the target; analysis is static.
+land in --out. The static lanes never execute the target; the behaviour lane
+launches its own browser (or an Electron app you explicitly allow) and says so
+in the report.
 """
 from __future__ import annotations
 
@@ -33,6 +43,8 @@ _OBJECT_RE = re.compile(
     r"object|executable|shared library|relocatable|archive|core file|COFF|a\.out",
     re.I,
 )
+
+_CAPTURE_LANES = ("web", "electron")
 
 
 def _file_type(path: str) -> str:
@@ -153,6 +165,66 @@ def render(report: dict) -> str:
             out.append("  " + ", ".join(report["env_config_keys"][:40]))
             out.append(f"\n## domains ({len(report.get('domains', []))})")
             out.append("  " + ", ".join(report["domains"][:40]))
+    elif lane == "behavior":
+        out.append(f"\n## capture: {report.get('mode')} — {report.get('base_url') or ''}")
+        if report.get("error"):
+            out.append(f"  error: {report['error']}")
+            if report.get("fix"):
+                out.append(f"  fix:   {report['fix']}")
+        d = report.get("debuggee") or {}
+        if d.get("browser"):
+            out.append(f"  debuggee: {d.get('browser')} (CDP {d.get('protocol')})")
+        vp = report.get("viewport") or {}
+        out.append(f"  viewport: {vp.get('width', '?')}x{vp.get('height', '?')}"
+                   f"  ·  cdp commands: {report.get('commands_sent', '—')}"
+                   f"  ·  captured: {report.get('captured_at')}")
+        st = report.get("states") or []
+        out.append(f"\n## states ({len(st)})")
+        for s in st[:12]:
+            out.append(f"  {s['id']}: {s.get('path')}  regions={len(s.get('regions', []))}"
+                       f" dialogs={s.get('dialogs', 0)} controls={s.get('control_count')}")
+        tr = report.get("transitions") or []
+        out.append(f"\n## transitions ({len(tr)} observed)")
+        for t in tr[:24]:
+            reqs = ", ".join(f"{r['method']} {r['path']}" for r in t.get("requests", [])[:3])
+            out.append(f"  T{t.get('n')} {t.get('action')}: {t.get('target')}"
+                       f"  [{t.get('from_state')}→{t.get('to_state')}]"
+                       f"  {t.get('outcome')}" + (f"  → {reqs}" if reqs else ""))
+            if t.get("error"):
+                out.append(f"       ! {t['error']}")
+        ep = report.get("endpoints") or []
+        out.append(f"\n## api call graph ({len(ep)} endpoints)")
+        for e in ep[:24]:
+            out.append(f"  {e['method']:4} {e['path']}  ×{e['hits']}"
+                       f"  {','.join(str(s) for s in e['statuses'])}")
+        ents = report.get("bodies") or []
+        if ents:
+            out.append(f"\n## observed payloads ({len(ents)})")
+            for b in ents[:10]:
+                out.append(f"  {b.get('method')} {b.get('url')[-60:]}")
+        cons = report.get("console") or []
+        errs = report.get("errors") or []
+        if cons or errs:
+            out.append(f"\n## console: {len(cons)} entries, {len(errs)} errors")
+            for e in errs[:5]:
+                out.append(f"  ! {e.get('text', '')[:120]}")
+        shots = [s.get("screenshot") for s in report.get("screens", []) if s.get("screenshot")]
+        out.append(f"\n## screens: {len(shots)} PNGs "
+                   f"(e.g. {', '.join(shots[:3])})")
+        for lim in report.get("limitations", [])[:5]:
+            out.append(f"  · limit: {lim}")
+    elif lane == "trace":
+        out.append(f"\n## mode: {report.get('mode')}  pid={report.get('pid')}"
+                   f"  path={report.get('path')}")
+        if report.get("error"):
+            out.append(f"  error: {report['error']}")
+        s = report.get("summary") or {}
+        out.append(f"  stop reason: {s.get('stop_reason')}")
+        out.append(f"  threads: {len(s.get('threads', []))}  frames: {len(s.get('frames', []))}")
+        for f in s.get("frames", [])[:14]:
+            out.append(f"    {f}")
+        if report.get("limitation"):
+            out.append(f"  · limit: {report['limitation']}")
     elif lane == "linux":
         if "error" in report:
             out.append(f"\n## error: {report['error']}")
@@ -221,10 +293,65 @@ def render(report: dict) -> str:
     return "\n".join(out)
 
 
+def _static_report(lane: str, target: str, bank: EvidenceBank) -> dict:
+    if lane == "apple":
+        return apple.inspect_apple(target, bank)
+    if lane == "web":
+        return web.inspect_web(target, bank)
+    if lane == "linux":
+        return linux.inspect_linux(target, bank)
+    if lane == "windows":
+        return windows.inspect_windows(target, bank)
+    if lane == "unix":
+        return unix.inspect_unix(target, bank)
+    return electron.inspect_electron(target, bank)
+
+
+def _run_capture(args, lane: str, bank: EvidenceBank) -> dict:
+    from engine import behavior
+    steps = None
+    if args.steps:
+        with open(args.steps) as f:
+            loaded = json.load(f)
+        # accept both a bare list of steps and a document with metadata
+        steps = loaded.get("steps") if isinstance(loaded, dict) else loaded
+        if not isinstance(steps, list):
+            raise SystemExit("--steps file must be a JSON array or {\"steps\": [...]}")
+    common = dict(steps=steps, max_controls=args.max_controls,
+                  explore=not args.no_explore, timeout=args.timeout)
+    if lane == "web":
+        return behavior.capture_web(args.target, bank, headless=not args.headed,
+                                    port=args.attach, **common)
+    if args.attach:
+        return behavior.capture_attach(args.attach, bank, target=args.target, **common)
+    return behavior.capture_electron(args.target, bank, launch_app=args.launch_app,
+                                     settle_s=args.app_settle, **common)
+
+
+def _run_trace(args, bank: EvidenceBank) -> dict:
+    from engine import trace as trace_lane
+    target = args.trace
+    try:
+        target_val = int(target)
+    except (TypeError, ValueError):
+        target_val = target
+    rep = trace_lane.trace(target_val, symbol=args.symbol,
+                           timeout=args.timeout)
+    bank.add("trace", str(args.trace), "lldb %s" % rep.get("mode"),
+             "lldb", rep.get("command", ""),
+             json.dumps(rep, indent=1, default=str).encode(),
+             {"mode": rep.get("mode"), "frames": len((rep.get("summary") or {}).get("frames", []))},
+             confidence="observed",
+             limitation=rep.get("limitation", ""))
+    return rep
+
+
 def main():
-    ap = argparse.ArgumentParser(description=__doc__)
+    ap = argparse.ArgumentParser(description=__doc__,
+                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("target")
-    ap.add_argument("--lane", choices=["auto", "apple", "electron", "web", "linux", "windows", "unix"], default="auto")
+    ap.add_argument("--lane", choices=["auto", "apple", "electron", "web", "linux",
+                                       "windows", "unix"], default="auto")
     ap.add_argument("--out", default=None,
                     help="evidence output dir (default: coll-out/<basename>)")
     ap.add_argument("--index", action="store_true",
@@ -235,6 +362,39 @@ def main():
                     help="max hits per category for --find")
     ap.add_argument("--sweep", default=None,
                     help="sweep a terms JSON (id+aliases) and print term->hits (any lane)")
+
+    g = ap.add_argument_group("behaviour capture (opt-in, drives the target)")
+    g.add_argument("--capture", action="store_true",
+                   help="capture live behaviour over CDP (web: launches headless "
+                        "Chrome; electron: attaches if a debug port is open)")
+    g.add_argument("--attach", type=int, default=None, metavar="PORT",
+                   help="attach to an existing CDP port instead of launching")
+    g.add_argument("--launch-app", action="store_true",
+                   help="launch an Electron app with --remote-debugging-port in an "
+                        "isolated profile (puts a window on screen)")
+    g.add_argument("--steps", default=None, metavar="FILE",
+                   help="JSON list of scripted interactions to run as the flow")
+    g.add_argument("--max-controls", type=int, default=8,
+                   help="auto-explore budget: controls clicked (default 8)")
+    g.add_argument("--no-explore", action="store_true",
+                   help="do not auto-click; only snapshot the initial screen")
+    g.add_argument("--headed", action="store_true",
+                   help="run the browser with a visible window")
+    g.add_argument("--app-settle", type=float, default=8.0,
+                   help="seconds to wait after launching an Electron app")
+
+    g2 = ap.add_argument_group("build-ready output")
+    g2.add_argument("--spec", action="store_true",
+                    help="synthesize FEATURE-SPEC.md + spec.json from the findings")
+    g2.add_argument("--spec-name", default=None, help="override the feature name")
+
+    g3 = ap.add_argument_group("runtime tracing (lldb)")
+    g3.add_argument("--trace", default=None, metavar="PID|EXE",
+                    help="capture a live stack: PID to attach, or a path to launch")
+    g3.add_argument("--symbol", default=None,
+                    help="breakpoint symbol for --trace")
+    ap.add_argument("--timeout", type=float, default=60.0,
+                    help="per-operation timeout in seconds (default 60)")
     args = ap.parse_args()
 
     lane = detect_lane(args.target) if args.lane == "auto" else args.lane
@@ -263,22 +423,55 @@ def main():
             print(f"# index -> {db}")
         return
 
-    if lane == "apple":
-        report = apple.inspect_apple(args.target, bank)
-    elif lane == "web":
-        report = web.inspect_web(args.target, bank)
-    elif lane == "linux":
-        report = linux.inspect_linux(args.target, bank)
-    elif lane == "windows":
-        report = windows.inspect_windows(args.target, bank)
-    elif lane == "unix":
-        report = unix.inspect_unix(args.target, bank)
-    else:
-        report = electron.inspect_electron(args.target, bank)
+    # runtime trace lane (lldb)
+    if args.trace:
+        rep = _run_trace(args, bank)
+        manifest = bank.save_manifest()
+        print(render(rep))
+        print(f"\n# evidence -> {os.path.abspath(bank.root)}  (manifest: {manifest})")
+        return
+
+    # static + optional behaviour
+    static = None
+    try:
+        static = _static_report(lane, args.target, bank)
+    except Exception as e:  # noqa: BLE001 — behaviour capture must not die for
+        print(f"# static lane '{lane}' skipped: {e}", file=sys.stderr)  # a bad path
+
+    behavior_report = None
+    if args.capture or args.attach:
+        if lane not in _CAPTURE_LANES and not args.attach:
+            print(f"# capture is not available for lane '{lane}' — skipping",
+                  file=sys.stderr)
+        else:
+            behavior_report = _run_capture(args, lane, bank)
 
     manifest = bank.save_manifest()
-    print(render(report))
+
+    if static is not None:
+        print(render(static))
+    if behavior_report is not None:
+        print(render(behavior_report))
+        # the raw behaviour record is a deliverable in its own right: it is what
+        # a builder re-reads when the spec's summary is not enough
+        bpath = os.path.join(bank.root, "behavior.json")
+        with open(bpath, "w") as fh:
+            json.dump(behavior_report, fh, indent=1, default=str)
+        print("\n# behaviour record -> %s" % bpath)
+
+    spec_paths = None
+    if args.spec:
+        from engine import spec as spec_mod
+        spec = spec_mod.build(behavior=behavior_report, static=static,
+                              name=args.spec_name, target=args.target)
+        spec_paths = spec_mod.write(spec, bank.root)
+        print("\n# FEATURE-SPEC -> %s" % spec_paths["markdown"])
+        print("# spec.json    -> %s" % spec_paths["json"])
+        print("\n" + spec_mod.to_markdown(spec).split("## 1.")[0].strip())
+
     print(f"\n# evidence -> {os.path.abspath(bank.root)}  (manifest: {manifest})")
+    if args.spec and spec_paths:
+        print("# build-ready spec: %s" % os.path.abspath(spec_paths["markdown"]))
 
 
 if __name__ == "__main__":

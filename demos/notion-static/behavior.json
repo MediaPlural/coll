@@ -1,0 +1,8 @@
+{
+ "lane": "behavior",
+ "mode": "electron-unavailable",
+ "target": "/Applications/Notion.app",
+ "captured_at": "2026-10-20T19:49:03Z",
+ "error": "no debug port open on this app",
+ "fix": "start it with: /Applications/Notion.app/Contents/MacOS/Notion --remote-debugging-port=9222 (or rerun coll with --launch-app)"
+}

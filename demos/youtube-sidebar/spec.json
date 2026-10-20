@@ -1,0 +1,1378 @@
+{
+  "schema": "coll/feature-spec@1",
+  "feature": "YouTube guide sidebar",
+  "target": "https://www.youtube.com/",
+  "generated_from": {
+    "behavior_mode": "launch-web",
+    "captured_at": "2026-10-20T19:49:42Z",
+    "viewport": {
+      "width": 1440,
+      "height": 900,
+      "deviceScaleFactor": 1,
+      "mobile": false
+    },
+    "debuggee": "Chrome/155.0.8059.85",
+    "static_lane": "web",
+    "cdp_commands": 75
+  },
+  "summary": "**YouTube guide sidebar** \u2014 reimplemented from an observed run. 5 surface component(s) (main content, sidebar / navigation, tab strip, search). 6 observed interaction(s) across 3 state(s). 5 API endpoint(s) with 14 observed payload shape(s).",
+  "components": [
+    {
+      "id": "C1",
+      "name": "main content",
+      "kind": "main content",
+      "role": "main",
+      "label": "",
+      "layouts": [
+        "1200x176",
+        "1368x176",
+        "1200x3984"
+      ],
+      "control_count": 84,
+      "controls": [
+        {
+          "role": "button",
+          "name": "A$AP ROCKY - SHROOM CLOUDS (Official Video)"
+        },
+        {
+          "role": "button",
+          "name": "Collaboration channels"
+        },
+        {
+          "role": "button",
+          "name": "Fontaines D.C. - Japan (Official Music Video)"
+        },
+        {
+          "role": "button",
+          "name": "Go to channel Ashe"
+        },
+        {
+          "role": "button",
+          "name": "Go to channel Mollie Elizabeth"
+        },
+        {
+          "role": "button",
+          "name": "Go to channel Rachel Chinouriri"
+        },
+        {
+          "role": "button",
+          "name": "Go to channel Tate McRae"
+        },
+        {
+          "role": "button",
+          "name": "Go to channel U2"
+        },
+        {
+          "role": "button",
+          "name": "Go to channel comehelpglo"
+        },
+        {
+          "role": "button",
+          "name": "Megan Thee Stallion - Thin Ice - Tina Tuesday Freestyle"
+        },
+        {
+          "role": "button",
+          "name": "More actions"
+        },
+        {
+          "role": "button",
+          "name": "Olivia Rodrigo - expectations (feat. Chappell Roan) (Official Music Video)"
+        },
+        {
+          "role": "button",
+          "name": "Show more"
+        },
+        {
+          "role": "button",
+          "name": "Subscribe to Music."
+        },
+        {
+          "role": "button",
+          "name": "Tate McRae - Housewife (Official Video)"
+        },
+        {
+          "role": "link",
+          "name": "'00s Hip Hop Party"
+        },
+        {
+          "role": "link",
+          "name": "'90s Hip Hop"
+        },
+        {
+          "role": "link",
+          "name": "100 songs"
+        },
+        {
+          "role": "link",
+          "name": "100 videos"
+        },
+        {
+          "role": "link",
+          "name": "106 songs"
+        },
+        {
+          "role": "link",
+          "name": "109 songs"
+        },
+        {
+          "role": "link",
+          "name": "118 songs"
+        },
+        {
+          "role": "link",
+          "name": "120 songs"
+        },
+        {
+          "role": "link",
+          "name": "121 songs"
+        },
+        {
+          "role": "link",
+          "name": "134 songs"
+        },
+        {
+          "role": "link",
+          "name": "18:47"
+        },
+        {
+          "role": "link",
+          "name": "20 videos"
+        },
+        {
+          "role": "link",
+          "name": "2:12"
+        },
+        {
+          "role": "link",
+          "name": "2:49"
+        },
+        {
+          "role": "link",
+          "name": "32:08"
+        },
+        {
+          "role": "link",
+          "name": "3:15"
+        },
+        {
+          "role": "link",
+          "name": "3:34"
+        },
+        {
+          "role": "link",
+          "name": "4:31"
+        },
+        {
+          "role": "link",
+          "name": "51 songs"
+        },
+        {
+          "role": "link",
+          "name": "52 songs"
+        },
+        {
+          "role": "link",
+          "name": "53 songs"
+        },
+        {
+          "role": "link",
+          "name": "5:42"
+        },
+        {
+          "role": "link",
+          "name": "60 songs"
+        },
+        {
+          "role": "link",
+          "name": "72 songs"
+        },
+        {
+          "role": "link",
+          "name": "76 songs"
+        }
+      ],
+      "confidence": "observed"
+    },
+    {
+      "id": "C2",
+      "name": "sidebar / navigation",
+      "kind": "sidebar / navigation",
+      "role": "navigation",
+      "label": "",
+      "layouts": [
+        "240x964",
+        "72x844"
+      ],
+      "control_count": 38,
+      "controls": [
+        {
+          "role": "button",
+          "name": "Show less"
+        },
+        {
+          "role": "button",
+          "name": "Show more"
+        },
+        {
+          "role": "link",
+          "name": "About"
+        },
+        {
+          "role": "link",
+          "name": "Advertise"
+        },
+        {
+          "role": "link",
+          "name": "Contact us"
+        },
+        {
+          "role": "link",
+          "name": "Copyright"
+        },
+        {
+          "role": "link",
+          "name": "Courses"
+        },
+        {
+          "role": "link",
+          "name": "Creators"
+        },
+        {
+          "role": "link",
+          "name": "Developers"
+        },
+        {
+          "role": "link",
+          "name": "Gaming"
+        },
+        {
+          "role": "link",
+          "name": "History"
+        },
+        {
+          "role": "link",
+          "name": "Home"
+        },
+        {
+          "role": "link",
+          "name": "How YouTube works"
+        },
+        {
+          "role": "link",
+          "name": "Hype"
+        },
+        {
+          "role": "link",
+          "name": "Live"
+        },
+        {
+          "role": "link",
+          "name": "Memberships"
+        },
+        {
+          "role": "link",
+          "name": "Movies & TV"
+        },
+        {
+          "role": "link",
+          "name": "Music"
+        },
+        {
+          "role": "link",
+          "name": "NFL Sunday Ticket"
+        },
+        {
+          "role": "link",
+          "name": "News"
+        },
+        {
+          "role": "link",
+          "name": "Playables"
+        },
+        {
+          "role": "link",
+          "name": "Podcasts"
+        },
+        {
+          "role": "link",
+          "name": "Policy & Safety"
+        },
+        {
+          "role": "link",
+          "name": "Press"
+        },
+        {
+          "role": "link",
+          "name": "Privacy"
+        },
+        {
+          "role": "link",
+          "name": "Report history"
+        },
+        {
+          "role": "link",
+          "name": "Shorts"
+        },
+        {
+          "role": "link",
+          "name": "Show less"
+        },
+        {
+          "role": "link",
+          "name": "Show more"
+        },
+        {
+          "role": "link",
+          "name": "Sign in"
+        },
+        {
+          "role": "link",
+          "name": "Subscriptions"
+        },
+        {
+          "role": "link",
+          "name": "Terms"
+        },
+        {
+          "role": "link",
+          "name": "Test new features"
+        },
+        {
+          "role": "link",
+          "name": "You"
+        },
+        {
+          "role": "link",
+          "name": "YouTube Kids"
+        },
+        {
+          "role": "link",
+          "name": "YouTube Music"
+        },
+        {
+          "role": "link",
+          "name": "YouTube Premium"
+        },
+        {
+          "role": "link",
+          "name": "YouTube TV"
+        }
+      ],
+      "confidence": "observed"
+    },
+    {
+      "id": "C3",
+      "name": "tab strip",
+      "kind": "tab strip",
+      "role": "tablist",
+      "label": "",
+      "layouts": [
+        "1152x48",
+        "120x48"
+      ],
+      "control_count": 3,
+      "controls": [
+        {
+          "role": "tab",
+          "name": "Home"
+        },
+        {
+          "role": "tab",
+          "name": "Posts"
+        },
+        {
+          "role": "tablist",
+          "name": "Home Posts"
+        }
+      ],
+      "confidence": "observed"
+    },
+    {
+      "id": "C4",
+      "name": "search",
+      "kind": "search",
+      "role": "search",
+      "label": "",
+      "layouts": [
+        "640x40"
+      ],
+      "control_count": 2,
+      "controls": [
+        {
+          "role": "button",
+          "name": "Clear search query"
+        },
+        {
+          "role": "button",
+          "name": "Search"
+        }
+      ],
+      "confidence": "observed"
+    },
+    {
+      "id": "C5",
+      "name": "app chrome",
+      "kind": "app chrome",
+      "role": "chrome",
+      "label": "app chrome",
+      "layouts": [],
+      "control_count": 7,
+      "controls": [
+        {
+          "role": "button",
+          "name": "Guide"
+        },
+        {
+          "role": "button",
+          "name": "Search with your voice"
+        },
+        {
+          "role": "button",
+          "name": "Settings"
+        },
+        {
+          "role": "button",
+          "name": "Skip navigation"
+        },
+        {
+          "role": "combobox",
+          "name": "Search"
+        },
+        {
+          "role": "link",
+          "name": "Sign in"
+        },
+        {
+          "role": "link",
+          "name": "YouTube Home"
+        }
+      ],
+      "confidence": "observed"
+    }
+  ],
+  "static_surface": {
+    "lane": "web",
+    "error": null
+  },
+  "states": [
+    {
+      "id": "S1",
+      "path": "/",
+      "title": "YouTube",
+      "regions": [
+        "navigation",
+        "main",
+        "search"
+      ],
+      "headings": [
+        "Explore",
+        "More from YouTube",
+        "Try searching to get started"
+      ],
+      "dialogs": 0,
+      "control_count": 51,
+      "confidence": "observed"
+    },
+    {
+      "id": "S2",
+      "path": "/",
+      "title": "YouTube",
+      "regions": [
+        "main",
+        "navigation",
+        "search"
+      ],
+      "headings": [
+        "Try searching to get started"
+      ],
+      "dialogs": 0,
+      "control_count": 12,
+      "confidence": "observed"
+    },
+    {
+      "id": "S3",
+      "path": "/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ",
+      "title": "The Music Channel - YouTube",
+      "regions": [
+        "main",
+        "navigation",
+        "tablist",
+        "search",
+        "tablist"
+      ],
+      "headings": [
+        "Explore",
+        "More from YouTube",
+        "A$AP ROCKY - SHROOM CLOUDS (Official Video)",
+        "Music"
+      ],
+      "dialogs": 0,
+      "control_count": 220,
+      "confidence": "observed"
+    },
+    {
+      "id": "S4",
+      "path": "/results",
+      "title": "reverse engineer app - YouTube",
+      "regions": [
+        "main",
+        "navigation",
+        "tablist",
+        "search",
+        "tablist"
+      ],
+      "headings": [
+        "Explore",
+        "More from YouTube",
+        "A$AP ROCKY - SHROOM CLOUDS (Official Video)",
+        "Music"
+      ],
+      "dialogs": 0,
+      "control_count": 220,
+      "confidence": "observed"
+    }
+  ],
+  "transitions": [
+    {
+      "n": 1,
+      "control": "button 'Guide'",
+      "action": "click",
+      "from_state": "S1",
+      "to_state": "S2",
+      "outcome": "panel-opened",
+      "effect": "hides 20 control(s); the navigation surface shrinks",
+      "calls": [],
+      "beacons": 1,
+      "screenshot": "018-screenshot-after-collapse-guide.png",
+      "risky": false,
+      "confidence": "observed"
+    },
+    {
+      "n": 2,
+      "control": "button 'Guide'",
+      "action": "click",
+      "from_state": "S2",
+      "to_state": "S1",
+      "outcome": "panel-opened",
+      "effect": "reveals 20 control(s) in navigation",
+      "calls": [],
+      "beacons": 0,
+      "screenshot": "021-screenshot-after-expand-guide.png",
+      "risky": false,
+      "confidence": "observed"
+    },
+    {
+      "n": 3,
+      "control": "button 'Show more'",
+      "action": "click",
+      "from_state": "S1",
+      "to_state": "S1",
+      "outcome": "panel-opened",
+      "effect": "swaps the panel surface (9 shown, 2 hidden)",
+      "calls": [],
+      "beacons": 0,
+      "screenshot": "024-screenshot-after-expand-sections.png",
+      "risky": false,
+      "confidence": "observed"
+    },
+    {
+      "n": 4,
+      "control": "ytd-guide-entry-renderer 'Music'",
+      "action": "click",
+      "from_state": "S1",
+      "to_state": "S3",
+      "outcome": "navigated",
+      "effect": "navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` \u2192 `POST /youtubei/v1/browse` (200), +1 more",
+      "calls": [
+        "POST /youtubei/v1/browse",
+        "POST /youtubei/v1/player"
+      ],
+      "beacons": 1,
+      "screenshot": "029-screenshot-after-navigate-music.png",
+      "risky": false,
+      "confidence": "observed"
+    },
+    {
+      "n": 5,
+      "control": "combobox 'Search'",
+      "action": "type",
+      "from_state": "S3",
+      "to_state": "S3",
+      "outcome": "panel-opened",
+      "effect": "accepts typed input and requests suggestions \u2192 `GET /complete/search` (200), +1 more",
+      "calls": [
+        "GET /complete/search",
+        "GET /complete/search"
+      ],
+      "beacons": 0,
+      "screenshot": "033-screenshot-after-type-query.png",
+      "risky": false,
+      "confidence": "observed"
+    },
+    {
+      "n": 6,
+      "control": "key 'Enter'",
+      "action": "key",
+      "from_state": "S3",
+      "to_state": "S4",
+      "outcome": "navigated",
+      "effect": "navigates to `/results?search_query=reverse+engineer+app` \u2192 `GET /complete/search` (200)",
+      "calls": [
+        "GET /complete/search"
+      ],
+      "beacons": 0,
+      "screenshot": "036-screenshot-after-submit-search.png",
+      "risky": false,
+      "confidence": "observed"
+    }
+  ],
+  "entities": [
+    {
+      "name": "Guide",
+      "fields": {
+        "responseContext": "object",
+        "responseContext.serviceTrackingParams": "array<object>",
+        "responseContext.serviceTrackingParams[].service": "string",
+        "responseContext.serviceTrackingParams[].params": "array<object>",
+        "responseContext.serviceTrackingParams[].params[].key": "...",
+        "responseContext.serviceTrackingParams[].params[].value": "...",
+        "responseContext.maxAgeSeconds": "number",
+        "responseContext.mainAppWebResponseContext": "object",
+        "responseContext.mainAppWebResponseContext.loggedOut": "bool",
+        "responseContext.mainAppWebResponseContext.trackingParam": "string",
+        "responseContext.responseId": "string",
+        "responseContext.webResponseContextExtensionData": "object",
+        "responseContext.webResponseContextExtensionData.webResponseContextPreloadData": "object",
+        "responseContext.webResponseContextExtensionData.webResponseContextPreloadData.preloadMessageNames": "array<string>",
+        "responseContext.webResponseContextExtensionData.hasDecorated": "bool",
+        "items": "array<object>",
+        "items[].guideSectionRenderer": "object",
+        "items[].guideSectionRenderer.items": "array<object>",
+        "items[].guideSectionRenderer.items[].guideEntryRenderer": "...",
+        "items[].guideSectionRenderer.trackingParams": "string",
+        "trackingParams": "string"
+      },
+      "sources": [
+        "POST /youtubei/v1/guide"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "Feedback",
+      "fields": {
+        "responseContext": "object",
+        "responseContext.serviceTrackingParams": "array<object>",
+        "responseContext.serviceTrackingParams[].service": "string",
+        "responseContext.serviceTrackingParams[].params": "array<object>",
+        "responseContext.serviceTrackingParams[].params[].key": "...",
+        "responseContext.serviceTrackingParams[].params[].value": "...",
+        "responseContext.mainAppWebResponseContext": "object",
+        "responseContext.mainAppWebResponseContext.loggedOut": "bool",
+        "responseContext.mainAppWebResponseContext.trackingParam": "string",
+        "responseContext.responseId": "string",
+        "responseContext.webResponseContextExtensionData": "object",
+        "responseContext.webResponseContextExtensionData.hasDecorated": "bool",
+        "feedbackResponses": "array<object>",
+        "feedbackResponses[].isProcessed": "bool"
+      },
+      "sources": [
+        "POST /youtubei/v1/feedback"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "GenerateIT",
+      "fields": {
+        "value": "array<string>"
+      },
+      "sources": [
+        "POST /api/jnn/v1/GenerateIT"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "LogEvent",
+      "fields": {
+        "responseContext": "object"
+      },
+      "sources": [
+        "POST /youtubei/v1/log_event"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "Player",
+      "fields": {
+        "responseContext": "object",
+        "responseContext.serviceTrackingParams": "array<object>",
+        "responseContext.serviceTrackingParams[].service": "string",
+        "responseContext.serviceTrackingParams[].params": "array<object>",
+        "responseContext.serviceTrackingParams[].params[].key": "...",
+        "responseContext.serviceTrackingParams[].params[].value": "...",
+        "responseContext.maxAgeSeconds": "number",
+        "responseContext.mainAppWebResponseContext": "object",
+        "responseContext.mainAppWebResponseContext.loggedOut": "bool",
+        "responseContext.mainAppWebResponseContext.trackingParam": "string",
+        "responseContext.responseId": "string",
+        "responseContext.webResponseContextExtensionData": "object",
+        "responseContext.webResponseContextExtensionData.webResponseContextPreloadData": "object",
+        "responseContext.webResponseContextExtensionData.webResponseContextPreloadData.preloadMessageNames": "array<string>",
+        "responseContext.webResponseContextExtensionData.hasDecorated": "bool",
+        "playabilityStatus": "object",
+        "playabilityStatus.status": "string",
+        "playabilityStatus.reason": "string",
+        "playabilityStatus.errorScreen": "object",
+        "playabilityStatus.errorScreen.playerInterstitialRenderer": "object",
+        "playabilityStatus.errorScreen.playerInterstitialRenderer.content": "object",
+        "playabilityStatus.errorScreen.playerInterstitialRenderer.content.interstitialViewModel": "object",
+        "playabilityStatus.errorScreen.playerInterstitialRenderer.content.interstitialViewModel.title": "...",
+        "playabilityStatus.errorScreen.playerInterstitialRenderer.content.interstitialViewModel.description": "...",
+        "playabilityStatus.errorScreen.playerInterstitialRenderer.content.interstitialViewModel.loggingDirectives": "...",
+        "playabilityStatus.errorScreen.playerInterstitialRenderer.stateEntityStoreKey": "string",
+        "playabilityStatus.contextParams": "string",
+        "videoDetails": "object",
+        "videoDetails.videoId": "string",
+        "videoDetails.title": "string",
+        "videoDetails.lengthSeconds": "string",
+        "videoDetails.keywords": "array<string>",
+        "videoDetails.channelId": "string",
+        "videoDetails.isOwnerViewing": "bool",
+        "videoDetails.shortDescription": "string",
+        "videoDetails.isCrawlable": "bool",
+        "videoDetails.thumbnail": "object",
+        "videoDetails.thumbnail.thumbnails": "array<object>",
+        "videoDetails.thumbnail.thumbnails[].url": "string",
+        "videoDetails.thumbnail.thumbnails[].width": "number",
+        "videoDetails.thumbnail.thumbnails[].height": "number",
+        "videoDetails.allowRatings": "bool",
+        "videoDetails.viewCount": "string",
+        "videoDetails.author": "string",
+        "videoDetails.isPrivate": "bool",
+        "videoDetails.isUnpluggedCorpus": "bool",
+        "videoDetails.isLiveContent": "bool",
+        "videoDetails.isTvfilmVideo": "bool",
+        "microformat": "object",
+        "microformat.playerMicroformatRenderer": "object",
+        "microformat.playerMicroformatRenderer.thumbnail": "object",
+        "microformat.playerMicroformatRenderer.thumbnail.thumbnails": "array<object>",
+        "microformat.playerMicroformatRenderer.thumbnail.thumbnails[].url": "...",
+        "microformat.playerMicroformatRenderer.thumbnail.thumbnails[].width": "...",
+        "microformat.playerMicroformatRenderer.thumbnail.thumbnails[].height": "...",
+        "microformat.playerMicroformatRenderer.embed": "object",
+        "microformat.playerMicroformatRenderer.embed.iframeUrl": "string",
+        "microformat.playerMicroformatRenderer.embed.width": "number",
+        "microformat.playerMicroformatRenderer.embed.height": "number",
+        "microformat.playerMicroformatRenderer.title": "object",
+        "microformat.playerMicroformatRenderer.title.simpleText": "string",
+        "microformat.playerMicroformatRenderer.description": "object",
+        "microformat.playerMicroformatRenderer.description.simpleText": "string",
+        "microformat.playerMicroformatRenderer.lengthSeconds": "string",
+        "microformat.playerMicroformatRenderer.ownerProfileUrl": "string",
+        "microformat.playerMicroformatRenderer.externalChannelId": "string",
+        "microformat.playerMicroformatRenderer.isFamilySafe": "bool",
+        "microformat.playerMicroformatRenderer.availableCountries": "array<string>",
+        "microformat.playerMicroformatRenderer.isUnlisted": "bool",
+        "microformat.playerMicroformatRenderer.hasYpcMetadata": "bool",
+        "microformat.playerMicroformatRenderer.viewCount": "string",
+        "microformat.playerMicroformatRenderer.category": "string",
+        "microformat.playerMicroformatRenderer.publishDate": "string",
+        "microformat.playerMicroformatRenderer.ownerChannelName": "string",
+        "microformat.playerMicroformatRenderer.uploadDate": "string",
+        "microformat.playerMicroformatRenderer.isShortsEligible": "bool",
+        "microformat.playerMicroformatRenderer.externalVideoId": "string",
+        "microformat.playerMicroformatRenderer.likeCount": "string",
+        "microformat.playerMicroformatRenderer.canonicalUrl": "string",
+        "trackingParams": "string",
+        "adBreakHeartbeatParams": "string",
+        "frameworkUpdates": "object",
+        "frameworkUpdates.entityBatchUpdate": "object",
+        "frameworkUpdates.entityBatchUpdate.mutations": "array<object>",
+        "frameworkUpdates.entityBatchUpdate.mutations[].entityKey": "string",
+        "frameworkUpdates.entityBatchUpdate.mutations[].type": "string",
+        "frameworkUpdates.entityBatchUpdate.mutations[].payload": "object",
+        "frameworkUpdates.entityBatchUpdate.mutations[].payload.offlineabilityEntity": "...",
+        "frameworkUpdates.entityBatchUpdate.timestamp": "object",
+        "frameworkUpdates.entityBatchUpdate.timestamp.seconds": "string",
+        "frameworkUpdates.entityBatchUpdate.timestamp.nanos": "number"
+      },
+      "sources": [
+        "POST /youtubei/v1/player"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "V73c188c6YtPlayerYtPlayerLv",
+      "fields": {
+        "data": "string",
+        "creation": "number"
+      },
+      "sources": [
+        "localStorage['V73c188c6||::yt-player::yt-player-lv']"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "YtidbLASTRESULTENTRYKEY",
+      "fields": {
+        "data": "object",
+        "data.hasSucceededOnce": "boolean",
+        "expiration": "number",
+        "creation": "number"
+      },
+      "sources": [
+        "localStorage['ytidb::LAST_RESULT_ENTRY_KEY']"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "YtRemoteCastAvailable",
+      "fields": {
+        "data": "string",
+        "creation": "number"
+      },
+      "sources": [
+        "sessionStorage['yt-remote-cast-available']"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "YtRemoteCastInstalled",
+      "fields": {
+        "data": "string",
+        "creation": "number"
+      },
+      "sources": [
+        "sessionStorage['yt-remote-cast-installed']"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "YtRemoteConnectedDevices",
+      "fields": {
+        "data": "string",
+        "expiration": "number",
+        "creation": "number"
+      },
+      "sources": [
+        "localStorage['yt-remote-connected-devices']"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "YtRemoteDeviceId",
+      "fields": {
+        "data": "string",
+        "expiration": "number",
+        "creation": "number"
+      },
+      "sources": [
+        "localStorage['yt-remote-device-id']"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "YtRemoteFastCheckPeriod",
+      "fields": {
+        "data": "string",
+        "creation": "number"
+      },
+      "sources": [
+        "sessionStorage['yt-remote-fast-check-period']"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "YtRemoteSessionApp",
+      "fields": {
+        "data": "string",
+        "creation": "number"
+      },
+      "sources": [
+        "sessionStorage['yt-remote-session-app']"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "name": "YtRemoteSessionName",
+      "fields": {
+        "data": "string",
+        "creation": "number"
+      },
+      "sources": [
+        "sessionStorage['yt-remote-session-name']"
+      ],
+      "confidence": "observed"
+    }
+  ],
+  "endpoints": [
+    {
+      "method": "POST",
+      "path": "/api/jnn/v1/GenerateIT",
+      "host": "www.youtube.com",
+      "hits": 1,
+      "statuses": [
+        200
+      ],
+      "types": [
+        "XHR"
+      ],
+      "schema": [
+        "array",
+        "string"
+      ],
+      "confidence": "observed"
+    },
+    {
+      "method": "POST",
+      "path": "/youtubei/v1/browse",
+      "host": "www.youtube.com",
+      "hits": 1,
+      "statuses": [
+        200
+      ],
+      "types": [
+        "Fetch"
+      ],
+      "schema": null,
+      "confidence": "observed"
+    },
+    {
+      "method": "POST",
+      "path": "/youtubei/v1/feedback",
+      "host": "www.youtube.com",
+      "hits": 1,
+      "statuses": [
+        200
+      ],
+      "types": [
+        "Fetch"
+      ],
+      "schema": {
+        "responseContext": {
+          "serviceTrackingParams": [
+            "array",
+            {
+              "service": "string",
+              "params": [
+                "array",
+                {
+                  "key": "...",
+                  "value": "..."
+                }
+              ]
+            }
+          ],
+          "mainAppWebResponseContext": {
+            "loggedOut": "bool",
+            "trackingParam": "string"
+          },
+          "responseId": "string",
+          "webResponseContextExtensionData": {
+            "hasDecorated": "bool"
+          }
+        },
+        "feedbackResponses": [
+          "array",
+          {
+            "isProcessed": "bool"
+          }
+        ]
+      },
+      "confidence": "observed"
+    },
+    {
+      "method": "POST",
+      "path": "/youtubei/v1/guide",
+      "host": "www.youtube.com",
+      "hits": 1,
+      "statuses": [
+        200
+      ],
+      "types": [
+        "Fetch"
+      ],
+      "schema": {
+        "responseContext": {
+          "serviceTrackingParams": [
+            "array",
+            {
+              "service": "string",
+              "params": [
+                "array",
+                {
+                  "key": "...",
+                  "value": "..."
+                }
+              ]
+            }
+          ],
+          "maxAgeSeconds": "number",
+          "mainAppWebResponseContext": {
+            "loggedOut": "bool",
+            "trackingParam": "string"
+          },
+          "responseId": "string",
+          "webResponseContextExtensionData": {
+            "webResponseContextPreloadData": {
+              "preloadMessageNames": [
+                "array",
+                "string"
+              ]
+            },
+            "hasDecorated": "bool"
+          }
+        },
+        "items": [
+          "array",
+          {
+            "guideSectionRenderer": {
+              "items": [
+                "array",
+                {
+                  "guideEntryRenderer": "..."
+                }
+              ],
+              "trackingParams": "string"
+            }
+          }
+        ],
+        "trackingParams": "string"
+      },
+      "confidence": "observed"
+    },
+    {
+      "method": "POST",
+      "path": "/youtubei/v1/player",
+      "host": "www.youtube.com",
+      "hits": 1,
+      "statuses": [
+        200
+      ],
+      "types": [
+        "Fetch"
+      ],
+      "schema": {
+        "responseContext": {
+          "serviceTrackingParams": [
+            "array",
+            {
+              "service": "string",
+              "params": [
+                "array",
+                {
+                  "key": "...",
+                  "value": "..."
+                }
+              ]
+            }
+          ],
+          "maxAgeSeconds": "number",
+          "mainAppWebResponseContext": {
+            "loggedOut": "bool",
+            "trackingParam": "string"
+          },
+          "responseId": "string",
+          "webResponseContextExtensionData": {
+            "webResponseContextPreloadData": {
+              "preloadMessageNames": [
+                "array",
+                "string"
+              ]
+            },
+            "hasDecorated": "bool"
+          }
+        },
+        "playabilityStatus": {
+          "status": "string",
+          "reason": "string",
+          "errorScreen": {
+            "playerInterstitialRenderer": {
+              "content": {
+                "interstitialViewModel": {
+                  "title": "...",
+                  "description": "...",
+                  "loggingDirectives": "..."
+                }
+              },
+              "stateEntityStoreKey": "string"
+            }
+          },
+          "contextParams": "string"
+        },
+        "videoDetails": {
+          "videoId": "string",
+          "title": "string",
+          "lengthSeconds": "string",
+          "keywords": [
+            "array",
+            "string"
+          ],
+          "channelId": "string",
+          "isOwnerViewing": "bool",
+          "shortDescription": "string",
+          "isCrawlable": "bool",
+          "thumbnail": {
+            "thumbnails": [
+              "array",
+              {
+                "url": "string",
+                "width": "number",
+                "height": "number"
+              }
+            ]
+          },
+          "allowRatings": "bool",
+          "viewCount": "string",
+          "author": "string",
+          "isPrivate": "bool",
+          "isUnpluggedCorpus": "bool",
+          "isLiveContent": "bool",
+          "isTvfilmVideo": "bool"
+        },
+        "microformat": {
+          "playerMicroformatRenderer": {
+            "thumbnail": {
+              "thumbnails": [
+                "array",
+                {
+                  "url": "...",
+                  "width": "...",
+                  "height": "..."
+                }
+              ]
+            },
+            "embed": {
+              "iframeUrl": "string",
+              "width": "number",
+              "height": "number"
+            },
+            "title": {
+              "simpleText": "string"
+            },
+            "description": {
+              "simpleText": "string"
+            },
+            "lengthSeconds": "string",
+            "ownerProfileUrl": "string",
+            "externalChannelId": "string",
+            "isFamilySafe": "bool",
+            "availableCountries": [
+              "array",
+              "string"
+            ],
+            "isUnlisted": "bool",
+            "hasYpcMetadata": "bool",
+            "viewCount": "string",
+            "category": "string",
+            "publishDate": "string",
+            "ownerChannelName": "string",
+            "uploadDate": "string",
+            "isShortsEligible": "bool",
+            "externalVideoId": "string",
+            "likeCount": "string",
+            "canonicalUrl": "string"
+          }
+        },
+        "trackingParams": "string",
+        "adBreakHeartbeatParams": "string",
+        "frameworkUpdates": {
+          "entityBatchUpdate": {
+            "mutations": [
+              "array",
+              {
+                "entityKey": "string",
+                "type": "string",
+                "payload": {
+                  "offlineabilityEntity": "..."
+                }
+              }
+            ],
+            "timestamp": {
+              "seconds": "string",
+              "nanos": "number"
+            }
+          }
+        }
+      },
+      "confidence": "observed"
+    }
+  ],
+  "build_plan": [
+    {
+      "id": "B1",
+      "title": "Build the main content component",
+      "kind": "ui",
+      "depends_on": [],
+      "acceptance": [
+        "renders as a `main` region (main content)",
+        "observed layouts: 1200x176, 1368x176, 1200x3984 px in a 1440x900 viewport",
+        "exposes 84 interactive control(s): button 'A$AP ROCKY - SHROOM CLOUDS (Official Video)', button 'Collaboration channels', button 'Fontaines D.C. - Japan (Official Music Video)', button 'Go to channel Ashe', button 'Go to channel Mollie Elizabeth', button 'Go to channel Rachel Chinouriri'"
+      ],
+      "evidence": "screen snapshots + region inventory"
+    },
+    {
+      "id": "B2",
+      "title": "Build the sidebar / navigation component",
+      "kind": "ui",
+      "depends_on": [],
+      "acceptance": [
+        "renders as a `navigation` region (sidebar / navigation)",
+        "observed layouts: 240x964, 72x844 px in a 1440x900 viewport",
+        "exposes 38 interactive control(s): button 'Show less', button 'Show more', link 'About', link 'Advertise', link 'Contact us', link 'Copyright'"
+      ],
+      "evidence": "screen snapshots + region inventory"
+    },
+    {
+      "id": "B3",
+      "title": "Build the tab strip component",
+      "kind": "ui",
+      "depends_on": [],
+      "acceptance": [
+        "renders as a `tablist` region (tab strip)",
+        "observed layouts: 1152x48, 120x48 px in a 1440x900 viewport",
+        "exposes 3 interactive control(s): tab 'Home', tab 'Posts', tablist 'Home Posts'"
+      ],
+      "evidence": "screen snapshots + region inventory"
+    },
+    {
+      "id": "B4",
+      "title": "Build the search component",
+      "kind": "ui",
+      "depends_on": [],
+      "acceptance": [
+        "renders as a `search` region (search)",
+        "observed layouts: 640x40 px in a 1440x900 viewport",
+        "exposes 2 interactive control(s): button 'Clear search query', button 'Search'"
+      ],
+      "evidence": "screen snapshots + region inventory"
+    },
+    {
+      "id": "B5",
+      "title": "Build the app chrome component",
+      "kind": "ui",
+      "depends_on": [],
+      "acceptance": [
+        "renders as a `chrome` region (app chrome)",
+        "exposes 7 interactive control(s): button 'Guide', button 'Search with your voice', button 'Settings', button 'Skip navigation', combobox 'Search', link 'Sign in'"
+      ],
+      "evidence": "screen snapshots + region inventory"
+    },
+    {
+      "id": "B6",
+      "title": "Implement button interactions (5 observed)",
+      "kind": "interaction",
+      "depends_on": [],
+      "acceptance": [
+        "button 'Guide' \u2192 hides 20 control(s); the navigation surface shrinks",
+        "button 'Guide' \u2192 reveals 20 control(s) in navigation",
+        "button 'Show more' \u2192 swaps the panel surface (9 shown, 2 hidden)",
+        "ytd-guide-entry-renderer 'Music' \u2192 navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` \u2192 `POST /youtubei/v1/browse` (200), +1 more",
+        "key 'Enter' \u2192 navigates to `/results?search_query=reverse+engineer+app` \u2192 `GET /complete/search` (200)"
+      ],
+      "controls": [
+        "button 'Guide'",
+        "button 'Show more'",
+        "key 'Enter'",
+        "ytd-guide-entry-renderer 'Music'"
+      ],
+      "evidence": "transition records T1, T2, T3, T4, T6"
+    },
+    {
+      "id": "B7",
+      "title": "Implement form field interactions (1 observed)",
+      "kind": "interaction",
+      "depends_on": [],
+      "acceptance": [
+        "combobox 'Search' \u2192 accepts typed input and requests suggestions \u2192 `GET /complete/search` (200), +1 more"
+      ],
+      "controls": [
+        "combobox 'Search'"
+      ],
+      "evidence": "transition records T5"
+    },
+    {
+      "id": "B8",
+      "title": "Implement `POST /api/jnn/v1/GenerateIT`",
+      "kind": "api",
+      "depends_on": [],
+      "acceptance": [
+        "`POST /api/jnn/v1/GenerateIT` returns 200",
+        "response shape: [string]"
+      ],
+      "evidence": "observed 1 call(s); response body artifact"
+    },
+    {
+      "id": "B9",
+      "title": "Implement `POST /youtubei/v1/browse`",
+      "kind": "api",
+      "depends_on": [],
+      "acceptance": [
+        "`POST /youtubei/v1/browse` returns 200"
+      ],
+      "evidence": "observed 1 call(s); response body artifact"
+    },
+    {
+      "id": "B10",
+      "title": "Implement `POST /youtubei/v1/feedback`",
+      "kind": "api",
+      "depends_on": [],
+      "acceptance": [
+        "`POST /youtubei/v1/feedback` returns 200",
+        "response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { hasDecorated: bool } }, feedbackResponses: [{ isProcessed: bool }] }"
+      ],
+      "evidence": "observed 1 call(s); response body artifact"
+    },
+    {
+      "id": "B11",
+      "title": "Implement `POST /youtubei/v1/guide`",
+      "kind": "api",
+      "depends_on": [],
+      "acceptance": [
+        "`POST /youtubei/v1/guide` returns 200",
+        "response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, items: [{ guideSectionRenderer: { items: [{ guideEntryRenderer: ... }], trackingParams: string } }], trackingParams: string }"
+      ],
+      "evidence": "observed 1 call(s); response body artifact"
+    },
+    {
+      "id": "B12",
+      "title": "Implement `POST /youtubei/v1/player`",
+      "kind": "api",
+      "depends_on": [],
+      "acceptance": [
+        "`POST /youtubei/v1/player` returns 200",
+        "response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, playabilityStatus: { status: string, reason: string, errorScreen: { playerInterstitialRenderer: { content: { interstitialViewModel: { title: ..., description: ..., loggingDirectives: ... } }, stateEntityStoreKey: string } }, contextParams: string }, videoDetails: { videoId: string, title: string, lengthSeconds: string, keywords: [string], channelId: string, isOwnerViewing: bool, shortDescription: string, isCrawlable: bool, thumbnail: { thumbnails: [{ url: string, width: number, height: number }] }, allowRatings: bool, viewCount: string, author: string }, microformat: { playerMicroformatRenderer: { thumbnail: { thumbnails: [{ url: ..., width: ..., height: ... }] }, embed: { iframeUrl: string, width: number, height: number }, title: { simpleText: string }, description: { simpleText: string }, lengthSeconds: string, ownerProfileUrl: string, externalChannelId: string, isFamilySafe: bool, availableCountries: [string], isUnlisted: bool, hasYpcMetadata: bool, viewCount: string } }, trackingParams: string, adBreakHeartbeatParams: string, frameworkUpdates: { entityBatchUpdate: { mutations: [{ entityKey: string, type: string, payload: { offlineabilityEntity: ... } }], timestamp: { seconds: string, nanos: number } } } }"
+      ],
+      "evidence": "observed 1 call(s); response body artifact"
+    },
+    {
+      "id": "B13",
+      "title": "Persist client state",
+      "kind": "data",
+      "depends_on": [],
+      "acceptance": [
+        "writes localStorage['V73c188c6||::yt-player::yt-player-lv'], sessionStorage['yt-remote-cast-available'], sessionStorage['yt-remote-cast-installed'], localStorage['yt-remote-connected-devices'], localStorage['yt-remote-device-id'], sessionStorage['yt-remote-fast-check-period'], sessionStorage['yt-remote-session-app'], sessionStorage['yt-remote-session-name'], localStorage['ytidb::LAST_RESULT_ENTRY_KEY']"
+      ],
+      "evidence": "storage shape probe before/after the run"
+    }
+  ],
+  "parity_checks": [
+    "Clicking **button 'Guide'** hides 20 control(s); the navigation surface shrinks (state S1 \u2192 S2).",
+    "Clicking **button 'Guide'** reveals 20 control(s) in navigation (state S2 \u2192 S1).",
+    "Clicking **button 'Show more'** swaps the panel surface (9 shown, 2 hidden) (state S1 \u2192 S1).",
+    "Clicking **ytd-guide-entry-renderer 'Music'** navigates to `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ` \u2192 `POST /youtubei/v1/browse` (200), +1 more; fires `POST /youtubei/v1/browse`, `POST /youtubei/v1/player` (state S1 \u2192 S3).",
+    "Typing into **combobox 'Search'** accepts typed input and requests suggestions \u2192 `GET /complete/search` (200), +1 more; fires `GET /complete/search`, `GET /complete/search` (state S3 \u2192 S3).",
+    "Pressing **key 'Enter'** navigates to `/results?search_query=reverse+engineer+app` \u2192 `GET /complete/search` (200); fires `GET /complete/search` (state S3 \u2192 S4).",
+    "Reaching `/`, `/channel/UC-9-kyTW8ZkZNDHQJ6FgpwQ`, `/results` never requires a full page reload \u2014 all transitions above are in-document.",
+    "`POST /api/jnn/v1/GenerateIT` keeps its observed response shape: [string]",
+    "`POST /youtubei/v1/feedback` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { hasDecorated: bool } }, feedbackResponses: [{ isProcessed: bool }] }",
+    "`POST /youtubei/v1/guide` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, items: [{ guideSectionRenderer: { items: [{ guideEntryRenderer: ... }], trackingParams: string } }], trackingParams: string }",
+    "`POST /youtubei/v1/player` keeps its observed response shape: { responseContext: { serviceTrackingParams: [{ service: string, params: [{ key: ..., value: ... }] }], maxAgeSeconds: number, mainAppWebResponseContext: { loggedOut: bool, trackingParam: string }, responseId: string, webResponseContextExtensionData: { webResponseContextPreloadData: { preloadMessageNames: [string] }, hasDecorated: bool } }, playabilityStatus: { status: string, reason: string, errorScreen: { playerInterstitialRenderer: { content: { interstitialViewModel: { title: ..., description: ..., loggingDirectives: ... } }, stateEntityStoreKey: string } }, contextParams: string }, videoDetails: { videoId: string, title: string, lengthSeconds: string, keywords: [string], channelId: string, isOwnerViewing: bool, shortDescription: string, isCrawlable: bool, thumbnail: { thumbnails: [{ url: string, width: number, height: number }] }, allowRatings: bool, viewCount: string, author: string }, microformat: { playerMicroformatRenderer: { thumbnail: { thumbnails: [{ url: ..., width: ..., height: ... }] }, embed: { iframeUrl: string, width: number, height: number }, title: { simpleText: string }, description: { simpleText: string }, lengthSeconds: string, ownerProfileUrl: string, externalChannelId: string, isFamilySafe: bool, availableCountries: [string], isUnlisted: bool, hasYpcMetadata: bool, viewCount: string } }, trackingParams: string, adBreakHeartbeatParams: string, frameworkUpdates: { entityBatchUpdate: { mutations: [{ entityKey: string, type: string, payload: { offlineabilityEntity: ... } }], timestamp: { seconds: string, nanos: number } } } }"
+  ],
+  "excluded_traffic": 146,
+  "unknowns": [
+    "one observed run: alternate paths, permission states and server-side branches are not exercised",
+    "viewport is 1440x900 @1x; responsive breakpoints not captured",
+    "logged-out / unauthenticated unless the attached profile was already signed in",
+    "launched a fresh headless profile: no cookies, no extensions, no signed-in session"
+  ]
+}
