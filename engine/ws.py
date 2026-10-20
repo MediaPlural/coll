@@ -23,6 +23,11 @@ _GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
 
 OP_CONT, OP_TEXT, OP_BIN, OP_CLOSE, OP_PING, OP_PONG = 0x0, 0x1, 0x2, 0x8, 0x9, 0xA
 
+# RFC 6455 §5.2: 0x3–0x7 are reserved for future non-control frames and 0xB–0xF
+# for future control frames. Data that arrives under one of them is not our data
+# to interpret — treating it as a payload would silently corrupt a message.
+VALID_OPCODES = frozenset((OP_CONT, OP_TEXT, OP_BIN, OP_CLOSE, OP_PING, OP_PONG))
+
 
 class WebSocketError(RuntimeError):
     pass
@@ -126,11 +131,26 @@ class WebSocket:
             raise WebSocketError("handshake failed: %s" % status)
         expect = base64.b64encode(
             hashlib.sha1((key + _GUID).encode()).digest()).decode()
+        accept_seen = False
         for line in header.split("\r\n")[1:]:
             if line.lower().startswith("sec-websocket-accept:"):
                 if line.split(":", 1)[1].strip() != expect:
-                    raise WebSocketError("bad Sec-WebSocket-Accept")
+                    self._fail("bad Sec-WebSocket-Accept")
+                accept_seen = True
                 break
+        if not accept_seen:
+            # RFC 6455 §4.1: a server that accepts the upgrade MUST echo the
+            # accept token. A 101 without it is not a completed handshake, and
+            # silently continuing would trust an unverified peer.
+            self._fail("handshake failed: no Sec-WebSocket-Accept")
+
+    def _fail(self, msg: str):
+        """Close the socket, then raise — a rejected handshake owns no session."""
+        try:
+            self.sock.close()
+        except Exception:  # noqa: BLE001
+            pass
+        raise WebSocketError(msg)
 
     def _read_headers(self, limit: int = 65536) -> str:
         data = b""
@@ -161,6 +181,9 @@ class WebSocket:
                     continue
                 if opcode == OP_CLOSE:
                     raise WebSocketError("peer closed the socket")
+                if opcode not in VALID_OPCODES:
+                    raise WebSocketError(
+                        "reserved/unknown opcode 0x%X (RFC 6455 §5.2)" % opcode)
                 return opcode, fin, payload
             ready, _, _ = select.select([self.sock], [], [], timeout)
             if not ready:

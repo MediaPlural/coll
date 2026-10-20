@@ -158,6 +158,24 @@ class TestBuild(unittest.TestCase):
         self.assertEqual(json.dumps(self.spec, sort_keys=True),
                          json.dumps(again, sort_keys=True))
 
+    def test_summary_counts_the_state_table(self):
+        """Summary said 2 (distinct from_state) while the table listed 3."""
+        self.assertEqual(len(self.spec["states"]), 3)
+        self.assertIn("across 3 state(s)", self.spec["summary"])
+
+    def test_summary_counts_states_reached_only_as_target(self):
+        tr = [{"from_state": "S1", "to_state": "S2"},
+              {"from_state": "S1", "to_state": "S3"}]
+        txt = spec_mod._summary("Feature", [], tr, [], {}, None)
+        self.assertIn("across 3 state(s)", txt)
+
+    def test_summary_markdown_matches_state_table_rows(self):
+        md = spec_mod.to_markdown(self.spec)
+        self.assertIn("across 3 state(s)", md)
+        rows = [ln for ln in md.splitlines()
+                if ln.startswith("| ") and ln.split("|")[1].strip().startswith("S")]
+        self.assertEqual(len(rows), 3)
+
 
 class TestStaticOnly(unittest.TestCase):
     def test_static_only_is_honest(self):

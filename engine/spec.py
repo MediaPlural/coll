@@ -352,6 +352,13 @@ def _effect(t: dict) -> str:
     if outcome == "modal-opened":
         n = len(t.get("controls_added") or [])
         return "opens a modal dialog (+%d controls)%s" % (n, call)
+    if outcome == "layout-swapped":
+        added = len(t.get("controls_added") or [])
+        hidden = len(t.get("controls_removed") or [])
+        roles = sorted({r.split("|")[0] for r in
+                        (t.get("regions_added") or []) + (t.get("regions_removed") or [])})
+        return "reshapes the %s surface in place (+%d / −%d controls)%s" % (
+            ", ".join(roles) or "panel", added, hidden, call)
     if outcome == "panel-opened":
         added = len(t.get("controls_added") or [])
         hidden = len(t.get("controls_removed") or [])
@@ -695,7 +702,8 @@ def build(behavior: dict = None, static: dict = None, name: str = None,
             "static_lane": static.get("lane"),
             "cdp_commands": behavior.get("commands_sent"),
         },
-        "summary": _summary(feature, components, transitions, endpoints, entities),
+        "summary": _summary(feature, components, transitions, endpoints,
+                            entities, states),
         "components": components,
         "static_surface": static_surface,
         "states": states,
@@ -716,15 +724,26 @@ def _feature_name(title: str) -> str:
     return t[:80]
 
 
-def _summary(feature, components, transitions, endpoints, entities) -> str:
+def _summary(feature, components, transitions, endpoints, entities,
+             states=None) -> str:
+    """One-line summary.
+
+    The state count must describe the same rows the state table below prints,
+    so it reads the state list — not the `from_state` set, which silently drops
+    states only ever reached as a `to_state` (or never left) and disagreed with
+    the table.
+    """
     parts = ["**%s** — reimplemented from an observed run." % feature]
     if components:
         parts.append("%d surface component(s) (%s)."
                      % (len(components),
                         ", ".join(c["name"] for c in components[:4])))
     if transitions:
+        reached = ({t.get("from_state") for t in transitions}
+                   | {t.get("to_state") for t in transitions}) - {None, ""}
+        n_states = len(states) if states else len(reached)
         parts.append("%d observed interaction(s) across %d state(s)."
-                     % (len(transitions), len({t["from_state"] for t in transitions})))
+                     % (len(transitions), n_states))
     if endpoints:
         parts.append("%d API endpoint(s) with %d observed payload shape(s)."
                      % (len(endpoints), len(entities)))

@@ -58,6 +58,39 @@ class TestOutcome(unittest.TestCase):
     def test_dom_updated(self):
         self.assertEqual(behavior._outcome(self._rec(dom={"mutations": 2})), "dom-updated")
 
+    def test_panel_opened_when_only_additions(self):
+        self.assertEqual(
+            behavior._outcome(self._rec(dom={"mutations": 4},
+                                        regions_added=["nav|Guide|nav"],
+                                        controls_added=["button 'More'"])),
+            "panel-opened")
+
+    def test_panel_closed_when_only_removals(self):
+        self.assertEqual(
+            behavior._outcome(self._rec(dom={"mutations": 4},
+                                        regions_removed=["nav|Guide|nav"],
+                                        controls_removed=["button 'More'"])),
+            "panel-closed")
+
+    def test_swap_is_not_panel_opened(self):
+        """Collapse 240px -> 72px re-publishes the same role: +1 / -1 regions."""
+        self.assertEqual(
+            behavior._outcome(self._rec(
+                dom={"mutations": 9},
+                regions_added=["nav|Guide:72x900"],
+                regions_removed=["nav|Guide:240x900"],
+                controls_removed=["link 'Subscriptions'"])),
+            "layout-swapped")
+
+    def test_expand_swap_is_not_panel_closed(self):
+        self.assertEqual(
+            behavior._outcome(self._rec(
+                dom={"mutations": 9},
+                regions_added=["nav|Guide:240x900"],
+                regions_removed=["nav|Guide:72x900"],
+                controls_added=["link 'Subscriptions'"])),
+            "layout-swapped")
+
 
 class TestCandidateSafety(unittest.TestCase):
     SNAP = {"controls": [
@@ -86,6 +119,40 @@ class TestCandidateSafety(unittest.TestCase):
 
     def test_limit_respected(self):
         self.assertLessEqual(len(behavior._candidates(self.SNAP, 1, False, ("navigation",))), 1)
+
+    MONEY_LABELS = [
+        "Complete payment", "Make a payment", "Send payment",
+        "Authorize payment", "Charge my card", "Refund me",
+        "Wire transfer", "Cancel order",
+    ]
+
+    def test_pay_and_cancel_class_skipped_by_default(self):
+        """Money/cancel verbs must never be auto-clicked by an explorer."""
+        snap = {"controls": [
+            {"role": "button", "name": n, "owner": "main||main",
+             "bbox": {"w": 120, "h": 32}} for n in self.MONEY_LABELS]}
+        names = [c["name"] for c in behavior._candidates(snap, 20, False, ("navigation",))]
+        for label in self.MONEY_LABELS:
+            self.assertNotIn(label, names, "%r would have been clicked" % label)
+        self.assertEqual(names, [])
+
+    def test_money_labels_still_available_when_asked(self):
+        snap = {"controls": [
+            {"role": "button", "name": n, "owner": "main||main",
+             "bbox": {"w": 120, "h": 32}} for n in self.MONEY_LABELS]}
+        names = [c["name"] for c in behavior._candidates(snap, 20, True, ("navigation",))]
+        self.assertEqual(sorted(names), sorted(self.MONEY_LABELS))
+
+    def test_ordinary_controls_survive_the_widened_filter(self):
+        for name in ("New page", "Settings", "Search", "Share", "Duplicate",
+                     "Show more", "Music", "Guide", "Reply", "Tooltip help"):
+            self.assertFalse(behavior._DESTRUCTIVE.search(name),
+                             "%r must stay explorable" % name)
+        for name in ("Delete page", "Sign out", "Buy now", "Upgrade plan",
+                     "Subscribe", "Publish", "Discard", "Gift card",
+                     "Donate", "Add a tip"):
+            self.assertTrue(behavior._DESTRUCTIVE.search(name),
+                            "%r must be blocked" % name)
 
 
 class TestSchema(unittest.TestCase):

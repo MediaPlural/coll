@@ -52,11 +52,20 @@ CHROME_CANDIDATES = [
 
 VIEWPORT = {"width": 1440, "height": 900, "deviceScaleFactor": 1, "mobile": False}
 
-# Never auto-click these. A teardown must not buy, delete, publish or log out.
+# Never auto-click these. A teardown must not buy, delete, publish, pay or log
+# out. The money verbs are the dangerous class here: "Complete payment",
+# "Charge my card", "Refund me", "Wire transfer" all look like ordinary buttons
+# to an explorer, so the filter errs wide — a skipped control costs coverage, a
+# clicked one costs the owner's money. Bare "cancel" is destructive too: cancelling
+# an order/subscription is not the same as dismissing a dialog, and we cannot tell
+# them apart from the label alone.
 _DESTRUCTIVE = re.compile(
-    r"\b(delete|remove|trash|destroy|sign ?out|log ?out|logout|unsubscribe|"
-    r"buy|purchase|pay|checkout|upgrade|subscribe now|publish|deploy|merge|"
-    r"discard|cancel (plan|subscription|account)|deactivate|erase|reset)\b", re.I)
+    r"\b(delete|remove|trash|destroy|erase|reset|discard|"
+    r"sign ?out|log ?out|logout|unsubscribe|deactivate|"
+    r"buy|purchase|checkout|upgrade|subscribe|publish|deploy|merge|"
+    r"pay(?:ment|ing)?s?|charge[ds]?|refund[ds]?|transfer(?:s|red)?|"
+    r"gift(?:ing)?s?|donat(?:e|ion)s?|tips?|"
+    r"cancel)\b", re.I)
 
 _JSON_MIME = ("json", "javascript")  # application/json, +json, text/json
 # Static payloads that happen to be JSON (lottie animations, manifests, i18n
@@ -854,15 +863,31 @@ def _state_sig(snap: dict) -> str:
 
 
 def _outcome(rec: dict) -> str:
+    """Name the observed effect of a transition.
+
+    A swap — regions added *and* removed on the same role — is not a panel
+    opening. A sidebar collapsing 240px → 72px re-publishes the same role at a
+    new geometry, so the snapshot records one region added and one removed; the
+    old order called that "panel-opened" and mislabelled every collapse. Both
+    directions present is checked before either alone. Collapse and expand land
+    on the same label on purpose — which way it went is a property of the
+    control counts, and the spec renders those per direction.
+    """
     if rec["url_before"] != rec["url_after"]:
         return "navigated"
     if rec["dom"]["mutations"] == 0 and not rec["requests"] and not rec["controls_added"]:
         return "no-visible-change"
     if any("dialog" in r for r in rec["regions_added"]):
         return "modal-opened"
-    if rec["controls_added"] or rec["regions_added"]:
+    added = bool(rec["controls_added"] or rec["regions_added"])
+    removed = bool(rec["controls_removed"] or rec["regions_removed"])
+    if added and removed:
+        # Same surface re-published at a new geometry / with a different
+        # control set: collapse, expand, or a swap between two panels.
+        return "layout-swapped"
+    if added:
         return "panel-opened"
-    if rec["controls_removed"] or rec["regions_removed"]:
+    if removed:
         return "panel-closed"
     if rec["requests"]:
         return "data-updated"

@@ -3,7 +3,8 @@
 The probes are the lane's eyes; a stray parenthesis there would only be caught
 by a live browser run, which is a slow and flaky place to find a typo. Node is
 used *only* as a parser here (never as a runtime dependency of the tool), and the
-test skips cleanly when node is not installed.
+test skips cleanly when node is not installed. Point `COLL_NODE` at a specific
+binary if node lives off `PATH`; nothing machine-specific belongs in this file.
 """
 import os
 import shutil
@@ -15,9 +16,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from engine import probes
 
-NODE = shutil.which("node") or (
-    "/Users/sharpe/.hermes/node/bin/node"
-    if os.path.exists("/Users/sharpe/.hermes/node/bin/node") else "")
+NODE = os.environ.get("COLL_NODE") or shutil.which("node") or ""
 
 
 def _parses(expr: str) -> tuple:
