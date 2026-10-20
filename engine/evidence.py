@@ -1,6 +1,6 @@
 """Evidence contract: every finding ships with provenance, not vibes.
 
-Law (mirrors the Consumer + REA's own discipline, synthesized our way):
+Law (mirrors REA's own discipline, synthesized fresh):
   - no conclusion without the evidence artifact + exact reproduction command
   - digest pins the artifact so findings can be re-verified byte-for-byte
   - confidence is explicit: observed | inferred | unknown

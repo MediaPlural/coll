@@ -1,4 +1,4 @@
-"""Coll — reverse-engineer features from apps, our way.
+"""Coll — reverse-engineer features from apps.
 
 Apple-native first, stdlib-only orchestrator, evidence-backed findings.
 Lanes: apple (Mach-O / .app), electron (Electron/JS bundles).

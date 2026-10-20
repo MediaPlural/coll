@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Coll — reverse-engineer a feature from an app, our way.
+"""Coll — reverse-engineer a feature from an app.
 
 Usage:
   python3 coll.py <target> [--lane auto|apple|electron|web|linux|windows|unix]
