@@ -36,7 +36,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from engine import EvidenceBank
-from engine import apple, electron, web, linux, windows, unix
+from engine import apple, electron, web, linux, windows, unix, capability
 from engine import run
 
 _OBJECT_RE = re.compile(
@@ -165,6 +165,18 @@ def render(report: dict) -> str:
             out.append("  " + ", ".join(report["env_config_keys"][:40]))
             out.append(f"\n## domains ({len(report.get('domains', []))})")
             out.append("  " + ", ".join(report["domains"][:40]))
+    elif lane == "capability":
+        out.append(f"\n## pages fetched")
+        for p in report.get("pages_fetched", []):
+            out.append(f"  - {p['url']} (HTTP {p['status']})")
+        out.append(f"\n## pricing signals ({len(report.get('pricing', []))})")
+        for p in report.get("pricing", [])[:20]:
+            out.append(f"  - {p}")
+        out.append(f"\n## business model ({len(report.get('business_model', []))})")
+        out.append("  " + ", ".join(report.get("business_model", [])[:20]))
+        out.append(f"\n## trust posture ({len(report.get('trust', []))})")
+        out.append("  " + ", ".join(report.get("trust", [])[:20]))
+        out.append("\n## NOTE: pricing/claims are vendor-reported, not independently reconciled")
     elif lane == "behavior":
         out.append(f"\n## capture: {report.get('mode')} — {report.get('base_url') or ''}")
         if report.get("error"):
@@ -298,6 +310,8 @@ def _static_report(lane: str, target: str, bank: EvidenceBank) -> dict:
         return apple.inspect_apple(target, bank)
     if lane == "web":
         return web.inspect_web(target, bank)
+    if lane == "capability":
+        return capability.inspect_capability(target, bank)
     if lane == "linux":
         return linux.inspect_linux(target, bank)
     if lane == "windows":
@@ -350,7 +364,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("target")
-    ap.add_argument("--lane", choices=["auto", "apple", "electron", "web", "linux",
+    ap.add_argument("--lane", choices=["auto", "apple", "electron", "web", "capability", "linux",
                                        "windows", "unix"], default="auto")
     ap.add_argument("--out", default=None,
                     help="evidence output dir (default: coll-out/<basename>)")
