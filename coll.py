@@ -126,6 +126,8 @@ def render(report: dict) -> str:
     elif lane == "electron":
         if "asar" in report:
             out.append(f"\n## asar: {report['asar']} ({report.get('asar_file_count', '?')} files)")
+        if report.get("asars"):
+            out.append(f"  asars analyzed: {', '.join(os.path.basename(a) for a in report['asars'])}")
         a = report.get("analysis")
         if a:
             if "package" in a:
@@ -142,6 +144,17 @@ def render(report: dict) -> str:
             out.append("  " + ", ".join(a["contextbridge_exposures"][:40]))
             out.append(f"\n## routes ({len(a.get('routes', []))})")
             out.append("  " + ", ".join(a["routes"][:40]))
+            out.append(f"\n## commands ({len(a.get('commands', []))})")
+            out.append("  " + ", ".join(a["commands"][:120]))
+            if a.get("urls"):
+                out.append(f"\n## urls ({len(a['urls'])})")
+                out.append("  " + ", ".join(a["urls"][:20]))
+            if a.get("api_paths"):
+                out.append(f"\n## api paths ({len(a['api_paths'])})")
+                out.append("  " + ", ".join(a["api_paths"][:30]))
+            if a.get("feature_flags"):
+                out.append(f"\n## feature flags ({len(a['feature_flags'])})")
+                out.append("  " + ", ".join(a["feature_flags"][:30]))
     elif lane == "web":
         if "error" in report:
             out.append(f"\n## error: {report['error']}")

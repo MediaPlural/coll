@@ -2,7 +2,12 @@
 
 Finds the real app logic (asar or plain JS dir) and extracts the surface a
 feature lives on: entry points, module graph, IPC channels, contextBridge
-exposures, and routes. Static only — no code is executed.
+exposures, routes, command IDs (Obsidian-style `namespace:verb`), URLs, API
+paths, and feature flags. Static only — no code is executed.
+
+Every `.asar` in the bundle is enumerated and analyzed (an Electron app ships
+a small `app.asar` wrapper AND a large primary bundle like `obsidian.asar`;
+missing the latter is a known defect this lane now closes).
 """
 from __future__ import annotations
 
@@ -21,16 +26,42 @@ _IPC_RENDER = re.compile(r"""ipcRenderer\.(invoke|send|sendSync|on|once|removeLi
 _EXPOSE = re.compile(r"""contextBridge\.exposeInMainWorld\(\s*['"]([^'"]+)['"]""")
 _ROUTE = re.compile(r"""(?:<Route[^>]*path\s*=\s*|path\s*:\s*|route\(\s*)['"]([^'"]+)['"]""")
 
+# Obsidian-style command IDs: namespace:verb, e.g. "app:open-vault",
+# "editor:insert-link", "graph:open", "file-explorer:open", "quick-switcher:open".
+# Namespaces are the app's own action domains (not a closed list, but the
+# dominant ones for a PKM/notes app — keep it permissive on the verb side).
+_COMMAND = re.compile(
+    r"""(["'])((?:app|editor|workspace|file|files|view|markdown|graph|note|template|"""
+    r"""open|insert|toggle|delete|copy|rename|reveal|publish|sync|slides|daily|random|"""
+    r"""outline|properties|canvas|bookmarks|webviewer|search|switcher|hotkey|theme|"""
+    r"""setting|command|plugin|window|obsidian|vault|tag|tags|backlink|backlinks|"""
+    r"""quick-switcher|file-explorer|starred|page-preview|word-count|audio-recorder|"""
+    r"""note-composer|open-in-default-app|templates|workspaces|outgoing-links)[a-z0-9-]*:"""
+    r"""[a-z0-9][a-z0-9-]*)\1"""
+)
+_URL = re.compile(r"""https?://[^\s"'`<>]+""")
+_API_PATH = re.compile(r"""["'](/api/[^"']+)["']""")
+_FLAG = re.compile(r"""["']([a-z][a-z0-9-]*(?:\.enable|\.enabled|\.disabled|\.beta|\.feature|\.experimental))["']""")
+
 _JS_EXT = {".js", ".mjs", ".cjs", ".jsx", ".ts", ".tsx"}
 
+# Minified renderer bundles are routinely 10-30 MB; skip only pathological files.
+_MAX_FILE_BYTES = 64_000_000
+_MAX_URLS = 60
+_MAX_COMMANDS = 160
 
-def _find_asar(app_root: str):
+
+def _find_asars(app_root: str):
     res = os.path.join(app_root, "Contents", "Resources")
-    asar = os.path.join(res, "app.asar")
-    return asar if os.path.isfile(asar) else None
+    out = []
+    if os.path.isdir(res):
+        for fn in sorted(os.listdir(res)):
+            if fn.endswith(".asar"):
+                out.append(os.path.join(res, fn))
+    return out
 
 
-def _analyze_js_dir(js_dir: str, bank, target: str, max_files: int = 4000) -> dict:
+def _analyze_js_dir(js_dir: str, bank, target: str, max_files: int = 20000) -> dict:
     files = []
     for dirpath, dirnames, filenames in os.walk(js_dir):
         dirnames[:] = [d for d in dirnames if d not in {"node_modules", ".git"}]
@@ -40,15 +71,19 @@ def _analyze_js_dir(js_dir: str, bank, target: str, max_files: int = 4000) -> di
     files = files[:max_files]
 
     requires = Counter()
+    commands = Counter()
     ipc_main = set()
     ipc_render = set()
     exposes = set()
     routes = set()
+    urls = set()
+    api_paths = set()
+    flags = set()
     pkg = None
 
     for fp in files:
         try:
-            if os.path.getsize(fp) > 8_000_000:
+            if os.path.getsize(fp) > _MAX_FILE_BYTES:
                 continue
             txt = open(fp, "r", encoding="utf-8", errors="replace").read()
         except OSError:
@@ -73,9 +108,19 @@ def _analyze_js_dir(js_dir: str, bank, target: str, max_files: int = 4000) -> di
             exposes.add(m.group(1))
         for m in _ROUTE.finditer(txt):
             routes.add(m.group(1))
+        for m in _COMMAND.finditer(txt):
+            commands[m.group(2)] += 1
+        if len(urls) < _MAX_URLS:
+            for m in _URL.finditer(txt):
+                urls.add(m.group(0).rstrip(".,;"))
+                if len(urls) >= _MAX_URLS:
+                    break
+        for m in _API_PATH.finditer(txt):
+            api_paths.add(m.group(1))
+        for m in _FLAG.finditer(txt):
+            flags.add(m.group(1))
 
     top_requires = sorted(requires.items(), key=lambda kv: -kv[1])[:60]
-    # keep only external-looking modules (not relative paths)
     ext_requires = [(m, c) for m, c in top_requires if not m.startswith(".")]
     report = {
         "js_files_analyzed": len(files),
@@ -84,6 +129,10 @@ def _analyze_js_dir(js_dir: str, bank, target: str, max_files: int = 4000) -> di
         "ipc_renderer_channels": sorted(ipc_render),
         "contextbridge_exposures": sorted(exposes),
         "routes": sorted(routes),
+        "commands": [c for c, _ in commands.most_common(_MAX_COMMANDS)],
+        "urls": sorted(urls)[:_MAX_URLS],
+        "api_paths": sorted(api_paths)[:60],
+        "feature_flags": sorted(flags)[:60],
     }
     if pkg:
         report["package"] = {
@@ -99,36 +148,88 @@ def _analyze_js_dir(js_dir: str, bank, target: str, max_files: int = 4000) -> di
     return report
 
 
+def _merge_reports(reports: list) -> dict:
+    """Union several _analyze_js_dir reports (multiple asars) into one."""
+    if not reports:
+        return {}
+    if len(reports) == 1:
+        return reports[0]
+    merged = {
+        "js_files_analyzed": 0,
+        "external_modules": [],
+        "ipc_main_channels": set(),
+        "ipc_renderer_channels": set(),
+        "contextbridge_exposures": set(),
+        "routes": set(),
+        "commands": Counter(),
+        "urls": set(),
+        "api_paths": set(),
+        "feature_flags": set(),
+    }
+    for r in reports:
+        merged["js_files_analyzed"] += r.get("js_files_analyzed", 0)
+        merged["external_modules"] += r.get("external_modules", [])
+        merged["ipc_main_channels"] |= set(r.get("ipc_main_channels", []))
+        merged["ipc_renderer_channels"] |= set(r.get("ipc_renderer_channels", []))
+        merged["contextbridge_exposures"] |= set(r.get("contextbridge_exposures", []))
+        merged["routes"] |= set(r.get("routes", []))
+        merged["commands"].update(r.get("commands", []))
+        merged["urls"] |= set(r.get("urls", []))
+        merged["api_paths"] |= set(r.get("api_paths", []))
+        merged["feature_flags"] |= set(r.get("feature_flags", []))
+        if "package" in r and "package" not in merged:
+            merged["package"] = r["package"]
+    merged["ipc_main_channels"] = sorted(merged["ipc_main_channels"])
+    merged["ipc_renderer_channels"] = sorted(merged["ipc_renderer_channels"])
+    merged["contextbridge_exposures"] = sorted(merged["contextbridge_exposures"])
+    merged["routes"] = sorted(merged["routes"])
+    merged["commands"] = [c for c, _ in merged["commands"].most_common(_MAX_COMMANDS)]
+    merged["urls"] = sorted(merged["urls"])[:_MAX_URLS]
+    merged["api_paths"] = sorted(merged["api_paths"])[:60]
+    merged["feature_flags"] = sorted(merged["feature_flags"])[:60]
+    return merged
+
+
 def inspect_electron(target: str, bank) -> dict:
     target = os.path.abspath(target)
-    report = {"target": target, "lane": "electron"}
+    report: dict = {"target": target, "lane": "electron"}
 
-    asar_path = None
+    asars = []
     if target.endswith(".app"):
-        asar_path = _find_asar(target)
+        asars = _find_asars(target)
     elif target.endswith(".asar"):
-        asar_path = target
+        asars = [target]
 
-    js_dir = None
-    if asar_path:
-        report["asar"] = asar_path
-        rc, listing, _, cmd = run(["asar", "list", asar_path], timeout=60)
-        if rc == 0:
-            files = [l for l in listing.decode("utf-8", "replace").splitlines() if l.strip()]
-            bank.add("electron", target, "asar file inventory", "asar list", cmd, listing,
-                     {"file_count": len(files)})
-            report["asar_file_count"] = len(files)
-        ext = os.path.join(bank.root, "asar-extracted")
-        rc, _, err, cmd = run(["asar", "extract", asar_path, ext], timeout=180)
-        if rc == 0:
-            js_dir = ext
-        else:
-            report["asar_extract_error"] = err.decode("utf-8", "replace")[:300]
+    reports = []
+    extracted_any = False
+    if asars:
+        report["asars"] = asars
+        # primary = largest (the real app bundle, not the thin wrapper)
+        primary = max(asars, key=os.path.getsize)
+        report["asar"] = primary
+        ext_root = os.path.join(bank.root, "asar-extracted")
+        for i, asar in enumerate(asars):
+            rc, listing, _, cmd = run(["asar", "list", asar], timeout=60)
+            if rc == 0:
+                files = [l for l in listing.decode("utf-8", "replace").splitlines() if l.strip()]
+                bank.add("electron", target, f"asar file inventory #{i}", "asar list", cmd,
+                         listing, {"file_count": len(files), "asar": asar})
+            ext = os.path.join(ext_root, str(i))
+            rc, _, err, cmd = run(["asar", "extract", asar, ext], timeout=300)
+            if rc == 0:
+                reports.append(_analyze_js_dir(ext, bank, target))
+                extracted_any = True
+            else:
+                report.setdefault("asar_extract_errors", []).append(
+                    f"{os.path.basename(asar)}: {err.decode('utf-8', 'replace')[:200]}")
     elif os.path.isdir(target):
-        js_dir = target
+        reports.append(_analyze_js_dir(target, bank, target))
+        extracted_any = True
 
-    if js_dir:
-        report["analysis"] = _analyze_js_dir(js_dir, bank, target)
+    if reports:
+        report["analysis"] = _merge_reports(reports)
+    elif extracted_any:
+        report["error"] = "extracted asar(s) but found no analyzable JS"
     else:
         report["error"] = "no asar or JS directory found"
     return report
